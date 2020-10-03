@@ -3,11 +3,15 @@ const router = Router();
 
 const userCtrl = require('../controllers/users');
 
-router.get('/signin',userCtrl.getUser);
-router.post('/signin',userCtrl.getUser);
+router.get('/',userCtrl.getUsers);
 
-router.post('/signup',userCtrl.newUser);
-router.get('/signup',userCtrl.newUser)
+router.post('/',userCtrl.postUser);
+
+
+router.post('/:username',userCtrl.newLogin);
+
+
+router.post('/:mail',userCtrl.getRecovery);
 
 
 
