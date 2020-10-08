@@ -2,16 +2,29 @@ const {Router} = require ('express');
 const router = Router();
 
 const userCtrl = require('../controllers/users');
+const geoCtrl = require ('../lib/geo.auth');
 
-router.get('/',userCtrl.getUsers);
+//ver todos
+router.get('/',userCtrl.getUsers); 
 
-router.post('/',userCtrl.postUser);
+//simple login
+router.post('/login',userCtrl.loginUser);
 
+//registro usuario no activo
+router.post('/register',userCtrl.registerUser);
 
-router.post('/:username',userCtrl.newLogin);
+//confirmar correo usuario cambia a activo
+router.get('/confirmation/:token',userCtrl.registerConfirm);
 
+//click boton olvide contraseña
+router.put('/:email',userCtrl.getRecovery);
 
-router.post('/:mail',userCtrl.getRecovery);
+//asignacion nueva contraseña
+router.get('/defaultPassword/:token',userCtrl.defaultPassword)
+
+//login simple geotab
+router.post('/geotab_login',geoCtrl.loginGeo);
+
 
 
 

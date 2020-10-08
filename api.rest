@@ -1,0 +1,39 @@
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+    "username": "",
+    "password": "",
+    "lastname": "",
+    "telephone":"",
+    "email":""
+}
+###
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "@mail.com",
+    "password": ""
+}
+
+###
+GET http://localhost:3000/api/auth/
+###
+PUT http://localhost:3000/api/auth/jacinto@mail.com
+
+
+###
+POST http://localhost:3000/api/auth/geotab_login
+Content-Type: application/json
+
+{
+    "username": "mail@.com",
+    "password": "mailpass",
+    "database": "dbname",
+}
+
+ 
+###
+ GET http://localhost:3000/api/auth/confirmation/
+
