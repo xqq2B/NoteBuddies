@@ -75,7 +75,7 @@ userCtrl.getRecovery = async (req,res)=>{
 
 userCtrl.defaultPassword =async (req,res)=>{    
     try {
-        console.log(req.params.token)
+        console.log(req.params.token);
         const id =jwt.verify(req.params.token,EMAIL_SECRET_PASS);
         console.log('ok');
         let text = 'UPDATE users set password=$1 where id_user=$2';

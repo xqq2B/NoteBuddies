@@ -28,7 +28,7 @@ EMAIL_SECRET,
     expiresIn:'1d',
 },
 (err,emailToken)=>{
-    const url =`http://localhost:3000/api/auth/confirmation/${emailToken}`;
+    const url =`http://35.206.82.124/api/auth/confirmation/${emailToken}`;
 
     transporter.sendMail({
         to: User.email,
@@ -62,7 +62,7 @@ function sendEmailRec (userId,mail,nPass){
         expiresIn:'1d',
     },
     (err,emailToken)=>{
-        const url =`http://localhost:3000/api/auth/defaultPassword/${emailToken}`;
+        const url =`http://35.206.82.124/api/auth/defaultPassword/${emailToken}`;
     
         transporter.sendMail({
             to: mail,

@@ -9,7 +9,7 @@ const app = express();
 app.set('port', process.env.port || 4000);
 
 
-app.use(cors({origin:"http://localhost:4200"} ));
+app.use(cors(/*{origin:"http://localhost:4200"} 10.128.0.32*/ ));
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));

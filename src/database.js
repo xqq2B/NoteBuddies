@@ -16,15 +16,13 @@ const config ={
 };
 
     const pool = new Pool(config);
-
-const getUsers= async ()  =>{
-    try{
-        console.log('Testing db connection');
-        await pool.query('Select * from users');
-        console.log('connected');
-    }catch(e){console.log('DB ERROR '+e);}
-    
-    //pool.end(); no usar en app, solo aqui
-};
-getUsers();
+console.log(pool);
+ pool.query('SELECT NOW()', async (err, res) => {
+    if(err)
+    {
+        console.log('DB Not Connected: '+err)
+    }
+    else
+        console.log('DB Connected');
+  })
 module.exports ={pool};
