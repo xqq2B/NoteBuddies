@@ -20,9 +20,20 @@ console.log(pool);
  pool.query('SELECT NOW()', async (err, res) => {
     if(err)
     {
-        console.log('DB Not Connected: '+err)
+        console.log('DB Not Connected: '+err);
     }
     else
         console.log('DB Connected');
-  })
+  });
+
+  const getUsers= async ()  =>{
+    try{
+        console.log('Getting users');
+    const result = await pool.query('Select * from usuario');
+    console.log(result.rows);
+    }catch(e){console.log(e);}
+    
+};
+
+getUsers();
 module.exports ={pool};
