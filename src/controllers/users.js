@@ -59,12 +59,11 @@ userCtrl.registerConfirm = async (req, res) => {
         let values = [id.user];
         const {rows} = await pool.query(text2, values);
         console.log(rows[0]);
-        //const{rows2} = await pool.query(text2,values);
-        /*if (rows[0].activo == false) {
+        if (rows[0].activo == false) {
             let text = 'SELECT estadoUsuario($1)';
             await pool.query(text, values);
             console.log(rows[0].activo);
-        }*/
+        }
     } catch (e) {
         res.send('error: '+e);
     }
