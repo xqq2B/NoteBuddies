@@ -42,7 +42,8 @@ helpers.matchPassword = async (password, savedPassword) => {
 };*/
 
 helpers.signIn =async  (user)=>{
-    const text = 'SELECT singIn($1)';
+
+    const text = 'SELECT * FROM usuario WHERE correo = $1';
     const values = [user.email];
     const { rows } = await pool.query(text, values);
     console.log(rows[0]);
