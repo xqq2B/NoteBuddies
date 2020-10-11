@@ -10,7 +10,7 @@ require('dotenv').config();
 
 const app = express();
 
-app.set('port', process.env.port || 3000);
+app.set('port', process.env.port || 3389);
 
 
 app.use(cors(/*{origin:"http://localhost:4200"} 10.128.0.32*/ ));
