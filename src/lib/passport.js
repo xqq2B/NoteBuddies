@@ -69,24 +69,9 @@ async function checkId (){
     else{
         return id_user;
     } 
-}/*
+}
 
-helpers.signUp =async  (newUser)=>{
-    const text = 'SELECT * FROM users WHERE email = $1';
-        const values= [newUser.email];
-        const {rows} = await pool.query(text,values);
-    if (rows.length == 0) {
-        const encPass = await helpers.encryptPassword(newUser.password);
-        await checkId().then(res => newUser.id_user = parseInt(res));
-        newUser.id_rol = 2;
-        console.log(newUser.id_user);
-        let text = 'INSERT INTO users VALUES ($1, $2, $3, $4, $5, $6, $7)';
-        let values = [newUser.username, encPass, newUser.lastname, newUser.email, newUser.telephone, newUser.id_rol, newUser.id_user];
-        await pool.query(text, values);
-        sendWelcomeEmail(newUser);
-        return true;
-    }
-*/
+
 helpers.signUp =async  (newUser)=>{
     const text = 'SELECT * FROM usuario WHERE correo = $1';//
         const values= [newUser.email];

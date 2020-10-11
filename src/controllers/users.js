@@ -3,6 +3,7 @@ const {pool} = require('../database');
 var User = require ('../models/User');
 const helpers = require('../lib/passport');
 const jwt = require('jsonwebtoken');
+const { placeholder } = require('sequelize/types/lib/operators');
 require('dotenv').config();
 
 const EMAIL_SECRET = process.env.EMAIL_SECRET;
@@ -49,34 +50,24 @@ userCtrl.registerUser =async (req,res)=>{
 };
 
 //confirm email
-/*userCtrl.registerConfirm =async (req,res)=>{    
+
+userCtrl.registerConfirm = async (req, res) => {
     try {
-        const id =jwt.verify(req.params.token,EMAIL_SECRET);
-        let text = 'UPDATE users set active=1 where id_user=$1';
-         let values =[id.user];
-         await pool.query(text,values);
-         
-       } catch (e) {
-         res.send('error');
-       }
-     
-       return res.redirect('http://google.com');
-     };*/
-     userCtrl.registerConfirm =async (req,res)=>{    
-        try {
-            console.log('ENTRE cambiar activo');
-            const id =jwt.verify(req.params.token,EMAIL_SECRET);
-            let text = 'SELECT estadoUsuario($1)';//users set active=1 where id_user=$1';
-             let values =[id.user];
-             console.log('cambiado');
-             await pool.query(text,values);
-             
-           } catch (e) {
-             res.send('error');
-           }
-         
-           return res.redirect('http://google.com');//mandar al login
-         };
+        const id = jwt.verify(req.params.token, EMAIL_SECRET);
+        let text = 'SELECT estadoUsuario($1)';//users set active=1 where id_user=$1';
+        let values = [id.user];
+        console.log('cambiado');
+        const {rows} = await pool.query(text, values);
+        if (rows[0].activo == false) {
+            await pool.query(text, values);
+            console.log(rows[0].activo);
+        }
+    } catch (e) {
+        res.send('error');
+    }
+
+    return res.redirect('http://google.com');//mandar al login
+};
 
 
 //edit password recovery
