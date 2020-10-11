@@ -49,7 +49,7 @@ userCtrl.registerUser =async (req,res)=>{
 };
 
 //confirm email
-userCtrl.registerConfirm =async (req,res)=>{    
+/*userCtrl.registerConfirm =async (req,res)=>{    
     try {
         const id =jwt.verify(req.params.token,EMAIL_SECRET);
         let text = 'UPDATE users set active=1 where id_user=$1';
@@ -61,7 +61,20 @@ userCtrl.registerConfirm =async (req,res)=>{
        }
      
        return res.redirect('http://google.com');
-     };
+     };*/
+     userCtrl.registerConfirm =async (req,res)=>{    
+        try {
+            const id =jwt.verify(req.params.token,EMAIL_SECRET);
+            let text = 'SELECT estadoUsuario($1)';//users set active=1 where id_user=$1';
+             let values =[id.user];
+             await pool.query(text,values);
+             
+           } catch (e) {
+             res.send('error');
+           }
+         
+           return res.redirect('http://google.com');//mandar al login
+         };
 
 
 //edit password recovery
