@@ -13,8 +13,8 @@ POST http://localhost:3000/api/auth/login
 Content-Type: application/json
 
 {
-    "email": "@mail.com",
-    "password": ""
+    "email": "jesus.valdez@metricamovil.com",
+    "password": "pass123"
 }
 
 ###
@@ -49,9 +49,19 @@ POST http://35.209.128.105:3389/api/auth/register
 Content-Type: application/json
 
 {
-    "username": "te5t",
-    "password": "test123",
+    "username": "ok1234",
+    "password": "ok1234",
     "lastname": "testor",
-    "telephone":"8883388888",
-    "email":"noexiste3@yahoo.com"
+    "telephone":"8883188888",
+    "email":"ok1234@yahoo.com"
+}
+
+
+###
+POST http://35.209.128.105:3389/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "ok1234@yahoo.com",
+    "password": "ok1234"
 }

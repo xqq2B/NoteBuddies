@@ -19,7 +19,7 @@ userCtrl.getUsers = async(req,res)=>{
 //login por username y password
 userCtrl.loginUser = async (req,res)=>{
     User = req.body;
-    console.log(User);
+    //console.log(User);
     try{
         const Verification = await helpers.signIn(User);
         if(Verification){
