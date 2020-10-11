@@ -42,13 +42,12 @@ helpers.matchPassword = async (password, savedPassword) => {
 };*/
 
 helpers.signIn =async  (user)=>{
-
-    const text = 'SELECT * FROM usuario WHERE email = $1';
-        const values= [user.email];
-        const {rows} = await pool.query(text,values);
+    const text = 'SELECT esActivo($1)';//funcion
+    const values = [user.email];
+    const { rows } = await pool.query(text, values);
     if (rows.length > 0) {
-        const OkPass = await helpers.matchPassword(user.password, rows[0].password);
-        if (rows[0].active != 1)     
+        const OkPass = await helpers.matchPassword(user.password, rows[0].pass);//pass <-- como aparece en la tabla
+        if (rows[0].activo != true)
             return 'Email Not Confirmed!';
         else if (OkPass) {
             return rows[0];
@@ -56,7 +55,7 @@ helpers.signIn =async  (user)=>{
         else {
             return 'Wrong Password!';
         }
-    }else return 'Something went wrong';
+    } else return 'Something went wrong';
 };
 
 async function checkId (){
