@@ -3,7 +3,6 @@ const {pool} = require('../database');
 var User = require ('../models/User');
 const helpers = require('../lib/passport');
 const jwt = require('jsonwebtoken');
-const { placeholder } = require('sequelize/types/lib/operators');
 require('dotenv').config();
 
 const EMAIL_SECRET = process.env.EMAIL_SECRET;
@@ -19,7 +18,7 @@ userCtrl.getUsers = async(req,res)=>{
 //login por username y password
 userCtrl.loginUser = async (req,res)=>{
     User = req.body;
-    //console.log(User);
+    console.log(User);
     try{
         const Verification = await helpers.signIn(User);
         if(Verification){
