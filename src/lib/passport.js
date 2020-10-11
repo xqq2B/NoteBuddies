@@ -93,11 +93,11 @@ helpers.signUp =async  (newUser)=>{
         const values= [newUser.email];
         const {rows} = await pool.query(text,values);
     if (rows.length == 0) {
-        const encPass = await helpers.encryptPassword(newUser.pass);//lucidchart m
+        const encPass = await helpers.encryptPassword(newUser.password);//lucidchart m
         await checkId().then(res => newUser.id_user = parseInt(res));
         //newUser.id_rol = 0; no mandar id rol
-        let text = 'INSERT INTO users VALUES ($1, $2, $3, $4, $5, $6)';
-        let values=[newUser.id_user,newUser.username,newUser.lastname,newUser.mail,newUser.telephone,newUser.pass];
+        let text = 'INSERT INTO usuario VALUES ($1, $2, $3, $4, $5, $6)';
+        let values=[newUser.id_user,newUser.username,newUser.lastname,newUser.mail,newUser.telephone,newUser.password];
         await pool.query(text, values);
         sendWelcomeEmail(newUser);
         return true;
