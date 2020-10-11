@@ -23,24 +23,6 @@ helpers.matchPassword = async (password, savedPassword) => {
 };
 
 
-/*helpers.signIn =async  (user)=>{
-
-    const text = 'SELECT * FROM users WHERE email = $1';
-        const values= [user.email];
-        const {rows} = await pool.query(text,values);
-    if (rows.length > 0) {
-        const OkPass = await helpers.matchPassword(user.password, rows[0].password);
-        if (rows[0].active != 1)
-            return 'Email Not Confirmed!';
-        else if (OkPass) {
-            return rows[0];
-        }
-        else {
-            return 'Wrong Password!';
-        }
-    }else return 'Unknown Email';
-};*/
-
 helpers.signIn =async  (user)=>{
 
     const text = 'SELECT * FROM usuario WHERE correo = $1';
@@ -98,16 +80,16 @@ helpers.signUp =async  (newUser)=>{
 };
 
 helpers.mailRe = async (mail)=>{    
-    const text = 'SELECT * FROM users WHERE email = $1';
+    const text = 'SELECT * FROM usuario WHERE correo = $1';
     const values= [mail];
     const {rows} = await pool.query(text,values);
     if(rows.length>0)
     {
        let size = Math.floor(Math.random() * (20 - 10 + 1) ) + 10;
        const nPass =makePass(size);
-       let user = [rows[0].id_user];
+       let id = [rows[0].id_usuario];
        console.log(mail,nPass);
-       return  sendEmailRec(user,mail,nPass);
+       return  sendEmailRec(id,mail,nPass);
     }
     else
         return 'Invalid Email';

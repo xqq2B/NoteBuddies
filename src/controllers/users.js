@@ -84,7 +84,7 @@ userCtrl.defaultPassword =async (req,res)=>{
         console.log(req.params.token);
         const id =jwt.verify(req.params.token,EMAIL_SECRET_PASS);
         console.log('ok');
-        let text = 'UPDATE users set password=$1 where id_user=$2';
+        let text = 'UPDATE usuario set pass=$1 where id_usuario=$2';
         const encPass = await helpers.encryptPassword(id.pass);
          let values =[encPass,id.user[0]];
          await pool.query(text,values);

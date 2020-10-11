@@ -21,7 +21,7 @@ router.get('/confirmation/:token',userCtrl.registerConfirm);
 router.post('/recovery',userCtrl.getRecovery);
 
 //asignacion nueva contraseña
-router.get('/defaultPassword/:token',userCtrl.defaultPassword)
+router.get('/defaultPassword/:token',userCtrl.defaultPassword);
 
 //login simple geotab
 router.post('/geotab_login',geoCtrl.loginGeo);
