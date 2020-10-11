@@ -49,9 +49,9 @@ POST http://35.209.128.105:3389/api/auth/register
 Content-Type: application/json
 
 {
-    "username": "t3st",
+    "username": "te5t",
     "password": "test123",
     "lastname": "testor",
-    "telephone":"8888888888",
-    "email":"noexiste@yahoo.com"
+    "telephone":"8883388888",
+    "email":"noexiste3@yahoo.com"
 }

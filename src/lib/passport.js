@@ -42,9 +42,10 @@ helpers.matchPassword = async (password, savedPassword) => {
 };*/
 
 helpers.signIn =async  (user)=>{
-    const text = 'SELECT esActivo($1)';//funcion
+    const text = 'SELECT singIn($1)';
     const values = [user.email];
     const { rows } = await pool.query(text, values);
+    console.log(rows[0]);
     if (rows.length > 0) {
         const OkPass = await helpers.matchPassword(user.password, rows[0].pass);//pass <-- como aparece en la tabla
         if (rows[0].activo != true)
@@ -81,7 +82,7 @@ helpers.signUp =async  (newUser)=>{
     if (rows.length == 0) {
         const encPass = await helpers.encryptPassword(newUser.password);//lucidchart m
         await checkId().then(res => newUser.id_user = parseInt(res));
-        //newUser.id_rol = 0; no mandar id rol
+        //newUser.id_rol generado en db
         let text = 'SELECT createusuario($1, $2, $3, $4, $5, $6)';//
         let values=[newUser.id_user,newUser.username,newUser.lastname,newUser.email,newUser.telephone,encPass];
         await pool.query(text, values);
