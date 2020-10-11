@@ -3,6 +3,7 @@ const {pool} = require('../database');
 var User = require ('../models/User');
 const helpers = require('../lib/passport');
 const jwt = require('jsonwebtoken');
+const { email } = require('../models/User');
 require('dotenv').config();
 
 const EMAIL_SECRET = process.env.EMAIL_SECRET;
@@ -53,11 +54,14 @@ userCtrl.registerUser =async (req,res)=>{
 userCtrl.registerConfirm = async (req, res) => {
     try {
         const id = jwt.verify(req.params.token, EMAIL_SECRET);
-        let text = 'SELECT estadoUsuario($1)';//users set active=1 where id_user=$1';
+        let text2='SELECT * FROM vistaEstadoUsuario WHERE id_usuario = $1';
+        //let text ='SELECT * FROM usuario WHERE id_usuario=$1 SET activo=$2'; const activo=true;
         let values = [id.user];
-        console.log('cambiado');
-        const {rows} = await pool.query(text, values);
+        const {rows} = await pool.query(text2, values);
+        console.log(rows[0]);//quitar
+        //const{rows2} = await pool.query(text2,values);
         if (rows[0].activo == false) {
+            let text = 'SELECT estadoUsuario($1)';
             await pool.query(text, values);
             console.log(rows[0].activo);
         }
