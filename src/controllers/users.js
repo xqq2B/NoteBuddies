@@ -64,9 +64,11 @@ userCtrl.registerUser =async (req,res)=>{
      };*/
      userCtrl.registerConfirm =async (req,res)=>{    
         try {
+            console.log('ENTRE cambiar activo');
             const id =jwt.verify(req.params.token,EMAIL_SECRET);
             let text = 'SELECT estadoUsuario($1)';//users set active=1 where id_user=$1';
              let values =[id.user];
+             console.log('cambiado');
              await pool.query(text,values);
              
            } catch (e) {
