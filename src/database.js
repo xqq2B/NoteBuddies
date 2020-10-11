@@ -17,7 +17,8 @@ const config ={
 
     const pool = new Pool(config);
 console.log(pool);
- pool.query('SELECT NOW()', async (err, res) => {
+
+ async function query(){await  pool.query('SELECT NOW()', (err, res) => {
     if(err)
     {
         console.log('DB Not Connected: '+err);
@@ -25,7 +26,7 @@ console.log(pool);
     else
         console.log('DB Connected');
   });
-
+}
   const getUsers= async ()  =>{
     try{
         console.log('Getting users');
@@ -34,6 +35,6 @@ console.log(pool);
     }catch(e){console.log(e);}
     
 };
-
+query();
 getUsers();
 module.exports ={pool};
