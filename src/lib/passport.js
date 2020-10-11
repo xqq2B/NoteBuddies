@@ -61,7 +61,7 @@ helpers.signIn =async  (user)=>{
 
 async function checkId (){
     const id_user = (Math.floor(Math.random() * (10000001)))+10000000;
-    const text = 'SELECT * FROM users WHERE id_user= $1';
+    const text = 'SELECT * FROM usuario WHERE id_usuario= $1';//id_user
     const value =[id_user];
     const{rows}= await pool.query(text,value);
     if(rows.length>0) {
