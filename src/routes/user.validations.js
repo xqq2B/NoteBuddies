@@ -16,8 +16,9 @@ router.post('/register',userCtrl.registerUser);
 //confirmar correo usuario cambia a activo
 router.get('/confirmation/:token',userCtrl.registerConfirm);
 
-//click boton olvide contraseña
-router.put('/:email',userCtrl.getRecovery);
+
+//NUEVO CON POST click boton olvide contraseña
+router.post('/recovery',userCtrl.getRecovery);
 
 //asignacion nueva contraseña
 router.get('/defaultPassword/:token',userCtrl.defaultPassword)

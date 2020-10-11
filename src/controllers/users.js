@@ -10,8 +10,9 @@ const EMAIL_SECRET_PASS = process.env.EMAIL_SECRET_PASS;
 
 //todos no es necesario
 userCtrl.getUsers = async(req,res)=>{
-    const result = await pool.query('Select * from users');
-    res.json(result.rows);
+    res.json('hay comunicacion!');
+    /*const result = await pool.query('Select * from users');
+    res.json(result.rows);*/
 };
 
 //login por username y password
@@ -65,7 +66,7 @@ userCtrl.registerConfirm =async (req,res)=>{
 
 //edit password recovery
 userCtrl.getRecovery = async (req,res)=>{
-    const mail=req.params.email;
+    const mail=req.body.email;
     console.log(mail);
     try{
         const Verification = await helpers.mailRe(mail);

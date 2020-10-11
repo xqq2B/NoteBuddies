@@ -18,9 +18,9 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
-//TEST port
+//TEST port mensaje
 app.get('/',(req,res)=>{
-    console.log('hi');
+    console.log('External Ip working!');
     res.sendFile(path.join(__dirname,'views/index.html'));
 });
 

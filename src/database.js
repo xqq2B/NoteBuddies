@@ -6,8 +6,6 @@ const password = process.env.passworddb;
 const database = process.env.databasedb;
 
 
-
-
 const config ={
     user,
     host,
@@ -27,6 +25,9 @@ console.log(pool);
         console.log('DB Connected');
   });
 }
+
+//DB Connected
+//error: permission denied for relation usuario
   const getUsers= async ()  =>{
     try{
         console.log('Getting users');
