@@ -3,7 +3,7 @@ const {pool} = require('../database');
 var User = require ('../models/User');
 const helpers = require('../lib/passport');
 const jwt = require('jsonwebtoken');
-const { email } = require('../models/User');
+//const { email } = require('../models/User');
 require('dotenv').config();
 
 const EMAIL_SECRET = process.env.EMAIL_SECRET;
@@ -58,15 +58,15 @@ userCtrl.registerConfirm = async (req, res) => {
         //let text ='SELECT * FROM usuario WHERE id_usuario=$1 SET activo=$2'; const activo=true;
         let values = [id.user];
         const {rows} = await pool.query(text2, values);
-        console.log(rows[0]);//quitar
+        console.log(rows[0]);
         //const{rows2} = await pool.query(text2,values);
-        if (rows[0].activo == false) {
+        /*if (rows[0].activo == false) {
             let text = 'SELECT estadoUsuario($1)';
             await pool.query(text, values);
             console.log(rows[0].activo);
-        }
+        }*/
     } catch (e) {
-        res.send('error');
+        res.send('error: '+e);
     }
 
     return res.redirect('http://google.com');//mandar al login
