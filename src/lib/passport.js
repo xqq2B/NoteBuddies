@@ -23,7 +23,7 @@ helpers.matchPassword = async (password, savedPassword) => {
 };
 
 
-helpers.signIn =async  (user)=>{
+/*helpers.signIn =async  (user)=>{
 
     const text = 'SELECT * FROM users WHERE email = $1';
         const values= [user.email];
@@ -39,16 +39,16 @@ helpers.signIn =async  (user)=>{
             return 'Wrong Password!';
         }
     }else return 'Unknown Email';
-};
+};*/
 
-/*helpers.signIn =async  (user)=>{
+helpers.signIn =async  (user)=>{
 
     const text = 'SELECT * FROM usuario WHERE email = $1';
         const values= [user.email];
         const {rows} = await pool.query(text,values);
     if (rows.length > 0) {
         const OkPass = await helpers.matchPassword(user.password, rows[0].password);
-        if (rows[0].active != 1)//
+        if (rows[0].active != 1)     
             return 'Email Not Confirmed!';
         else if (OkPass) {
             return rows[0];
@@ -58,7 +58,7 @@ helpers.signIn =async  (user)=>{
         }
     }else return 'Something went wrong';
 };
-*/
+
 async function checkId (){
     const id_user = (Math.floor(Math.random() * (10000001)))+10000000;
     const text = 'SELECT * FROM users WHERE id_user= $1';
@@ -97,7 +97,7 @@ helpers.signUp =async  (newUser)=>{
         await checkId().then(res => newUser.id_user = parseInt(res));
         //newUser.id_rol = 0; no mandar id rol
         let text = 'INSERT INTO usuario VALUES ($1, $2, $3, $4, $5, $6)';
-        let values=[newUser.id_user,newUser.username,newUser.lastname,newUser.mail,newUser.telephone,newUser.password];
+        let values=[newUser.id_user,newUser.username,newUser.lastname,encPass,newUser.telephone,newUser.password];
         await pool.query(text, values);
         sendWelcomeEmail(newUser);
         return true;
