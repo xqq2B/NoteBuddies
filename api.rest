@@ -49,11 +49,11 @@ POST http://35.209.128.105:3389/api/auth/register
 Content-Type: application/json
 
 {
-    "username": "ok1234",
-    "password": "ok1234",
+    "username": "ko1234",
+    "password": "ko1234",
     "lastname": "testor",
-    "telephone":"8883188888",
-    "email":"ok1234@yahoo.com"
+    "telephone":"777788888",
+    "email":"ok12345@yahoo.com"
 }
 
 
@@ -62,8 +62,8 @@ POST http://35.209.128.105:3389/api/auth/login
 Content-Type: application/json
 
 {
-    "email": "ok1234@yahoo.com",
-    "password": "WM5ZztfcoWwA"
+    "email": "ok12345@yahoo.com",
+    "password": "rUpbg1q355wLbIDM"
 }
 
 ###
@@ -71,5 +71,5 @@ POST http://35.209.128.105:3389/api/auth/recovery
 Content-Type: application/json
 
 {
-    "email": "ok1234@yahoo.com"
+    "email": "ok12345@yahoo.com"
 }

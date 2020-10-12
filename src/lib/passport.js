@@ -39,7 +39,7 @@ helpers.signIn =async  (user)=>{
         else {
             return 'Wrong Password!';
         }
-    } else return 'Something went wrong';
+    } else return 'Unknown Email!';//correo no existe
 };
 
 async function checkId (){

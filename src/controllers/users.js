@@ -24,6 +24,7 @@ userCtrl.loginUser = async (req,res)=>{
         const Verification = await helpers.signIn(User);
         if(Verification){
             res.json(Verification);
+            //res.redirect();
         }
         else
             res.json({status:'Failed'});
@@ -40,6 +41,7 @@ userCtrl.registerUser =async (req,res)=>{
         const Verification = await helpers.signUp(User);
         if (Verification) {
             res.json({ status: 'Registered' });
+            //res.redirect();
         }
         else
             res.json({ status: 'Email already registered!' });
@@ -68,7 +70,7 @@ userCtrl.registerConfirm = async (req, res) => {
         res.send('error: '+e);
     }
 
-    return res.redirect('http://google.com');//mandar al login
+    return res.redirect('http://35.206.82.124/login');//mandar al login
 };
 
 
