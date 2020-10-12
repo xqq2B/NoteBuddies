@@ -27,7 +27,7 @@ userCtrl.loginUser = async (req,res)=>{
             //res.redirect();
         }
         else
-            res.json({status:'Failed'});
+            res.json({status:'Failed!'});
     }catch(e){
         console.log(e);
     }
@@ -40,7 +40,7 @@ userCtrl.registerUser =async (req,res)=>{
     try {
         const Verification = await helpers.signUp(User);
         if (Verification) {
-            res.json({ status: 'Registered' });
+            res.json({ status: 'Registered!' });
             //res.redirect();
         }
         else
@@ -101,7 +101,7 @@ userCtrl.defaultPassword =async (req,res)=>{
          res.send('error');
        }
      
-       return res.redirect('http://google.com');
+       return res.redirect('http://35.206.82.124/login');
      };
 
 

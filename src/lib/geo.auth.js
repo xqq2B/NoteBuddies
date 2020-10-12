@@ -4,16 +4,16 @@ const geoCtrl ={}
 geoCtrl.loginGeo =async (req,res)=>{       
     const authentication = {
         credentials: {
-            database: req.body.database,
+            database: 'metrica',//req.body.database,
             userName: req.body.username,
             password: req.body.password
         }}
     try{
         const api = new GeotabApi(authentication);
         await api.authenticate( success => {
-            res.json({status:'Ok'});
+            res.json({status:'Ok!'});
         }, (error) => {
-            res.json({status:'No Valido'});
+            res.json({status:'Wrong Credentials!'});
         });
     }catch(e){
         console.log(e);

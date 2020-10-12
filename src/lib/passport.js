@@ -92,7 +92,7 @@ helpers.mailRe = async (mail)=>{
        return  sendEmailRec(id,mail,nPass);
     }
     else
-        return 'Invalid Email';
+        return 'Invalid Email!';
 };
 
 function makePass(size) {
