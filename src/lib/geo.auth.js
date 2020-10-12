@@ -5,7 +5,7 @@ geoCtrl.loginGeo =async (req,res)=>{
     const authentication = {
         credentials: {
             database: 'metrica',//req.body.database,
-            userName: req.body.username,
+            userName: req.body.email,
             password: req.body.password
         }}
     try{
