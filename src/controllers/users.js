@@ -70,7 +70,7 @@ userCtrl.registerConfirm = async (req, res) => {
         res.send('error: '+e);
     }
 
-    return res.redirect('http://35.206.82.124/login');//mandar al login
+    return res.redirect('http://35.206.82.124/');//mandar al login
 };
 
 
@@ -101,7 +101,7 @@ userCtrl.defaultPassword =async (req,res)=>{
          res.send('error');
        }
      
-       return res.redirect('http://35.206.82.124/login');
+       return res.redirect('http://35.206.82.124/');
      };
 
 
