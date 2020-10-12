@@ -11,9 +11,9 @@ geoCtrl.loginGeo =async (req,res)=>{
     try{
         const api = new GeotabApi(authentication);
         await api.authenticate( success => {
-            res.json({status:'Ok!'});
+            res.json('Ok!');
         }, (error) => {
-            res.json({status:'Wrong Credentials!'});
+            res.json('Wrong Credentials!');
         });
     }catch(e){
         console.log(e);
