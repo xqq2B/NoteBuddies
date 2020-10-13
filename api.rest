@@ -24,13 +24,13 @@ PUT http://localhost:3000/api/auth/jacinto@mail.com
 
 
 ###
-POST http://localhost:3000/api/auth/geotab_login
+POST http://35.209.128.105:3389/api/auth/geotab_login
 Content-Type: application/json
 
 {
-    "username": "mail@.com",
-    "password": "mailpass",
-    "database": "dbname",
+    "username": "rodolfo.chavarria@metricamovil.com",
+    "password": ""
+    //"database": "dbname",
 }
 
  
@@ -49,11 +49,11 @@ POST http://35.209.128.105:3389/api/auth/register
 Content-Type: application/json
 
 {
-    "username": "ko1234",
-    "password": "ko1234",
-    "lastname": "testor",
-    "telephone":"777788888",
-    "email":"ok12345@yahoo.com"
+    "username": "pprueba",
+    "password": "1123456789",
+    "lastname": "tesstor",
+    "telephone":"7777s8855",
+    "email":"frjoseluis31@gmail.com"
 }
 
 
