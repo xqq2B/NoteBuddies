@@ -29,7 +29,7 @@ Content-Type: application/json
 
 {
     "username": "rodolfo.chavarria@metricamovil.com",
-    "password": ""
+    "password": "asasdasd"
     //"database": "dbname",
 }
 
@@ -52,8 +52,8 @@ Content-Type: application/json
     "username": "pprueba",
     "password": "1123456789",
     "lastname": "tesstor",
-    "telephone":"7777s8855",
-    "email":"frjoseluis31@gmail.com"
+    "telephone":"777728855",
+    "email":"frsd1@gmail.com"
 }
 
 
