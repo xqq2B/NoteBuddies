@@ -60,7 +60,7 @@ geoCtrl.registerGeo =async (req,res)=>{
     console.log(User);
     try {
         //let text = 'UPDATE usuario SET telefono = $1, nombre = $2, apellido = $3  WHERE correo=$4';
-        let text = 'SELECT setGeotab(correo,nombre,apellido,telefono)';
+        let text = 'SELECT setGeotab($1,$2,$3,$4)';
         let values = [User.email, User.username, User.lastname, User.telephone];
         const {rows}=await pool.query(text, values);
         res.json({status:'Registered!',id_rol:rows.id_rol});
