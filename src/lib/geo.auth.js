@@ -26,22 +26,22 @@ geoCtrl.loginGeo = async (req, res) => {
     try {
         const api = new GeotabApi(authentication);
         await api.authenticate(success => {
-            let text = 'SELECT * FROM Usuario WHERE correo = $1';
-            let values = [req.body.email];
-            const {rows} =  pool.query(text, values);
-            console.log(rows);
-            console.log(rows[0].length);
-            if (rows.length == 0) {
+            // let text = 'SELECT * FROM Usuario WHERE correo = $1';
+            // let values = [req.body.email];
+            // const {rows} =  pool.query(text, values);
+            // console.log(rows);
+            // console.log(rows[0].length);
+            // if (rows.length == 0) {
                 
-                userRegister(api);
-            }
-            else if (rows.length != 0 && rows.telefono == null) {
-                res.json({ email: req.bodyemail });
-                //res.redirect('http://google.com');//terminar registro
-            }
-            else {
-                res.json({status:'Ok!',id_rol:rows.id_rol});
-            }
+            //     userRegister(api);
+            // }
+            // else if (rows.length != 0 && rows.telefono == null) {
+            //     res.json({ email: req.bodyemail });
+            //     //res.redirect('http://google.com');//terminar registro
+            // }
+            // else {
+            res.json({status:'Ok!'});//,id_rol:rows.id_rol});
+        //}
         }, (error) => {
             res.json('Wrong Credentials!');
         });
