@@ -12,9 +12,11 @@ async function userRegister(api) {
     console.log('insertado usuario GEOTAB en DB');
 }
 
-async function revision(){
-    const {rows} = await pool.query('SELECT * FROM Usuario');
-                console.log(rows);
+async function revision(email) {
+    let text = 'SELECT * FROM Usuario WHERE correo = $1';
+    let values = [email];
+    const { rows } = await pool.query(text, values);
+    return rows;
 }
 
 
@@ -27,27 +29,24 @@ geoCtrl.loginGeo = async (req, res) => {
             password: req.body.password
         }
     };
-    
+
     try {
         const api = new GeotabApi(authentication);
-          await api.authenticate(success => {
-            // let text = 'SELECT * FROM Usuario WHERE correo = $1';
-            // let values = [req.body.email];
-            // const {rows} =  pool.query(text, values);
-            // console.log(rows);
-            // console.log(rows[0].length);
-            // if (rows.length == 0) {
-                
-            //     userRegister(api);
-            // }
-            // else if (rows.length != 0 && rows.telefono == null) {
-            //     res.json({ email: req.bodyemail });
-            //     //res.redirect('http://google.com');//terminar registro
-            // }
-            // else {
-                revision();
-            res.json({status:'Ok!'});//,id_rol:rows.id_rol});
-        //}
+        await api.authenticate(success => {
+            revision(req.body.email);
+
+            if (rows.length == 0) {
+
+                userRegister(api);
+            }
+            else if (rows.length != 0 && rows.telefono == null) {
+                res.json({ email: req.bodyemail });
+                //res.redirect('http://google.com');//terminar registro
+            }
+            else {
+
+                res.json({ status: 'Ok!' });//,id_rol:rows.id_rol});
+            }
         }, (error) => {
             res.json('Wrong Credentials!');
         });
