@@ -2,23 +2,15 @@ const GeotabApi = require('mg-api-js');
 const geoCtrl ={};
 const {pool} = require('../database');
 
-async function userRegister(api) {
-    const session = await api.authenticate();
-    let text = 'SELECT createUsuario_Geotab($1,$2,$3)';
-    let values = [session.credentials.sessionId, session.credentials.userName, session.credentials.database];//username es email
-    await pool.query(text, values);
-    res.json({email: session.credentials.userName});
-    //res.redirect('http://google.com');//termine registro
-    console.log('insertado usuario GEOTAB en DB');
-}
-
-async function revision(email) {
-    let text = 'SELECT * FROM Usuario WHERE correo = $1';
-    let values = [email];
-    const {rows} = await pool.query(text, values);
-    console.log(rows);
-    return rows;
-}
+// async function userRegister(api) {
+//     const session = await api.authenticate();
+//     let text = 'SELECT createUsuario_Geotab($1,$2,$3)';
+//     let values = [session.credentials.sessionId, session.credentials.userName, session.credentials.database];//username es email
+//     await pool.query(text, values);
+//     res.json({email: session.credentials.userName});
+//     //res.redirect('http://google.com');//termine registro
+//     console.log('insertado usuario GEOTAB en DB');
+// }
 
 
 
@@ -39,17 +31,27 @@ geoCtrl.loginGeo = async (req, res) => {
             let values = [req.body.email];
             const { rows } = await pool.query(text, values);
             console.log(rows);
-            //revision().then(res => result);
             if (rows.length == 0) {
 
-                userRegister(api);
+               // userRegister(api);
+
+                let session = await api.authenticate();
+                let text = 'SELECT createUsuario_Geotab($1,$2,$3)';
+                let values = [session.credentials.sessionId, session.credentials.userName, session.credentials.database];//username es email
+                await pool.query(text, values);
+                res.json({ email: session.credentials.userName });
+                //res.redirect('http://google.com');//termine registro
+                console.log('insertado usuario GEOTAB en DB');    
+
+
+
+
             }
             else if (rows.length != 0 && rows.telefono == null) {
                 res.json({ email: req.bodyemail });
                 //res.redirect('http://google.com');//terminar registro
             }
             else {
-
                 res.json({ status: 'Ok!' });//,id_rol:rows.id_rol});
             }
         }, (error) => {
