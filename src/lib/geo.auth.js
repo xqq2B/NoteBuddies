@@ -2,7 +2,6 @@ const GeotabApi = require('mg-api-js');
 const geoCtrl ={};
 const {pool} = require('../database');
 
-
 async function userRegister(api) {
     const session = await api.authenticate();
     let text = 'SELECT createUsuario_Geotab($1,$2,$3)';
@@ -40,8 +39,10 @@ geoCtrl.loginGeo = async (req, res) => {
             //     //res.redirect('http://google.com');//terminar registro
             // }
             // else {
-                const {rows} = pool.query('SELECT * FROM Usuario');
-                console.log(rows);
+                /*const {rows} = pool.query('SELECT * FROM Usuario');
+                console.log(rows);*/
+                const result =  pool.query('Select * from usuario');
+                console.log(result.rows);
             res.json({status:'Ok!'});//,id_rol:rows.id_rol});
         //}
         }, (error) => {
