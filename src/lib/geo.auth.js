@@ -26,11 +26,10 @@ geoCtrl.loginGeo = async (req, res) => {
     try {
         const api = new GeotabApi(authentication);
         await api.authenticate(success => {
-            let text = 'SELECT * FROM vistaObtenerUsuario WHERE correo = $1';
+            let text = 'SELECT * FROM Usuario WHERE correo = $1';
             let values = [req.body.email];
-            const {rows} = pool.query(text, values);
+            const {rows} =  pool.query(text, values);
             console.log(rows);
-            console.log(pool.query('SELECT * FROM usuario'));
             console.log(rows[0].length);
             if (rows.length == 0) {
                 
