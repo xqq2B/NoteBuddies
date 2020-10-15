@@ -46,7 +46,7 @@ geoCtrl.loginGeo = async (req, res) => {
     }
 };
 
-userCtrl.registerGeo =async (req,res)=>{      
+geoCtrl.registerGeo =async (req,res)=>{      
     User = req.body;
     console.log(User);
     try {
