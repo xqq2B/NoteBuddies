@@ -16,6 +16,7 @@ async function revision(email) {
     let text = 'SELECT * FROM Usuario WHERE correo = $1';
     let values = [email];
     const {rows} = await pool.query(text, values);
+    console.log(rows);
     return rows;
 }
 
