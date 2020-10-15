@@ -36,7 +36,7 @@ geoCtrl.loginGeo = async (req, res) => {
         await api.authenticate(async success => {
 
             let text = 'SELECT * FROM Usuario WHERE correo = $1';
-            let values = [email];
+            let values = [req.body.email];
             const { rows } = await pool.query(text, values);
             console.log(rows);
             //revision().then(res => result);
