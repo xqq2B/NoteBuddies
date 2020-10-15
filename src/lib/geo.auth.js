@@ -2,12 +2,12 @@ const GeotabApi = require('mg-api-js');
 const geoCtrl ={};
 const {pool} = require('../database');
 
-// async function userRegister(api) {
+// userRegister(callback, errorCallBack,api) => {
 //     const session = await api.authenticate();
 //     let text = 'SELECT createUsuario_Geotab($1,$2,$3)';
 //     let values = [session.credentials.sessionId, session.credentials.userName, session.credentials.database];//username es email
 //     await pool.query(text, values);
-//     res.json({email: session.credentials.userName});
+//     res.json({ email: session.credentials.userName });
 //     //res.redirect('http://google.com');//termine registro
 //     console.log('insertado usuario GEOTAB en DB');
 // }
@@ -32,9 +32,6 @@ geoCtrl.loginGeo = async (req, res) => {
             const { rows } = await pool.query(text, values);
             console.log(rows);
             if (rows.length == 0) {
-
-               // userRegister(api);
-
                 let session = await api.authenticate();
                 let text = 'SELECT createUsuario_Geotab($1,$2,$3)';
                 let values = [session.credentials.sessionId, session.credentials.userName, session.credentials.database];//username es email
@@ -42,10 +39,6 @@ geoCtrl.loginGeo = async (req, res) => {
                 res.json({ email: session.credentials.userName });
                 //res.redirect('http://google.com');//termine registro
                 console.log('insertado usuario GEOTAB en DB');    
-
-
-
-
             }
             else if (rows.length != 0 && rows.telefono == null) {
                 res.json({ email: req.bodyemail });
@@ -66,8 +59,9 @@ geoCtrl.registerGeo =async (req,res)=>{
     User = req.body;
     console.log(User);
     try {
-        let text = 'UPDATE usuario SET telefono = $1, nombre = $2, apellido = $3  WHERE correo=$4';
-        let values = [User.telephone, User.username, User.lastname, User.email];
+        //let text = 'UPDATE usuario SET telefono = $1, nombre = $2, apellido = $3  WHERE correo=$4';
+        let text = 'SELECT setGeotab(mail,nombre,apellido,telefono)';
+        let values = [User.email, User.username, User.lastname, User.telephone];
         const {rows}=await pool.query(text, values);
         res.json({status:'Registered!',id_rol:rows.id_rol});
         //res.redirect('http://35.206.82.124/');//mandar a login
@@ -75,22 +69,6 @@ geoCtrl.registerGeo =async (req,res)=>{
         console.log(e);
     }
 };
-
-
-// async function checkId (){
-//     const id_user = (Math.floor(Math.random() * (10000001)))+10000000;
-//     const text = 'SELECT * FROM usuario WHERE id_usuario= $1';//id_user
-//     const value =[id_user];
-//     const{rows}= await pool.query(text,value);
-//     if(rows.length>0) {
-//         console.log('id user repetido');
-//         checkId();}
-//     else{
-//         return id_user;
-//     } 
-// }
-
-
 
 
 module.exports = geoCtrl;

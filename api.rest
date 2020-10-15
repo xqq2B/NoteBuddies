@@ -28,9 +28,9 @@ POST http://35.209.128.105:3389/api/auth/geotab_login
 Content-Type: application/json
 
 {
-    "username": "rodolfo.chavarria@metricamovil.com",
-    "password": "asasdasd"
-    //"database": "dbname",
+    "email": "rodolfo.chavarria@metricamovil.com",
+    "password": "Metrica*1*2*3",
+    "database": "metrica"
 }
 
 ###
