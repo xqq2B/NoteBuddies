@@ -15,8 +15,8 @@ async function userRegister(api) {
 async function revision(email) {
     let text = 'SELECT * FROM Usuario WHERE correo = $1';
     let values = [email];
-    const { rows } = await pool.query(text, values);
-    return rows;
+    const result = await pool.query(text, values);
+    return result;
 }
 
 
@@ -33,13 +33,14 @@ geoCtrl.loginGeo = async (req, res) => {
     try {
         const api = new GeotabApi(authentication);
         await api.authenticate(success => {
-            revision(req.body.email);
+            
+            var result =revision(req.body.email);
 
-            if (rows.length == 0) {
+            if (result.rows.length == 0) {
 
                 userRegister(api);
             }
-            else if (rows.length != 0 && rows.telefono == null) {
+            else if (result.rows.length != 0 && result.rows.telefono == null) {
                 res.json({ email: req.bodyemail });
                 //res.redirect('http://google.com');//terminar registro
             }
