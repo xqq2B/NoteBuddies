@@ -37,10 +37,9 @@ geoCtrl.loginGeo = async (req, res) => {
                 let values = [session.credentials.sessionId, session.credentials.userName, session.credentials.database];//username es email
                 await pool.query(text, values);
                 res.json({ email: session.credentials.userName });
-                //res.redirect('http://google.com');//termine registro
                 console.log('insertado usuario GEOTAB en DB');    
             }
-            else if (rows.length != 0 && rows.telefono == null) {
+            else if (rows.length != 0 && rows.activo == false) {
                 res.json({ email: req.bodyemail });
                 //res.redirect('http://google.com');//terminar registro
             }
