@@ -40,6 +40,8 @@ geoCtrl.loginGeo = async (req, res) => {
             //     //res.redirect('http://google.com');//terminar registro
             // }
             // else {
+                const {rows} = pool.query('SELECT * FROM Usuario');
+                console.log(rows);
             res.json({status:'Ok!'});//,id_rol:rows.id_rol});
         //}
         }, (error) => {
