@@ -63,7 +63,7 @@ helpers.signUp =async  (newUser)=>{
         console.log(newUser.password);
         console.log(rows);
     if (rows.length == 0) {
-        const encPass = await helpers.encryptPassword(newUser.password);//lucidchart m
+        const encPass = await helpers.encryptPassword(newUser.password);
         await checkId().then(res => newUser.id_user = parseInt(res));
         //newUser.id_rol generado en db
         let text = 'SELECT createusuario($1, $2, $3, $4, $5, $6)';//

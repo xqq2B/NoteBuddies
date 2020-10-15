@@ -33,6 +33,20 @@ Content-Type: application/json
     //"database": "dbname",
 }
 
+###
+POST http://35.209.128.105:3389/api/auth/geotab_register
+Content-Type: application/json
+
+{
+    "username": "rrr",
+    "lastname": "asasdasd",
+    "telephone": "6785649875",
+    "email":"rrr@mail.com"
+    //"database": "dbname",
+}
+
+
+
  
 ###
  GET http://localhost:3000/api/auth/confirmation/

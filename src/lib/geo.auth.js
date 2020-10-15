@@ -5,11 +5,12 @@ const {pool} = require('../database');
 
 async function userRegister(api) {
     const session = await api.authenticate();
-        //let text = 'SELECT createusuario($1,$2,$3,$4,$5,$6,$7,$8';
-        let text = 'SELECT createUsuario_Geotab($1,$2,$3)';
-        let values = [session.credentials.sessionId,session.credentials.userName,session.credentials.database];//username es email... luego cambiar
-        await pool.query(text, values);
-        console.log('insertado usuario GEOTAB en DB');
+    let text = 'SELECT createUsuario_Geotab($1,$2,$3)';
+    let values = [session.credentials.sessionId, session.credentials.userName, session.credentials.database];//username es email
+    await pool.query(text, values);
+    res.json({email: session.credentials.userName});
+    //res.redirect('http://google.com');//termine registro
+    console.log('insertado usuario GEOTAB en DB');
 }
 
 
@@ -24,17 +25,56 @@ geoCtrl.loginGeo = async (req, res) => {
     try {
         const api = new GeotabApi(authentication);
         await api.authenticate(success => {
-            res.json('Ok!');
-            userRegister(api);
+            let text = 'SELECT * FROM Usuario WHERE correo = $1';
+            let values = [req.body.email];
+            const { rows } = pool.query(text, values);
+            if (rows.length == 0) {
+                userRegister(api);
+            }
+            else if (rows.length != 0 && rows.telefono == null) {
+                res.json({ email: req.bodyemail });
+                //res.redirect('http://google.com');//terminar registro
+            }
+            else {
+                res.json({status:'Ok!',id_rol:rows.id_rol});
+            }
         }, (error) => {
             res.json('Wrong Credentials!');
         });
-
-        
-
-    }catch(e){
+    } catch (e) {
         console.log(e);
     }
 };
+
+userCtrl.registerGeo =async (req,res)=>{      
+    User = req.body;
+    console.log(User);
+    try {
+        let text = 'UPDATE usuario SET telefono = $1, nombre = $2, apellido = $3  WHERE correo=$4';
+        let values = [User.telephone, User.username, User.lastname, User.email];
+        const {rows}=await pool.query(text, values);
+        res.json({status:'Registered!',id_rol:rows.id_rol});
+        //res.redirect('http://35.206.82.124/');//mandar a login
+    } catch (e) {
+        console.log(e);
+    }
+};
+
+
+// async function checkId (){
+//     const id_user = (Math.floor(Math.random() * (10000001)))+10000000;
+//     const text = 'SELECT * FROM usuario WHERE id_usuario= $1';//id_user
+//     const value =[id_user];
+//     const{rows}= await pool.query(text,value);
+//     if(rows.length>0) {
+//         console.log('id user repetido');
+//         checkId();}
+//     else{
+//         return id_user;
+//     } 
+// }
+
+
+
 
 module.exports = geoCtrl;

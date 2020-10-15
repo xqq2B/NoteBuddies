@@ -26,7 +26,8 @@ router.get('/defaultPassword/:token',userCtrl.defaultPassword);
 //login simple geotab
 router.post('/geotab_login',geoCtrl.loginGeo);
 
-
+//registro completo geotab
+router.post('/geotab_register',geoCtrl.registerGeo);
 
 
 module.exports=router;
