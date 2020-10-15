@@ -13,10 +13,12 @@ async function userRegister(api) {
 }
 
 async function revision(email) {
-    let text = 'SELECT * FROM Usuario WHERE correo = $1';
-    let values = [email];
-    const {rows} = await pool.query(text, values);
-    console.log(rows);
+    // let text = 'SELECT * FROM Usuario WHERE correo = $1';
+    // let values = [email];
+    // const {rows} = await pool.query(text, values);
+    // console.log(rows);
+    const result = await pool.query('Select * from usuario');
+    console.log(result.rows);
     return rows;
 }
 
