@@ -12,14 +12,12 @@ async function userRegister(api) {
     console.log('insertado usuario GEOTAB en DB');
 }
 
-async function revision() {
-    // let text = 'SELECT * FROM Usuario WHERE correo = $1';
-    // let values = [email];
-    // const {rows} = await pool.query(text, values);
-    // console.log(rows);
-    const result = await pool.query('Select * from usuario');
-    console.log(result.rows);
-    //return rows;
+async function revision(email) {
+    let text = 'SELECT * FROM Usuario WHERE correo = $1';
+    let values = [email];
+    const {rows} = await pool.query(text, values);
+    console.log(rows);
+    return rows;
 }
 
 
@@ -35,15 +33,18 @@ geoCtrl.loginGeo = async (req, res) => {
 
     try {
         const api = new GeotabApi(authentication);
-        await api.authenticate(success => {
-            
-            revision();
-            console.log(result);
-            if (result.length == 0) {
+        await api.authenticate(async success => {
+
+            let text = 'SELECT * FROM Usuario WHERE correo = $1';
+            let values = [email];
+            const { rows } = await pool.query(text, values);
+            console.log(rows);
+            //revision().then(res => result);
+            if (rows.length == 0) {
 
                 userRegister(api);
             }
-            else if (result.rows.length != 0 && result.rows.telefono == null) {
+            else if (rows.length != 0 && rows.telefono == null) {
                 res.json({ email: req.bodyemail });
                 //res.redirect('http://google.com');//terminar registro
             }
