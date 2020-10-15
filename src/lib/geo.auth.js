@@ -15,8 +15,8 @@ async function userRegister(api) {
 async function revision(email) {
     let text = 'SELECT * FROM Usuario WHERE correo = $1';
     let values = [email];
-    const result = await pool.query(text, values);
-    return result;
+    const {rows} = await pool.query(text, values);
+    return rows;
 }
 
 
@@ -35,8 +35,8 @@ geoCtrl.loginGeo = async (req, res) => {
         await api.authenticate(success => {
             
             var result =revision(req.body.email);
-
-            if (result.rows.length == 0) {
+            console.log(result);
+            if (result.length == 0) {
 
                 userRegister(api);
             }
