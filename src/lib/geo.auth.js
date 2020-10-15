@@ -28,10 +28,10 @@ geoCtrl.loginGeo = async (req, res) => {
         await api.authenticate(success => {
             let text = 'SELECT * FROM vistaObtenerUsuario WHERE correo = $1';
             let values = [req.body.email];
-            
             const {rows} = pool.query(text, values);
-            console.log(rows.length);
             console.log(rows[0]);
+            console.log(rows);
+            console.log(rows[0].length);
             if (rows.length == 0) {
                 
                 userRegister(api);
