@@ -63,7 +63,7 @@ qryCtrl.CreateRol = async(req,res)=>{
             //await makeIdRol().then(res => id_rol = parseInt(res));
             console.log(id_rol);
             let text = 'SELECT createRol($1,$2)';//idrol y nombre rol
-            let values = [id_rol2,Rol];
+            let values = [id_rol,Rol];
             await pool.query(text, values);
             res.json({ status: 'Rol Inserted!' });
         }
