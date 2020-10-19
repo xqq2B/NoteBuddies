@@ -105,10 +105,10 @@ async function makeIdRol() {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     //verification
+    console.log(result);
     let text = 'SELECT nombreRol FROM verRoles WHERE id_rol=$1';
     let values = [result];
     const { rows } = await pool.query(text, values);
-    console.log(result);
     if (rows.length > 0) {
         console.log('id rol repeated');
         makeIdRol();
