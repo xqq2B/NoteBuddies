@@ -45,6 +45,15 @@ Content-Type: application/json
     //"database": "dbname",
 }
 
+###
+POST http://35.209.128.105:3389/api/auth/config/roles
+Content-Type: application/json
+
+{
+    "rolInfo": "newRol" 
+    //"database": "dbname",
+}
+
 
 
  

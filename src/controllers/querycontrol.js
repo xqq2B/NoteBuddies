@@ -44,7 +44,7 @@ const helpers = require('../lib/passport');
 
 //Consulta roles
 qryCtrl.QueryRol = async(req,res)=>{
-    const result = await pool.query('SELECT nombre_Rol verRoles');
+    const result = await pool.query('SELECT nombreRol FROM verRoles');
     res.json(result.rows);
 };
 
@@ -54,7 +54,7 @@ qryCtrl.CreateRol = async(req,res)=>{
     console.log(req.body);
     Rol=req.body.rolInfo;
     try {
-        let text = 'SELECT nombre_Rol verRoles WHERE nombre_Rol=$1'; //error nombrerol column not exist
+        let text = 'SELECT nombreRol FROM verRoles WHERE nombreRol=$1'; //error nombrerol column not exist
         let values = [Rol];
         const { rows } = await pool.query(text,values);
 
