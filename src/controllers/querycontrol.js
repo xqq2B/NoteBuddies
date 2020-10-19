@@ -66,7 +66,7 @@ qryCtrl.CreateRol = async(req,res)=>{
         }
         else
             res.json({ status: 'Rol Repeated!' });
-    }catch(e){
+    }catch(e){//
         console.log(e);
     }
     
