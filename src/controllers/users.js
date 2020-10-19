@@ -23,7 +23,7 @@ userCtrl.loginUser = async (req,res)=>{
     try{
         const Verification = await helpers.signIn(User);
         if(Verification){
-            res.json(Verification);
+            res.json({status:Verification});
             //res.redirect();
         }
         else

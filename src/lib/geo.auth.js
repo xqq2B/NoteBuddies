@@ -2,16 +2,6 @@ const GeotabApi = require('mg-api-js');
 const geoCtrl ={};
 const {pool} = require('../database');
 
-// userRegister(callback, errorCallBack,api) => {
-//     const session = await api.authenticate();
-//     let text = 'SELECT createUsuario_Geotab($1,$2,$3)';
-//     let values = [session.credentials.sessionId, session.credentials.userName, session.credentials.database];//username es email
-//     await pool.query(text, values);
-//     res.json({ email: session.credentials.userName });
-//     //res.redirect('http://google.com');//termine registro
-//     console.log('insertado usuario GEOTAB en DB');
-// }
-
 
 
 geoCtrl.loginGeo = async (req, res) => {
@@ -37,14 +27,15 @@ geoCtrl.loginGeo = async (req, res) => {
                 let values = [session.credentials.sessionId, session.credentials.userName, session.credentials.database];//username es email
                 await pool.query(text, values);
                 res.json({ email: session.credentials.userName });
+                res.redirect('http://35.206.82.124/finalizar_registro');
                 console.log('insertado usuario GEOTAB en DB');    
             }
             else if (rows.length != 0 && rows.activo == false) {
                 res.json({ email: req.bodyemail });
-                //res.redirect('http://google.com');//terminar registro
+                res.redirect('http://35.206.82.124/finalizar_registro');//terminar registro
             }
             else {
-                res.json({ status: 'Ok!' });//,id_rol:rows.id_rol});
+                res.json({ rows });//,id_rol:rows.id_rol});//cambio de ok a json activo
             }
         }, (error) => {
             res.json('Wrong Credentials!');
@@ -58,12 +49,10 @@ geoCtrl.registerGeo =async (req,res)=>{
     User = req.body;
     console.log(User);
     try {
-        //let text = 'UPDATE usuario SET telefono = $1, nombre = $2, apellido = $3  WHERE correo=$4';
         let text = 'SELECT setGeotab($1,$2,$3,$4)';
         let values = [User.email, User.username, User.lastname, User.telephone];
         const {rows}=await pool.query(text, values);
-        res.json({status:'Registered!',id_rol:rows.id_rol});
-        //res.redirect('http://35.206.82.124/');//mandar a login
+        res.json({rows});//status:'Registered!',id_rol:rows.id_rol});
     } catch (e) {
         console.log(e);
     }
