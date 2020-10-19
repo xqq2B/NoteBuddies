@@ -60,9 +60,10 @@ qryCtrl.CreateRol = async(req,res)=>{
         console.log(rows);
         if (rows.length == 0) {
             const id_rol= makeIdRol();
-            console.log('entro length 0');
+            await checkId().then(res => id_rol2 = parseInt(res));
+            console.log(id_rol2);
             let text = 'SELECT createRol($1,$2)';//idrol y nombre rol
-            let values = [id_rol,Rol];
+            let values = [id_rol2,Rol];
             await pool.query(text, values);
             res.json({ status: 'Rol Inserted!' });
         }
@@ -106,14 +107,14 @@ async function makeIdRol() {
     }
     //verification
     console.log(result);
-    // let text = 'SELECT nombreRol FROM verRoles WHERE id_rol=$1';
-    // let values = [result];
-    // const { rows } = await pool.query(text, values);
-    // if (rows.length > 0) {
-    //     console.log('id rol repeated');
-    //     makeIdRol();
-    // }
-    // else
+    let text = 'SELECT nombreRol FROM verRoles WHERE id_rol=$1';
+    let values = [result];
+    const { rows } = await pool.query(text, values);
+    if (rows.length > 0) {
+        console.log('id rol repeated');
+        makeIdRol();
+    }
+    else
     return result;
 }
  
