@@ -51,9 +51,10 @@ qryCtrl.QueryRol = async(req,res)=>{
 
 //Alta roles
 qryCtrl.CreateRol = async(req,res)=>{
-    Rol = req.body.rolInfo;
+    console.log(req.body);
+    Rol=req.body.rolInfo;
     try {
-        let text = 'SELECT nombreRol verRoles WHERE nombre_Rol=$1'; 
+        let text = 'SELECT nombre_Rol verRoles WHERE nombre_Rol=$1'; //error nombrerol column not exist
         let values = [Rol];
         const { rows } = await pool.query(text,values);
 
