@@ -44,7 +44,7 @@ const helpers = require('../lib/passport');
 
 //Consulta roles
 qryCtrl.QueryRol = async(req,res)=>{
-    const result = await pool.query('SELECT nombreRol FROM verRoles');
+    const result = await pool.query('SELECT * FROM verRolesyPermisos');
     res.json(result.rows);
 };
 
@@ -59,7 +59,7 @@ qryCtrl.CreateRol = async(req,res)=>{
         const { rows } = await pool.query(text,values);
         console.log(rows);
         if (rows.length == 0) {
-            const id_rol= 10;//makeIdRol();
+            const id_rol= makeIdRol();
             console.log('entro length 0');
             let text = 'SELECT createRol($1,$2)';//idrol y nombre rol
             let values = [id_rol,Rol];
@@ -97,7 +97,7 @@ qryCtrl.CreateRol = async(req,res)=>{
 
 //helpers
 async function makeIdRol() {
-    let size = 20;//Math.floor(Math.random() * (20 - 10 + 1) ) + 10;
+    let size = Math.floor(Math.random() * (20 - 10 + 1) ) + 10;
     var result = '';
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var charactersLength = characters.length;
@@ -108,6 +108,7 @@ async function makeIdRol() {
     let text = 'SELECT nombreRol FROM verRoles WHERE id_rol=$1';
     let values = [result];
     const { rows } = await pool.query(text, values);
+    console.log(result);
     if (rows.length > 0) {
         console.log('id rol repeated');
         makeIdRol();
