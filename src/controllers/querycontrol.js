@@ -51,10 +51,10 @@ qryCtrl.QueryRol = async(req,res)=>{
 
 //Alta roles
 qryCtrl.CreateRol = async(req,res)=>{
-    Rol = req.body;
+    Rol = req.body.rolInfo;
     try {
         let text = 'SELECT nombreRol verRoles WHERE nombreRol=$1'; 
-        let values = [ROl];
+        let values = [Rol];
         const { rows } = await pool.query(text,values);
 
         if (rows.length == 0) {
