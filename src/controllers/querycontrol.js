@@ -106,14 +106,14 @@ async function makeIdRol() {
     }
     //verification
     console.log(result);
-    let text = 'SELECT nombreRol FROM verRoles WHERE id_rol=$1';
-    let values = [result];
-    const { rows } = await pool.query(text, values);
-    if (rows.length > 0) {
-        console.log('id rol repeated');
-        makeIdRol();
-    }
-    else
+    // let text = 'SELECT nombreRol FROM verRoles WHERE id_rol=$1';
+    // let values = [result];
+    // const { rows } = await pool.query(text, values);
+    // if (rows.length > 0) {
+    //     console.log('id rol repeated');
+    //     makeIdRol();
+    // }
+    // else
     return result;
 }
  
