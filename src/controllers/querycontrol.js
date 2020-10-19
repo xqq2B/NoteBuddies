@@ -44,7 +44,7 @@ const helpers = require('../lib/passport');
 
 //Consulta roles
 qryCtrl.QueryRol = async(req,res)=>{
-    const result = await pool.query('SELECT nombreRol verRoles');
+    const result = await pool.query('SELECT nombre_Rol verRoles');
     res.json(result.rows);
 };
 
@@ -53,7 +53,7 @@ qryCtrl.QueryRol = async(req,res)=>{
 qryCtrl.CreateRol = async(req,res)=>{
     Rol = req.body.rolInfo;
     try {
-        let text = 'SELECT nombreRol verRoles WHERE nombreRol=$1'; 
+        let text = 'SELECT nombreRol verRoles WHERE nombre_Rol=$1'; 
         let values = [Rol];
         const { rows } = await pool.query(text,values);
 
