@@ -50,7 +50,7 @@ POST http://35.209.128.105:3389/api/auth/config/roles
 Content-Type: application/json
 
 {
-    "rolInfo": "newRol" 
+    "rolname": "newRol" 
     //"database": "dbname",
 }
 

@@ -57,9 +57,10 @@ qryCtrl.CreateRol = async(req,res)=>{
         let text = 'SELECT nombreRol FROM verRoles WHERE nombreRol=$1'; //error nombrerol column not exist
         let values = [Rol];
         const { rows } = await pool.query(text,values);
-
+        console.log(rows);
         if (rows.length == 0) {
             const id_rol= makeIdRol();
+            console.log('entro length 0');
             let text = 'SELECT createRol($1,$2)';//idrol y nombre rol
             let values = [id_rol,Rol];
             await pool.query(text, values);
@@ -68,6 +69,7 @@ qryCtrl.CreateRol = async(req,res)=>{
         else
             res.json({ status: 'Rol Repeated!' });
     }catch(e){//
+        res.json(e);
         console.log(e);
     }
     
@@ -103,7 +105,7 @@ async function makeIdRol() {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     //verification
-    let text = 'SELECT nombreRol verRoles WHERE id_rol=$1';
+    let text = 'SELECT nombreRol FROM verRoles WHERE id_rol=$1';
     let values = [result];
     const { rows } = await pool.query(text, values);
     if (rows.length > 0) {
