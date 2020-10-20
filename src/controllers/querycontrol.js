@@ -44,7 +44,7 @@ const helpers = require('../lib/passport');
 
 //Consulta roles
 qryCtrl.QueryRol = async(req,res)=>{
-    const result = await pool.query('SELECT * FROM verRolesyPermisos');
+    const result = await pool.query('SELECT * FROM verRoles');//verRolesyPermisos');
     res.json(result.rows);
 };
 
