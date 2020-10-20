@@ -45,8 +45,8 @@ router.post('/geotab_register',geoCtrl.registerGeo);
 router.get('/config/roles',qryCtrl.QueryRol);
 //Alta Roles
 router.post('/config/roles',qryCtrl.CreateRol);
-// //Edicion Roles
-// router.put('/config/roles/:email',qryCtrl.EditRol);
+//Edicion Roles
+router.post('/config/roles/edit',qryCtrl.EditRol);//cambiado id_Rol new_Rol
 // //Eliminacion Roles
 // router.delete('/config/roles/:email',qryCtrl.DelRol);
 

@@ -76,14 +76,20 @@ qryCtrl.CreateRol = async(req,res)=>{
     
 };
 
-// //Edit roles
-// qryCtrl.QueryEdit = async(req,res)=>{
-//     User = req.params;
-//     let text = 'UPDATE users SET username=$1, lastname=$2, email=$3, telephone=$4 WHERE email=$5';
-//     let values =[User.username,User.lastname,User.email,User.telephone,User.id_user];
-//     const {rows} = await pool.query(text,values);
-//     res.json(rows[0]);
-// };
+//Edit roles
+qryCtrl.EditRol = async (req, res) => {
+    try {
+        let id_rol = req.params.id_Rol;
+        let new_rol = req.params.new_Rol;
+        console.log(req.params);
+        let text = 'SELECT updateRole($1,$2)';
+        let values = [id_rol,new_rol];
+        await pool.query(text, values);
+        res.json({ status: 'Rol Edited' });
+    } catch (e) {
+        res.json({ status: e });
+    }
+};
 
 // //Delete roles
 // qryCtrl.DelUser = async(req,res)=>{
