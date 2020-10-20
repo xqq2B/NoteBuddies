@@ -96,3 +96,13 @@ Content-Type: application/json
 {
     "email": "ok12345@yahoo.com"
 }
+
+
+###
+POST http://35.209.128.105:3389/api/auth/config/roles/edit
+Content-Type: application/json
+
+{
+    "id_Rol": 987987,
+    "new_Rol": "okok"
+}

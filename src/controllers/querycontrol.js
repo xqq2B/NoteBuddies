@@ -79,9 +79,9 @@ qryCtrl.CreateRol = async(req,res)=>{
 //Edit roles
 qryCtrl.EditRol = async (req, res) => {
     try {
-        let id_rol = req.params.id_Rol;
-        let new_rol = req.params.new_Rol;
-        console.log(req.params);
+        let id_rol = req.body.id_Rol;
+        let new_rol = req.body.new_Rol;
+        console.log(req.body);
         let text = 'SELECT updateRole($1,$2)';
         let values = [id_rol,new_rol];
         await pool.query(text, values);
