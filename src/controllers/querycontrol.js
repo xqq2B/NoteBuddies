@@ -80,7 +80,7 @@ qryCtrl.CreateRol = async(req,res)=>{
 qryCtrl.EditRol = async (req, res) => {
     try {
         let id_rol = req.body.id_Rol_Edit;//agregado Edit
-        let new_rol = req.body.new_Rol_Edit;
+        let new_rol = req.body.name_Rol_Edit;
         console.log(req.body);
         let text = 'SELECT updateRol($1,$2)';
         let values = [id_rol,new_rol];
