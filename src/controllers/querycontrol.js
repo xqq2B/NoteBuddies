@@ -52,7 +52,7 @@ qryCtrl.QueryRol = async(req,res)=>{
 //Alta roles
 qryCtrl.CreateRol = async(req,res)=>{
     console.log(req.body);//name_ROl_Add
-    Rol=req.body.rolname;
+    Rol=req.body.name_Rol_Add;
     try {
         let text = 'SELECT nombreRol FROM verRoles WHERE nombreRol=$1'; //error nombrerol column not exist
         let values = [Rol];
