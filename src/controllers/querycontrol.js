@@ -82,7 +82,7 @@ qryCtrl.EditRol = async (req, res) => {
         let id_rol = req.body.id_Rol_Edit;//agregado Edit
         let new_rol = req.body.new_Rol_Edit;
         console.log(req.body);
-        let text = 'SELECT updateRole($1,$2)';
+        let text = 'SELECT updateRol($1,$2)';
         let values = [id_rol,new_rol];
         await pool.query(text, values);
         res.json({ status: 'Rol Edited' });
