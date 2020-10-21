@@ -111,3 +111,6 @@ Content-Type: application/json
 
 ###
 GET http://35.209.128.105:3389/api/auth/config/roles/
+
+###
+DELETE http://35.209.128.105:3389/api/auth/config/roles/Whu8UlirBe6

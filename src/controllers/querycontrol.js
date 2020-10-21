@@ -101,7 +101,7 @@ qryCtrl.DelRol = async(req,res)=>{
     let text =('SELECT estadoRol($1)');
     let values= [id_rol];
     await pool.query(text,values);
-    console.log(id_user+'Deleted!');
+    console.log(id_rol+'Deleted!');
 };
 
 

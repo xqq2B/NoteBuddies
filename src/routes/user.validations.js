@@ -48,7 +48,7 @@ router.post('/config/roles',qryCtrl.CreateRol);
 //Edicion Roles
 router.post('/config/roles/edit',qryCtrl.EditRol);//cambiado id_Rol new_Rol
 // //Eliminacion Roles
-router.delete('/config/roles/:email',qryCtrl.DelRol);
+router.delete('/config/roles/:id_Rol',qryCtrl.DelRol);
 
 
 
