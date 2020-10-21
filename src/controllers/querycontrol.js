@@ -88,7 +88,7 @@ qryCtrl.EditRol = async (req, res) => {
         let text = 'SELECT updateRol($1,$2)';
         let values = [id_rol,new_rol];
         await pool.query(text, values);
-        res.json({ status: 'Rol Edited' });
+        res.json({ status: 'Rol Edited!' });
     } catch (e) {
         res.json({ status: e });
     }
@@ -101,7 +101,7 @@ qryCtrl.DelRol = async(req,res)=>{
     let text =('SELECT estadoRol($1)');
     let values= [id_rol];
     await pool.query(text,values);
-    console.log(id_rol+'Deleted!');
+    console.log({status:'Rol Deleted!'});
 };
 
 
