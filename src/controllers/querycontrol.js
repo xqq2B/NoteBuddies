@@ -47,7 +47,7 @@ qryCtrl.QueryRol = async(req,res)=>{
     let activo= true;
     let text ='SELECT * FROM verRoles WHERE activo = $1 ORDER BY nombrerol ASC';
     let values = [activo];
-    await pool.query (text,values);
+    const result = await pool.query (text,values);
     //const result = await pool.query('SELECT * FROM verRoles WHERE activo = true ORDER BY nombrerol ASC');//verRolesyPermisos');
     res.json(result.rows);
 };
