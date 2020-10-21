@@ -44,7 +44,11 @@ const helpers = require('../lib/passport');
 
 //Consulta roles
 qryCtrl.QueryRol = async(req,res)=>{
-    const result = await pool.query('SELECT * FROM verRoles ORDER BY nombrerol ASC');//verRolesyPermisos');
+    let activo= true;
+    let text ='SELECT * FROM verRoles WHERE activo = $1 ORDER BY nombrerol ASC';
+    let values = [activo];
+    await pool.query (text,values);
+    //const result = await pool.query('SELECT * FROM verRoles WHERE activo = true ORDER BY nombrerol ASC');//verRolesyPermisos');
     res.json(result.rows);
 };
 
@@ -59,10 +63,9 @@ qryCtrl.CreateRol = async(req,res)=>{
         const { rows } = await pool.query(text,values);
         console.log(rows);
         if (rows.length == 0) {
-            //id_rol= '9898kajshd4';//makeIdRol();
             await makeIdRol().then(res => id_rol = res.toString());
             console.log(id_rol);
-            let text = 'SELECT createRol($1,$2)';//idrol y nombre rol
+            let text = 'SELECT createRol($1,$2)';
             let values = [id_rol,Rol];
             await pool.query(text, values);
             res.json({ status: 'Rol Inserted!' });
@@ -79,7 +82,7 @@ qryCtrl.CreateRol = async(req,res)=>{
 //Edit roles
 qryCtrl.EditRol = async (req, res) => {
     try {
-        let id_rol = req.body.id_Rol_Edit;//agregado Edit
+        let id_rol = req.body.id_Rol_Edit;
         let new_rol = req.body.name_Rol_Edit;
         console.log(req.body);
         let text = 'SELECT updateRol($1,$2)';
@@ -92,13 +95,14 @@ qryCtrl.EditRol = async (req, res) => {
 };
 
 // //Delete roles
-// qryCtrl.DelUser = async(req,res)=>{
-//     let id_user = req.params.id_user;
-//     let text =('DELETE FROM users WHERE id_user = $1');
-//     let values= [id_user];
-//     await pool.query(text,values);
-//     console.log(id_user+'Deleted!');
-// };
+qryCtrl.DelRol = async(req,res)=>{
+    let id_rol = req.params.id_Rol;//id_Rol_Delete;
+    console.log(req.params);
+    let text =('SELECT estadoRol($1)');
+    let values= [id_rol];
+    await pool.query(text,values);
+    console.log(id_user+'Deleted!');
+};
 
 
 
