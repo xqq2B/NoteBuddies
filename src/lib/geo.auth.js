@@ -57,7 +57,7 @@ geoCtrl.registerGeo =async (req,res)=>{
         let value =[User.email];
         const {rows} = await pool.query(text2,value);
         console.log(rows);
-        res.json({rows});//status:'Registered!',id_rol:rows.id_rol});
+        res.json({status:rows});//status:'Registered!',id_rol:rows.id_rol});
     } catch (e) {
         console.log(e);
     }
