@@ -51,7 +51,10 @@ geoCtrl.registerGeo =async (req,res)=>{
     try {
         let text = 'SELECT setGeotab($1,$2,$3,$4)';
         let values = [User.email, User.username, User.lastname, User.telephone];
-        const {rows}=await pool.query(text, values);
+        /*const {rows}=*/await pool.query(text, values);
+        let text2 = 'SELECT * FROM vistaObtenerUsuario WHERE correo =$1';
+        let value =[User.email];
+        const {rows} = await pool.query(text2,value);
         res.json({rows});//status:'Registered!',id_rol:rows.id_rol});
     } catch (e) {
         console.log(e);
