@@ -55,6 +55,7 @@ geoCtrl.registerGeo =async (req,res)=>{
         let text2 = 'SELECT * FROM vistaObtenerUsuario WHERE correo =$1';
         let value =[User.email];
         const {rows} = await pool.query(text2,value);
+        console.log(rows);
         res.json({rows});//status:'Registered!',id_rol:rows.id_rol});
     } catch (e) {
         console.log(e);
