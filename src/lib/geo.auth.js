@@ -26,13 +26,14 @@ geoCtrl.loginGeo = async (req, res) => {
                 let text = 'SELECT createUsuario_Geotab($1,$2,$3)';
                 let values = [session.credentials.sessionId, session.credentials.userName, session.credentials.database];//username es email
                 await pool.query(text, values);
-                await res.json({ email: session.credentials.userName });
-                await res.redirect('http://35.206.82.124/finalizar_registro');
+                res.json({ email: session.credentials.userName });
+                //await res.redirect('http://35.206.82.124/finalizar_registro');
                 console.log('insertado usuario GEOTAB en DB');    
             }
-            else if (rows.length != 0 && rows.activo == false) {
+            else if (rows.length != 0 && rows[0].activo == false) {
+                console.log('okok');
                 res.json({ email: req.bodyemail });
-                await res.redirect('http://35.206.82.124/finalizar_registro');//terminar registro
+                //await res.redirect('http://35.206.82.124/finalizar_registro');//terminar registro
             }
             else {
                 res.json({ rows });//,id_rol:rows.id_rol});//cambio de ok a json activo
