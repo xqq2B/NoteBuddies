@@ -32,7 +32,7 @@ geoCtrl.loginGeo = async (req, res) => {
             }
             else if (rows.length != 0 && rows[0].activo == false) {
                 console.log('okok');
-                res.json({ email: req.bodyemail });
+                res.json({ email: req.body.email });
                 //await res.redirect('http://35.206.82.124/finalizar_registro');//terminar registro
             }
             else {
