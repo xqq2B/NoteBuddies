@@ -30,9 +30,9 @@ router.post('/geotab_login',geoCtrl.loginGeo);
 router.post('/geotab_register',geoCtrl.registerGeo);
 
 
-// //USUARIOS
-// //Consulta Usuarios
-// router.get('/config/users',qryCtrl.QueryUser);
+//USUARIOS
+//Consulta Usuarios
+router.get('/config/users',qryCtrl.QueryUser);
 // //Alta usuarios
 // router.post('/config/users',qryCtrl.CreateUser);
 // //Edicion usuarios

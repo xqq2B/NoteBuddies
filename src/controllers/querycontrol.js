@@ -5,14 +5,13 @@ const helpers = require('../lib/passport');
 
 
 
-// //Consulta usuarios
-// qryCtrl.QueryUser = async(req,res)=>{
-//     console.log('hi');
-//     const {rows} = await pool.query('Select * from users');
-//     console.log(rows[0]);
-//     //res.json(rows[0]);
-//     //res.send(rows[0]);
-// };
+//Consulta usuarios
+qryCtrl.QueryUser = async(req,res)=>{
+    const {rows} = await pool.query('Select * from usuario');
+    console.log(rows);
+    res.json({ rows });
+    //res.send(rows[0]);
+};
 
 // //Alta usuarios
 // qryCtrl.QueryCreate = async(req,res)=>{
