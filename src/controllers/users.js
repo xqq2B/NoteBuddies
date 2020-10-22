@@ -57,10 +57,13 @@ userCtrl.registerConfirm = async (req, res) => {
     try {
         const id = jwt.verify(req.params.token, EMAIL_SECRET);
         let text2='SELECT * FROM vistaEstadoUsuario WHERE id_usuario = $1';
-        //let text ='SELECT * FROM usuario WHERE id_usuario=$1 SET activo=$2'; const activo=true;
         let values = [id.user];
         const {rows} = await pool.query(text2, values);
         console.log(id.user);
+        //////////////////
+        let text = 'SELECT estadoUsuario($1)';
+            await pool.query(text, values);
+         ///////////////////
         console.log('rows'+rows[0]);
         if (rows[0].activo == false) {
             let text = 'SELECT estadoUsuario($1)';
