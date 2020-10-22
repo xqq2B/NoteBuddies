@@ -113,4 +113,13 @@ Content-Type: application/json
 GET http://35.209.128.105:3389/api/auth/config/roles/
 
 ###
-DELETE http://35.209.128.105:3389/api/auth/config/roles/IcsslOPtTK8lXC
+DELETE http://35.209.128.105:3389/api/auth/config/roles/1
+
+
+###
+POST http://35.209.128.105:3389/api/auth/config/roles/
+Content-Type: application/json
+
+{
+    "name_Rol_Add": "Maestro"
+}

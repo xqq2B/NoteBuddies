@@ -60,6 +60,7 @@ userCtrl.registerConfirm = async (req, res) => {
         //let text ='SELECT * FROM usuario WHERE id_usuario=$1 SET activo=$2'; const activo=true;
         let values = [id.user];
         const {rows} = await pool.query(text2, values);
+        console.log(id.user);
         console.log(rows[0]);
         if (rows[0].activo == false) {
             let text = 'SELECT estadoUsuario($1)';
