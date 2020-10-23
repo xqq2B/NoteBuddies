@@ -9,7 +9,7 @@ const helpers = require('../lib/passport');
 qryCtrl.QueryUser = async(req,res)=>{
     const {rows} = await pool.query('Select * from usuario');
     console.log(rows);
-    res.json({ rows });
+    res.json( rows );
     //res.send(rows[0]);
 };
 
