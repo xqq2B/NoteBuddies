@@ -22,7 +22,7 @@ qryCtrl.QueryUser = async(req,res)=>{
 
 //Edit usuarios
 qryCtrl.EditUser = async (req, res) => {
-    console.log(req.body);
+    console.log(req.params);
     let text = 'SELECT editarUsuario($1,$2,$3,$4)';
     let values = [req.body.id_user, req.body.username, req.body.lastname, req.body.telephone];
     await pool.query(text, values);
