@@ -62,7 +62,7 @@ helpers.signUp =async  (newUser)=>{
         const {rows} = await pool.query(text,values);
         console.log(newUser.password);
         console.log(rows);
-    if (rows.length == 0 || rows[0].activo == false) {
+    if (rows.length == 0){ //|| rows[0].activo == false) {//added rows0 condition
         const encPass = await helpers.encryptPassword(newUser.password);
         await checkId().then(res => newUser.id_user = parseInt(res));
         //newUser.id_rol generado en db
