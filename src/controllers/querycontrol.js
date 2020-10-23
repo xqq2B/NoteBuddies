@@ -7,7 +7,7 @@ const helpers = require('../lib/passport');
 
 //Consulta usuarios
 qryCtrl.QueryUser = async(req,res)=>{
-    const {rows} = await pool.query('Select * from usuario');
+    const {rows} = await pool.query('SELECT * FROM vistaObtenerUsuario');
     console.log(rows);
     res.json( rows );
     //res.send(rows[0]);
@@ -20,25 +20,29 @@ qryCtrl.QueryUser = async(req,res)=>{
 //     console.log(rows[0]);
 // };
 
-// //Edit usuarios
-// qryCtrl.QueryEdit = async(req,res)=>{
-//     User = req.params;
-//     let text = 'UPDATE users SET username=$1, lastname=$2, email=$3, telephone=$4 WHERE email=$5';
-//     let values =[User.username,User.lastname,User.email,User.telephone,User.id_user];
-//     const {rows} = await pool.query(text,values);
-//     res.json(rows[0]);
-// };
+//Edit usuarios
+qryCtrl.EditUser = async (req, res) => {
+    //    User = req.body;
+    let text = 'SELECT editarUsuario($1,$2,$3,$4)';
+    let values = [req.body.id_user, req.body.name_user, req.body.lname_user, req.body.telephone];
+    const { rows } = await pool.query(text, values);
+    res.json(rows);//rows[0];
+};
 
-// //Delete usuarios
-// qryCtrl.DelUser = async(req,res)=>{
-//     let id_user = req.params.id_user;
-//     let text =('DELETE FROM users WHERE id_user = $1');
-//     let values= [id_user];
-//     await pool.query(text,values);
-//     console.log(id_user+'Deleted!');
-// };
+//Delete usuarios
+qryCtrl.DelUser = async(req,res)=>{
+    let id_user = req.params.id_user;//id_Rol_Delete;
+    console.log(req.params);
+    let text =('SELECT estadoUsuario($1)');
+    let values= [id_user];
+    await pool.query(text,values);
+    res.json({status:'User Deleted!'});
+    console.log('User Deleted!');
+};
 
 
+
+/////////////////////////////////////////
 //ROLES
 
 //Consulta roles

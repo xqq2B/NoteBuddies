@@ -35,10 +35,10 @@ router.post('/geotab_register',geoCtrl.registerGeo);
 router.get('/config/users',qryCtrl.QueryUser);
 // //Alta usuarios
 // router.post('/config/users',qryCtrl.CreateUser);
-// //Edicion usuarios
-// router.put('/config/users/:email',qryCtrl.EditUser);
-// //Eliminacion usuarios
-// router.delete('/config/users/:id_user',qryCtrl.DelUser);
+//Edicion usuarios
+router.post('/config/users/edit',qryCtrl.EditUser);
+//Eliminacion usuarios
+router.delete('/config/users/:id_user',qryCtrl.DelUser);
 
 //ROLES
 //Consulta Roles
