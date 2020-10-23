@@ -57,12 +57,12 @@ async function checkId (){
 
 
 helpers.signUp =async  (newUser)=>{
-    const text = 'SELECT * FROM usuario WHERE correo = $1';//
+    const text = 'SELECT * FROM usuario WHERE correo = $1';// activo
         const values= [newUser.email];
         const {rows} = await pool.query(text,values);
         console.log(newUser.password);
         console.log(rows);
-    if (rows.length == 0 || rows[0].activo == false) {//added rows0 condition
+    if (rows.length == 0 ){//|| rows[0].activo == false) {//added rows0 condition
         const encPass = await helpers.encryptPassword(newUser.password);
         await checkId().then(res => newUser.id_user = parseInt(res));
         //newUser.id_rol generado en db
@@ -72,7 +72,18 @@ helpers.signUp =async  (newUser)=>{
         sendWelcomeEmail(newUser);
         return true;
     }
-
+    else if(rows[0].activo == false){
+        newUser.id_user = rows[0].id_usuario;
+        const encPass = await helpers.encryptPassword(newUser.password);
+        //await checkId().then(res => newUser.id_user = parseInt(res)); se va el id
+        console.log(newUser.id_user);
+        let text = 'SELECT updateUsuario($1, $2, $3, $4, $5)';
+        let values=[newUser.id_user,newUser.username,newUser.lastname,newUser.telephone,encPass];
+        await pool.query(text, values);
+        sendWelcomeEmail(newUser);
+        console.log('sirvio query');
+        return true;
+    }
     else {
         return false;
     }

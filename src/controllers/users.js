@@ -61,7 +61,7 @@ userCtrl.registerConfirm = async (req, res) => {
         let values = [id.user];
         const {rows} = await pool.query(text2, values);
         console.log(id.user);
-        console.log('rows'+rows[0]);
+        console.log('rows'+rows);
         if (rows[0].activo == false) {
             let text = 'SELECT estadoUsuario($1)';
             await pool.query(text, values);
