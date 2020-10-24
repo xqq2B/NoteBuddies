@@ -20,15 +20,18 @@ userCtrl.getUsers = async(req,res)=>{
 userCtrl.loginUser = async (req,res)=>{
     User = req.body;
     console.log(User);
-    try{
+    try {
         const Verification = await helpers.signIn(User);
-        if(Verification){
-            res.json({status:Verification});
+        if (Verification) {
+            res.json({ status: Verification });
             //res.redirect();
         }
+        else if (Verification == 'true') {
+            res.json({ status: 'User Deleted!' });
+        }
         else
-            res.json({status:'Failed!'});
-    }catch(e){
+            res.json({ status: 'Failed!' });
+    } catch (e) {
         console.log(e);
     }
 };

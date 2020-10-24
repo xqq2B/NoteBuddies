@@ -82,7 +82,7 @@ helpers.signUp =async  (newUser)=>{
         await pool.query(text, values);
         sendWelcomeEmail(newUser);
         console.log('sirvio query');
-        return true;
+        return 'true';
     }
     else {
         return false;

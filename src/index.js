@@ -1,4 +1,5 @@
 require('./database');
+//require('./conexion');
 const app = require ('./app');
 
 //server

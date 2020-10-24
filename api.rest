@@ -61,19 +61,13 @@ Content-Type: application/json
  GET http://localhost:3000/api/auth/confirmation/
 
 
-
-
-
-
-
-
 ###
 POST http://35.209.128.105:3389/api/auth/register
 Content-Type: application/json
 
 {
     "username": "pprueba",
-    "password": "1123456789",
+    "password": "123456789",
     "lastname": "tesstor",
     "telephone":"777728855",
     "email":"frsd1@gmail.com"
@@ -85,8 +79,8 @@ POST http://35.209.128.105:3389/api/auth/login
 Content-Type: application/json
 
 {
-    "email": "ok12345@yahoo.com",
-    "password": "rUpbg1q355wLbIDM"
+    "email": "frsd1@gmail.com",
+    "password": "123456789"
 }
 
 ###
@@ -123,3 +117,6 @@ Content-Type: application/json
 {
     "name_Rol_Add": "Maestro"
 }
+
+###
+POST http://35.209.128.105:3389/api/auth/recovery
