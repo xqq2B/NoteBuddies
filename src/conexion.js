@@ -1,7 +1,7 @@
 const GeotabApi = require('mg-api-js');
 const fs = require ('fs');
 require('dotenv').config();
-
+//no implementado
 const schedule = require('node-schedule');
 
 const username = process.env.user_geo;
