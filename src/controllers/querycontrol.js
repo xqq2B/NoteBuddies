@@ -15,19 +15,16 @@ qryCtrl.QueryUser = async(req,res)=>{
 
 //Alta usuarios
 qryCtrl.CreateUser = async(req,res)=>{
-    console.log(req.body);
-    console.log(req.body.length);
     try{
         for (var i=0; i < req.body.length; i++) {
             let text = ('SELECT cambiarRolaUsuario($1,$2)');
             let values = [req.body[i].id_user, req.body[i].id_rol];
              await pool.query(text, values);
         }
-        console.log('sirvio');
+        res.json({status:'Rol Applied!'});
     }
     catch(e){
         res.json({status:e});
-        console.log(e);
     }
 };
 
