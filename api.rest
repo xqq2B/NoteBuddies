@@ -70,7 +70,7 @@ Content-Type: application/json
     "password": "123456789",
     "lastname": "tesstor",
     "telephone":"777728855",
-    "email":"frsd1@gmail.com"
+    "email":"ok@gmail.com"
 }
 
 
@@ -79,7 +79,7 @@ POST http://35.209.128.105:3389/api/auth/login
 Content-Type: application/json
 
 {
-    "email": "frsd1@gmail.com",
+    "email": "ok@gmail.com",
     "password": "123456789"
 }
 

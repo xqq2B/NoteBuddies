@@ -13,12 +13,22 @@ qryCtrl.QueryUser = async(req,res)=>{
     //res.send(rows[0]);
 };
 
-// //Alta usuarios
-// qryCtrl.QueryCreate = async(req,res)=>{
-//     console.log('hi');
-//     const {rows} = await pool.query('Select * from users');
-//     console.log(rows[0]);
-// };
+//Alta usuarios
+qryCtrl.CreateUser = async(req,res)=>{
+    console.log(require.body);
+    try{
+        for (var i=0; i < require.body.length; i++) {
+            let text = ('SELECT cambiarRolaUsuario($1,$2)');
+            let values = [require.body.id_user[i], requirebody.id_rol[i]];
+             await pool.query(text, values);
+        }
+        console.log('sirvio');
+    }
+    catch(e){
+        res.json({status:e});
+        console.log(e);
+    }
+};
 
 //Edit usuarios
 qryCtrl.EditUser = async (req, res) => {
