@@ -20,7 +20,7 @@ qryCtrl.CreateUser = async(req,res)=>{
     try{
         for (var i=0; i < req.body.length; i++) {
             let text = ('SELECT cambiarRolaUsuario($1,$2)');
-            let values = [require.body.id_user[i], requirebody.id_rol[i]];
+            let values = [req.body.id_user[i], reqbody.id_rol[i]];
              await pool.query(text, values);
         }
         console.log('sirvio');
