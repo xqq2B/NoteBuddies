@@ -22,10 +22,11 @@ userCtrl.loginUser = async (req,res)=>{
     console.log(User);
     try {
         const Verification = await helpers.signIn(User);
-        if (Verification == 'true') {
-            res.json({ status: 'User Deleted!' });
-        }
-        else if (Verification) {
+        // if (Verification == 'true') {
+        //     res.json({ status: 'User Deleted!' });
+        // }
+        // 
+        if (Verification) {
             res.json({ status: Verification });
             //res.redirect();
         }

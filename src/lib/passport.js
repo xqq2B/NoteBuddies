@@ -32,7 +32,7 @@ helpers.signIn =async  (user)=>{
     if (rows.length > 0) {
         const OkPass = await helpers.matchPassword(user.password, rows[0].pass);//pass <-- como aparece en la tabla
         if (rows[0].activo != true)
-            return 'true';//Email Not Confirmed!';
+            return 'Email Not Confirmed!';
         else if (OkPass) {
             return rows[0];
         }
