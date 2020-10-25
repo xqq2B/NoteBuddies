@@ -15,9 +15,10 @@ qryCtrl.QueryUser = async(req,res)=>{
 
 //Alta usuarios
 qryCtrl.CreateUser = async(req,res)=>{
-    console.log(require.body);
+    console.log(req.body);
+    console.log(req.body.length);
     try{
-        for (var i=0; i < require.body.length; i++) {
+        for (var i=0; i < req.body.length; i++) {
             let text = ('SELECT cambiarRolaUsuario($1,$2)');
             let values = [require.body.id_user[i], requirebody.id_rol[i]];
              await pool.query(text, values);
