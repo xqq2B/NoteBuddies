@@ -71,8 +71,15 @@ userCtrl.registerConfirm = async (req, res) => {
             await pool.query(text, values);
             console.log(rows[0].activo);
         }
+        else if (rows[0].activo == null) {
+            let activo=true;
+            let text2 = 'UPDATE usuario SET activo=$1 WHERE id_usuario=$2';
+            let values2 = [activo,id.user];
+            await pool.query(text2, values2);
+            console.log(rows[0].activo);
+        }
     } catch (e) {
-        res.send('error: '+e);
+        res.send('error: ' + e);
     }
 
     return res.redirect('http://35.206.82.124/');//mandar al login
