@@ -83,6 +83,12 @@ helpers.signUp =async  (newUser)=>{
         let text = 'SELECT updateUsuario($1, $2, $3, $4, $5)';
         let values=[newUser.id_user,newUser.username,newUser.lastname,newUser.telephone,encPass];
         await pool.query(text, values);
+        /////////cambiar a nulo
+        console.log('ok');
+        let text2 = 'SELECT activonulo($1)';
+        let values2=[newUser.id_user];
+        await pool.query(text2,values2);
+        console.log('sali');
         sendWelcomeEmail(newUser);
         console.log('sirvio query');
         return 'true';
