@@ -31,8 +31,11 @@ helpers.signIn =async  (user)=>{
     console.log(rows[0]);
     if (rows.length > 0) {
         const OkPass = await helpers.matchPassword(user.password, rows[0].pass);//pass <-- como aparece en la tabla
-        if (rows[0].activo != true)
-            return 'Email Not Confirmed!';
+        if (rows[0].activo == null)
+            return 'Email Not Confirmed!';////cambios
+        else if(rows[0].activo == false ){
+            return 'User Deleted!';
+        }
         else if (OkPass) {
             return rows[0];
         }
