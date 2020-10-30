@@ -36,7 +36,7 @@ geoCtrl.loginGeo = async (req, res) => {
                 //await res.redirect('http://35.206.82.124/finalizar_registro');//terminar registro
             }
             else {
-                res.json({ rows });//,id_rol:rows.id_rol});//cambio de ok a json activo
+                res.json({status: rows });//cambio a status para llegue igual que login
             }
         }, (error) => {
             res.json('Wrong Credentials!');
