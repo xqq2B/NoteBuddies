@@ -22,16 +22,40 @@ userCtrl.loginUser = async (req,res)=>{
     console.log(User);
     try {
         const Verification = await helpers.signIn(User);
-        // if (Verification == 'true') {
-        //     res.json({ status: 'User Deleted!' });
-        // }
-        // 
         if (Verification) {
             res.json({ status: Verification });
             //res.redirect();
         }
         else
             res.json({ status: 'Failed!' });
+    } catch (e) {
+        console.log(e);
+    }
+};
+
+
+//pass changer
+userCtrl.newPass =async (req,res)=>{    
+    let id_user = req.body.id_user;  
+    let pass = req.body.pass;
+    let newPass= req.body.newPass;
+    try {
+        const text = 'SELECT * FROM usuario WHERE id_usuario = $1';
+        const values = [id_user];
+        const { rows } = await pool.query(text, values);
+        if (rows.length > 0) {
+            const OkPass = await helpers.matchPassword(pass, rows[0].pass);//pass <-- como aparece en la tabla
+             if (OkPass) {
+                const encPass = await helpers.encryptPassword(newPass);
+                let text2 = 'UPDATE usuario SET pass=$1 WHERE id_usuario=$2';
+                let values2 = [encPass,id_user];
+                await pool.query(text2, values2);
+                res.json('Password Changed!');
+            }
+            else{
+                res.json('Wrong Password!');
+            }
+        }
     } catch (e) {
         console.log(e);
     }
