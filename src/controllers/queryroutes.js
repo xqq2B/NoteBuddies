@@ -12,8 +12,10 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
         let text='select * from vistaObtenerUsuario WHERE id_usuario = $1';
         let values=[req.body.id_user];
         const result = await pool.query(text,values);
-        console.log('bbbbbbbbbbbbbbbddddddddddddd'+result.rows.database);
-        if (result.rows.database == "metrica") {
+        console.log('bbbbbbbbbbbbbbbddddddddddddd'+result.rows.bd);
+        console.log(result);
+        console.log(result.rows);
+        if (result.rows.db == "metrica") {
             api = await conexion.updateSessionId();
             console.log(api);
         }
