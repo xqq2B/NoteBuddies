@@ -59,8 +59,7 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
         let text='SELECT * FROM vistaObtenerUsuario WHERE id_usuario = $1';
         let values=[req.body.id_user];
         const result = await pool.query(text,values);
-        console.log('devicesssssssssssss'+result.rows.bd);
-        if (result.rows.bd == "metrica") {
+        if (result.rows[0].bd == "metrica") {
             api = await conexion.updateSessionId();
             console.log(api);
         }
@@ -89,7 +88,7 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
         //res.json(Routes);
         res.json({Devices});
         console.log(Devices[2]);
-        console.log(results[0].deviceType);
+//        console.log(results[0].deviceType);
         //res.json(result[0].id);
     }
     catch (e) {
