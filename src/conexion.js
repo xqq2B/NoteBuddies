@@ -58,6 +58,7 @@ async function updateSessionId() {
             console.log(passGeoDev);
             const api = await new GeotabApi({credentials:{userName:username,database:database,password:passGeoDev}});//authentication);
             console.log('paso1');
+            console.log(api);
             const session = await api.authenticate();//no reconoce Async
             console.log('paso');
             await saveSession(session.credentials.sessionId, session.path);
