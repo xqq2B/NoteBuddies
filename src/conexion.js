@@ -5,7 +5,7 @@ require('dotenv').config();
 const schedule = require('node-schedule');
 
 const username = process.env.user_geo;
-const password = process.env.password_geo;
+//const password = process.env.password_geo;
 const database = process.env.database_geo;
 var sessionIde;
 var serverIde;
@@ -57,7 +57,9 @@ async function updateSessionId() {
             const passGeoDev = await  fs.readFileSync('unknown.txt','utf8');
             console.log(passGeoDev);
             const api = await new GeotabApi({credentials:{userName:username,database:database,password:passGeoDev}});//authentication);
+            console.log('paso1');
             const session = await api.authenticate();//no reconoce Async
+            console.log('paso');
             await saveSession(session.credentials.sessionId, session.path);
             return api;
         } else {
