@@ -21,7 +21,7 @@ geoCtrl.loginGeo = async (req, res) => {
             let values = [req.body.email];
             const { rows } = await pool.query(text, values);
             console.log(rows);
-            const ide_usuario =rows.ide_usuario;
+            const ide_usuario =rows.id_usuario;
             if (rows.length == 0) {
                 let session = await api.authenticate();
                 let text = 'SELECT createUsuario_Geotab($1,$2,$3)';
