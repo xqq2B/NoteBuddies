@@ -9,10 +9,9 @@ const { pool } = require('../database');
 qryCtrlRoutes.QueryRoute = async (req, res) => {
     try {
         var api;
-        console.log(req.body);
-        console.log(req);
+        console.log(req.body.id_user);
         let text='select * from vistaObtenerUsuario WHERE id_usuario = $1';
-        let values=[req.body];
+        let values=[req.body.id_user];
         const result = await pool.query(text,values);
         console.log('bbbbbbbbbbbbbbbddddddddddddd'+result.rows.bd);
         console.log(result);
