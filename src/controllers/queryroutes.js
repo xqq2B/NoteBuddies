@@ -14,9 +14,8 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
         let values=[req.body.id_user];
         const result = await pool.query(text,values);
         console.log('bbbbbbbbbbbbbbbddddddddddddd'+result.rows.bd);
-        console.log(result);
         console.log(result.rows);
-        if (result.rows.db == "metrica") {
+        if (result.rows.bd == "metrica") {
             api = await conexion.updateSessionId();
             console.log(api);
         }
