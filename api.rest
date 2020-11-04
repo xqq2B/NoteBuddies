@@ -120,3 +120,28 @@ Content-Type: application/json
 
 ###
 POST http://35.209.128.105:3389/api/auth/recovery
+
+
+
+###
+POST http://35.209.128.105:3389/api/auth/config/routes/query
+Content-Type: application/json
+
+{
+    "username": "rodolfo.chavarria@metricamovil.com",
+    "db": "metrica",
+    "session": "Q0GYvTHkkn_9ZmIhPh-jw",
+    "servo":"my167.geotab.com"
+}   
+
+
+###
+POST http://35.209.128.105:3389/api/auth/config/devices
+Content-Type: application/json
+
+{
+    "username": "rodolfo.chavarria@metricamovil.com",
+    "db": "metrica",
+    "session": "Q0GYvTHkkn_9ZmIhPh-jw",
+    "servo":"my167.geotab.com"
+}

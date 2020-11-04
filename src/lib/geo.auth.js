@@ -21,6 +21,7 @@ geoCtrl.loginGeo = async (req, res) => {
             let values = [req.body.email];
             const { rows } = await pool.query(text, values);
             console.log(rows);
+            const ide_usuario =rows.ide_usuario;
             if (rows.length == 0) {
                 let session = await api.authenticate();
                 let text = 'SELECT createUsuario_Geotab($1,$2,$3)';
@@ -36,7 +37,13 @@ geoCtrl.loginGeo = async (req, res) => {
                 //await res.redirect('http://35.206.82.124/finalizar_registro');//terminar registro
             }
             else {
-                res.json({status: rows[0] });//cambio a status para llegue igual que login
+                //agregado para enviar sessionid, database, path
+                let session = await api.authenticate();
+                let text='SELECT setSessionID_Path($1,$2,$3)';
+                let values=[ide_usuario,session.credentials.sessionId, session.path];
+                await pool.query(text,values);
+                //////////////////////////////////
+                res.json({status: rows[0] });//cambio a status para llegue igual que login SESSION DATABASE
             }
         }, (error) => {
             res.json('Wrong Credentials!');

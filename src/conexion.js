@@ -1,5 +1,5 @@
 const GeotabApi = require('mg-api-js');
-const fs = require ('fs');
+const fs = require('fs');
 require('dotenv').config();
 //no implementado
 const schedule = require('node-schedule');
@@ -7,8 +7,8 @@ const schedule = require('node-schedule');
 const username = process.env.user_geo;
 const password = process.env.password_geo;
 const database = process.env.database_geo;
-var sessionId;
-var server;
+var sessionIde;
+var serverIde;
 
 updateSessionId();
 
@@ -18,53 +18,55 @@ schedule.scheduleJob('* * 23 * * *', function () {
 
 
 
-const authentication = {
-    credentials: {
-        database: database,
-        userName: username,
-        password: password,
-        sessionId: sessionId
-    },
-    path: server,
-};
+// const authentication = {
+//     credentials: {
+//         database: database,
+//         userName: username,
+//         password: password,
+//     }
+// };
 
 
-async function saveSession (sessionId,server){
+async function saveSession(sessionId, server) {
     console.log('save session');
     await fs.writeFileSync("file.txt", sessionId + ',' + server, { flag: 'w' });
 }
 
 
-async function getSession(){
-    try{
+async function getSession() {
+    try {
         console.log('getting session');
-        const session = await  fs.readFileSync('file.txt','utf8');
+        const session = await fs.readFileSync('file.txt', 'utf8');
         const params = session.split(',');
         console.log(params);
         return params;
 
-    }catch(err){
-        console.log('GETSESSIONERROR'+err);
+    } catch (err) {
+        console.log('GETSESSIONERROR' + err);
         //getLogger.error('function getSession '+ err);
     }
 }
 
-async function updateSessionId(){
-    try{
-        sessionId = await getSession();
+async function updateSessionId() {
+    try {
+        const sessionId = await getSession();
         console.log(sessionId[0]);
-        server = await getSession();
+        const server = await getSession();
         console.log(server[1]);
-        if(!sessionId[0]){
-            console.log('entre');
-            const api = new GeotabApi(authentication);
-            console.log('sali');
+        if (!sessionId[0]) {
+            const passGeoDev = await  fs.readFileSync('unknown.txt','utf8');
+            console.log(passGeoDev);
+            const api = await new GeotabApi({credentials:{userName:username,database:database,password:passGeoDev}});//authentication);
             const session = await api.authenticate();//no reconoce Async
             await saveSession(session.credentials.sessionId, session.path);
             return api;
         } else {
+            const serverIde = server[1];
+            console.log(server);
             console.log('ya hay sesion');
-            const api = new GeotabApi(authentication);//(username, null, sessionId, database, server[1]);
+            sessionIde = sessionId[0];
+            const api = await new GeotabApi({ credentials: { userName: username, database: database, sessionId: sessionIde }, path: serverIde });//authenticationSId);//(username, null, sessionId, database, server[1]);
+            console.log(api);
             return api;
         }
 
@@ -77,3 +79,21 @@ async function updateSessionId(){
         //return api;
     }
 }
+
+//SPRINT 3
+
+async function sessionOtherDb(user, db, session, servo) {
+    try {
+        console.log(user + db + session + servo);
+        const api = await new GeotabApi({ credentials: { userName: username, database: database, sessionId: session }, path: servo });
+        console.log(api);
+        return api;
+    } catch (err) {
+        //const api = new GeotabApi(username, password, null, database, server);
+        //const session = await api.authenticateAsync();
+        //await saveSession(session.credentials.sessionId, session.path);
+        console.log('ERROR SESION ID' + err);
+    }
+}
+exports.updateSessionId = updateSessionId;
+exports.sessionOtherDb = sessionOtherDb;
