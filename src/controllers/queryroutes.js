@@ -10,6 +10,7 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
     try {
         var api;
         console.log(req.body);
+        console.log(req);
         let text='select * from vistaObtenerUsuario WHERE id_usuario = $1';
         let values=[req.body];
         const result = await pool.query(text,values);
