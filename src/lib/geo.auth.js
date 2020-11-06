@@ -10,7 +10,8 @@ geoCtrl.loginGeo = async (req, res) => {
             database: req.body.database,
             userName: req.body.email,
             password: req.body.password
-        }
+        },
+        path: req.body.path
     };
 
     try {
@@ -27,6 +28,11 @@ geoCtrl.loginGeo = async (req, res) => {
                 let text = 'SELECT createUsuario_Geotab($1,$2,$3)';
                 let values = [session.credentials.sessionId, session.credentials.userName, session.credentials.database];//username es email
                 await pool.query(text, values);
+                ///setpath recibe session.credentials.sessionId para darle el path correcto
+                let text2 = 'SELECT setPath($1,$2)';
+                let values2 =[session.credentials.sessionId, req.body.path];
+                await pool.query(text2,values2);
+                ////////////////////////////////////////////////
                 res.json({ email: session.credentials.userName });
                 //await res.redirect('http://35.206.82.124/finalizar_registro');
                 console.log('insertado usuario GEOTAB en DB');    
