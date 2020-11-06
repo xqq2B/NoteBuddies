@@ -22,6 +22,7 @@ geoCtrl.loginGeo = async (req, res) => {
             let values = [req.body.email];
             const { rows } = await pool.query(text, values);
             console.log(rows);
+            console.log(req.body);
             const ide_usuario =rows.id_usuario;
             if (rows.length == 0) {
                 let session = await api.authenticate();
@@ -51,6 +52,7 @@ geoCtrl.loginGeo = async (req, res) => {
                 let text2='SELECT updatebd($1,$2)';
                 let values2=[ide_usuario,req.body.database];
                 await pool.query(text2,values2);
+                console.log('debio guardar');
                 //////////////////////////////////
                 res.json({status: rows[0] });//cambio a status para llegue igual que login SESSION DATABASE
             }

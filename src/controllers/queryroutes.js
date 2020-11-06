@@ -34,14 +34,14 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
             },
             resultsLimit: 100
         });
-        console.log(results);
+        //console.log(results);
         //res.json(result[1].name);
         var Routes=[];
         for(var i=0;i<results.length;i++)
         {
             Routes[i]=results[i].name;
         }
-        console.log(Routes);
+       // console.log(Routes);
         //res.json(Routes);
         res.json({Routes});
         console.log(Routes[1]);
