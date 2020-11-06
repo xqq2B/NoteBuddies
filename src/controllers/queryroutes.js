@@ -82,9 +82,9 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
         var Devices=[];
         for(var i=0;i<results.length;i++)
         {
-            Devices[i]=results[i].name;
+             Devices[i]=await results[i].name;//sgregao await y quitado console.log
         }
-        console.log(results);
+        //console.log(results);
         //res.json(Routes);
         res.json({Devices});
         console.log(Devices[2]);
