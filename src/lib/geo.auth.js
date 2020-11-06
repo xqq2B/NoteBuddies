@@ -22,7 +22,8 @@ geoCtrl.loginGeo = async (req, res) => {
             let values = [req.body.email];
             const { rows } = await pool.query(text, values);
             console.log(rows);
-            console.log(req.body);
+            console.log(req.body.email);
+            console.log(req.body.path);
             const ide_usuario =rows.id_usuario;
             if (rows.length == 0) {
                 let session = await api.authenticate();
