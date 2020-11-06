@@ -88,7 +88,7 @@ async function updateSessionId() {
 async function sessionOtherDb(user, db, session, servo) {
     try {
         console.log(user + db + session + servo);
-        const api = await new GeotabApi({ credentials: { userName: username, database: database, sessionId: session }, path: servo });
+        const api = await new GeotabApi({ credentials: { userName: user, database: db, sessionId: session }, path: servo });
         console.log(api);
         return api;
     } catch (err) {
