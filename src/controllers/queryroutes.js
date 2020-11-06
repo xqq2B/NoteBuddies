@@ -32,7 +32,7 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
                 //name: "Ruta de pruebad"
                 //externalReference:"metrica"
             },
-            resultsLimit: 10
+            resultsLimit: 100
         });
         console.log(results);
         //res.json(result[1].name);
@@ -77,7 +77,7 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
                 //externalReference:"metrica"
                 //deviceType:"GO6"
             },
-            resultsLimit: 3
+            resultsLimit: 100
         });
         var Devices=[];
         for(var i=0;i<results.length;i++)
