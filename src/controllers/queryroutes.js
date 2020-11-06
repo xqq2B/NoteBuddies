@@ -22,7 +22,7 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
         else {
             console.log('Otra base de datos');
             //registros tomados de github documentacion db
-            api = await conexion.sessionOtherDb(result.rows.correo,result.rows.bd, result.rows.sessionID, result.rows.path);
+            api = await conexion.sessionOtherDb(result.rows[0].correo,result.rows[0].bd, result.rows[0].sessionID, result.rows[0].path);
         }
         console.log(api);
         const results = await api.call("Get", {
