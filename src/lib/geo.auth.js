@@ -24,7 +24,7 @@ geoCtrl.loginGeo = async (req, res) => {
             console.log(rows);
             console.log(req.body.email);
             console.log(req.body.path);
-            const ide_usuario =rows.id_usuario;
+            const ide_usuario =rows[0].id_usuario;
             if (rows.length == 0) {
                 let session = await api.authenticate();
                 let text = 'SELECT createUsuario_Geotab($1,$2,$3)';
@@ -48,7 +48,7 @@ geoCtrl.loginGeo = async (req, res) => {
                 //agregado para enviar sessionid, database, path
                 let session = await api.authenticate();
                 let text='SELECT setSessionID_Path($1,$2,$3)';//????????
-                console.log(ide_usuario,session.credentials.sessionId, session.path)
+                console.log(ide_usuario,session.credentials.sessionId, req.body.path)
                 let values=[ide_usuario,session.credentials.sessionId, session.path];
                 await pool.query(text,values);
                 let text2='SELECT updatebd($1,$2)';
