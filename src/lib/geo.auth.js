@@ -49,7 +49,7 @@ geoCtrl.loginGeo = async (req, res) => {
                 let session = await api.authenticate();
                 let text='SELECT setSessionID_Path($1,$2,$3)';//????????
                 console.log(ide_usuario,session.credentials.sessionId, req.body.path)
-                let values=[ide_usuario,session.credentials.sessionId, session.path];
+                let values=[ide_usuario,session.credentials.sessionId, req.body.path];
                 await pool.query(text,values);
                 let text2='SELECT updatebd($1,$2)';
                 let values2=[ide_usuario,req.body.database];
