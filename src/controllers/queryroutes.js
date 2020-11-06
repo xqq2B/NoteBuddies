@@ -37,13 +37,15 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
         //console.log(results);
         //res.json(result[1].name);
         var Routes=[];
+        var Points=[];
         for(var i=0;i<results.length;i++)
         {
             Routes[i]=results[i].name;
+            Points[i]=result[i].points;
         }
        // console.log(Routes);
         //res.json(Routes);
-        res.json({Routes});
+        res.json({Routes,Points});
         console.log(Routes[1]);
         //JSON.parse(await JSON.stringify(await updateSessionId()));
     }
