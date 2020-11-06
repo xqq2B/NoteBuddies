@@ -66,7 +66,7 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
         else {
             console.log('hi');
             //api = await conexion.sessionOtherDb(req.body.username,req.body.db, req.body.session, req.body.servo);
-            api = await conexion.sessionOtherDb(result.rows.correo,result.rows.bd, result.rows.sessionID, result.rows.path);
+            api = await conexion.sessionOtherDb(result.rows[0].correo,result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
         }
         console.log(api);
         const results = await api.call("Get", {
