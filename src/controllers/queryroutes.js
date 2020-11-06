@@ -26,13 +26,13 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
         }
         console.log(api);
         const results = await api.call("Get", {
-            typeName: "Route",//search por name, id, externalReference
+            typeName: "Zone",//Route a Zone por geocercasearch por name, id, externalReference
             search: {
                 //id:"b1D5"
                 //name: "Ruta de pruebad"
                 //externalReference:"metrica"
             },
-            resultsLimit: 3
+            resultsLimit: 10
         });
         console.log(results);
         //res.json(result[1].name);
