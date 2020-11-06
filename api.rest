@@ -30,7 +30,8 @@ Content-Type: application/json
 {
     "email": "rodolfo.chavarria@metricamovil.com",
     "password": "Metrica*1*2*3",
-    "database": "metrica"
+    "database": "mmfleet",
+    "path": "mypreview.geotab.com"
 }
 
 ###
@@ -38,7 +39,7 @@ POST http://35.209.128.105:3389/api/auth/geotab_register
 Content-Type: application/json
 
 {
-    "username": "rrr",
+    "username": "rodolfo.chavarria@metricamovil.com",
     "lastname": "asasdasd",
     "telephone": "6785649875",
     "email":"rrr@mail.com"
