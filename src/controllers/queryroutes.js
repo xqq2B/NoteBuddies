@@ -58,27 +58,32 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
  qryCtrlRoutes.QueryDevice = async(req,res)=>{
     try {
         var api;
-        console.log(req.body);
-        if (req.body.db == "metrica") {
+        let text='SELECT * FROM vistaObtenerUsuario WHERE id_usuario = $1';
+        let values=[req.body.id_user];
+        const result = await pool.query(text,values);
+        if (result.rows[0].bd == "metrica") {
             api = await conexion.updateSessionId();
-            console.log('ooooooooooooooooo');
             console.log(api);
         }
         else {
             console.log('hi');
-            api = await conexion.sessionOtherDb(req.body.username,req.body.db, req.body.session, req.body.servo);
+            //api = await conexion.sessionOtherDb(req.body.username,req.body.db, req.body.session, req.body.servo);
+            api = await conexion.sessionOtherDb(result.rows[0].correo,result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
         }
-        console.log(api);
-        const result = await api.call("Get", {
+        const results = await api.call("Get", {
             typeName: "Device",//search por name, id, externalReference
             search: {
+                //id:"b1" DEVICE ID sale en ROUTES usar para buscar vehiculos
+                //name: "Ruta de pruebad"
+                //externalReference:"metrica"
+                //deviceType:"GO6"
              },
             resultsLimit: 100
         });
         var Devices=[];
-        for(var i=0;i<result.length;i++)
+        for(var i=0;i<results.length;i++)
         {
-            Devices.push({id: result[i].id,name: result[i].name});
+            Devices.push({id: results[i].id,name: results[i].name});
         }
         res.json({Devices});
     }
