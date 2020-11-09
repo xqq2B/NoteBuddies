@@ -58,8 +58,8 @@ router.delete('/config/roles/:id_Rol',qryCtrl.DelRol);
 //RUTAS
 //Consulta Rutas
 router.post('/config/routes/query',qryCtrlRoutes.QueryRoute);
-//Alta Puntos Rutas
-//router.post('/config/routes',qryCtrl.CreateRoutesPoints);
+//Checkpoints
+//router.post('/config/routes/checkpoints',qryCtrlRoutes.QueryCheckpoints);
 //Consulta Vehiculos
 router.post('/config/devices',qryCtrlRoutes.QueryDevice);//vehiculos
 
