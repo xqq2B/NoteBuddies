@@ -12,9 +12,9 @@ var serverIde;
 
 updateSessionId();
 
-schedule.scheduleJob('* * 23 * * *', function () {
-    updateSessionId();
-});
+// schedule.scheduleJob('* * 23 * * *', function () {
+//     updateSessionId();
+// });
 
 
 
