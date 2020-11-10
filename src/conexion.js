@@ -2,7 +2,7 @@ const GeotabApi = require('mg-api-js');
 const fs = require('fs');
 require('dotenv').config();
 //no implementado
-//const schedule = require('node-schedule');
+const schedule = require('node-schedule');
 
 const username = process.env.user_geo;
 //const password = process.env.password_geo;
@@ -12,11 +12,17 @@ var serverIde;
 
 updateSessionId();
 
-// schedule.scheduleJob('* * 23 * * *', function () {
-//     updateSessionId();
-// });
+schedule.scheduleJob('* * 23 * * *', function () {
+    updateSessionId();
+});
+
+///////////////////////////////////////////////////
 
 
+//expira la sesion y trata de autenticar en ciclo por siempre
+
+
+////////////////////////////////////////////////////
 
 // const authentication = {
 //     credentials: {
