@@ -41,10 +41,13 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
         var Rutas = [];
         console.log(zones[0].id)
         console.log(zonesRoutes[0]);
-        console.log(zonesRoutes.length);
-        console.log(zonesRoutes[0].groups[0].id);
-        console.log(zonesRoutes[0].id);
-        console.log(zonesRoutes[0].name);
+        // console.log(zonesRoutes.length);
+        // console.log(zonesRoutes[0].groups[0].id);
+        // console.log(zonesRoutes[0].id);
+        // console.log(zonesRoutes[0].name);
+        console.log(zonesRoutes[174]);
+        console.log(zonesRoutes[175]);
+        console.log(zonesRoutes[176]);
         for (let i = 0; i < zonesRoutes.length; i++) 
         {
             if(zonesRoutes[i].groups[0].id){
