@@ -40,13 +40,19 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
         });
         var Rutas = [];
         console.log(zones[0].id)
-        console.log(zonesRoutes[2]);
+        console.log(zonesRoutes[0]);
         console.log(zonesRoutes.length);
         console.log(zonesRoutes[0].groups[0].id);
-        for (var i = 0; i < zonesRoutes.length; i++) {
+        console.log(zonesRoutes[0].id);
+        console.log(zonesRoutes[0].name);
+        for (let i = 0; i < zonesRoutes.length; i++) 
+        {
             if (zonesRoutes[i].groups[0].id == zones[0].id) {
                 // hola.push(zonesRoutes[i]);
                 Rutas.push({ id: zonesRoutes[i].id, name: zonesRoutes[i].name });
+            }
+            else{
+                console.log('no existe');
             }
         }
         
