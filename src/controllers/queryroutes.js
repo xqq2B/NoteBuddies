@@ -56,13 +56,13 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
     }
 };
 
- //Consulta Vehiculos
- qryCtrlRoutes.QueryDevice = async(req,res)=>{
+//Consulta Vehiculos
+qryCtrlRoutes.QueryDevice = async (req, res) => {
     try {
         var api;
-        let text='SELECT * FROM vistaObtenerUsuario WHERE id_usuario = $1';
-        let values=[req.body.id_user];
-        const result = await pool.query(text,values);
+        let text = 'SELECT * FROM vistaObtenerUsuario WHERE id_usuario = $1';
+        let values = [req.body.id_user];
+        const result = await pool.query(text, values);
         if (result.rows[0].bd == "metrica") {
             api = await conexion.updateSessionId();
             console.log(api);
@@ -70,20 +70,19 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
         else {
             console.log('hi');
             //api = await conexion.sessionOtherDb(req.body.username,req.body.db, req.body.session, req.body.servo);
-            api = await conexion.sessionOtherDb(result.rows[0].correo,result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
+            api = await conexion.sessionOtherDb(result.rows[0].correo, result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
         }
         const results = await api.call("Get", {
             typeName: "Device",//search por name, id, externalReference
             search: {
-             },
+            },
             resultsLimit: 100
         });
-        var Devices=[];
-        for(var i=0;i<results.length;i++)
-        {
-            Devices.push({id: results[i].id,name: results[i].name});
+        var Devices = [];
+        for (var i = 0; i < results.length; i++) {
+            Devices.push({ id: results[i].id, name: results[i].name });
         }
-        res.json({Devices});
+        res.json({ Devices });
     }
     catch (e) {
         console.log('ERROR RUTAS' + e);
@@ -109,6 +108,13 @@ qryCtrlRoutes.QueryCheckpoints = async (req, res) => {
             api = await conexion.sessionOtherDb(result.rows[0].correo, result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
         }
         console.log(api);
+        const zones = await api.call("Get", {
+            typeName: "Group",//para sacar id
+            search: {
+                "name": "checkpoints"
+            }
+        });
+        console.log(zones[0]);
         const zonesCheckPoints = await api.call("Get", {
             typeName: "Zone",
             search: {
@@ -128,6 +134,8 @@ qryCtrlRoutes.QueryCheckpoints = async (req, res) => {
         console.log('ERROR RUTAS' + e);
     }
 };
+
+
 
 
 module.exports = qryCtrlRoutes;
