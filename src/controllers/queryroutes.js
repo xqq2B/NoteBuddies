@@ -41,38 +41,25 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
         var Rutas = [];
         console.log(zones[0].id)
         console.log(zonesRoutes[0]);
-        // console.log(zonesRoutes.length);
-        // console.log(zonesRoutes[0].groups[0].id);
-        // console.log(zonesRoutes[0].id);
-        // console.log(zonesRoutes[0].name);
-        console.log(zonesRoutes[175]);
-        console.log(zonesRoutes[175].groups[0]);
+        // console.log(zonesRoutes[175]);
+        // console.log(zonesRoutes[175].groups[0]);
         for (let i = 0; i < zonesRoutes.length; i++) 
         {
             if(zonesRoutes[i].groups[0]!= null){
                 if (zonesRoutes[i].groups[0].id == zones[0].id) {
-                    // hola.push(zonesRoutes[i]);
-                    console.log(i);
                     Rutas.push({ id: zonesRoutes[i].id, name: zonesRoutes[i].name });
                 }
-                else{
-                    console.log('no existe');
-                }
+                // else{
+                //     console.log('no existe');
+                // }
             }
             else{
                 console.log('registro incompleto',i);
             }
             
         }
-        console.log('afuera');
         res.json({ Rutas });
-        console.log('sali');
-        console.log(Rutas[3]);
-        console.log('adentro');
         console.log(Rutas.length);
-        console.log('sali0000');
-        console.log(zones[0].id);
-        console.log('BIEN');
     }
     catch (e) {
         console.log('ERROR RUTAS' + e);
@@ -140,20 +127,20 @@ qryCtrlRoutes.QueryCheckpoints = async (req, res) => {
         });
         console.log(zones[0]);
         const zonesCheckPoints= await api.call("Get",{
-            typeName:"Zone",
-            search:{
+            typeName: "Zone",
+            search: {
             }
         });
-        var Checkpoints=[];
-    for (var i = 0; i < zonesCheckPoints.length; i++)
-    {
-        if(zonesCheckPoints[i].groups[0].id==zones[0].id){
-                Checkpoints.push({ id: zonesCheckPoints[i].id, name: zonesCheckPoints[i].name });
+        var Checkpoints = [];
+        for (var i = 0; i < zonesCheckPoints.length; i++) {
+            if (zonesCheckPoints[i].groups[0] != null) {
+                if (zonesCheckPoints[i].groups[0].id == zones[0].id) {
+                    Checkpoints.push({ id: zonesCheckPoints[i].id, name: zonesCheckPoints[i].name });
+                }
             }
         }
         console.log(zonesCheckPoints[2]);
         res.json({ Checkpoints });
-        console.log(zones[0].id);
     }
     catch (e) {
         console.log('ERROR RUTAS' + e);
