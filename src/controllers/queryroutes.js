@@ -56,11 +56,15 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
                 console.log('no existe');
             }
         }
-        
+        console.log('afuera');
         res.json({ Rutas });
+        console.log('sali');
         console.log(Rutas[3]);
+        console.log('adentro');
         console.log(Rutas.length);
+        console.log('sali0000');
         console.log(zones[0].id);
+        console.log('BIEN');
     }
     catch (e) {
         console.log('ERROR RUTAS' + e);
