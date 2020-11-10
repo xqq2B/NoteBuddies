@@ -1,7 +1,7 @@
-const qryCtrlRoutes ={};
+const qryCtrlRoutes = {};
 //const {pool} = require('../database');
 //const helpers = require('../lib/passport');
-const conexion = require ('../conexion');
+const conexion = require('../conexion');
 const { pool } = require('../database');
 
 
@@ -10,10 +10,10 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
     try {
         var api;
         console.log(req.body.id_user);
-        let text='select * from vistaObtenerUsuario WHERE id_usuario = $1';
-        let values=[req.body.id_user];
-        const result = await pool.query(text,values);
-        console.log('bbbbbbbbbbbbbbbddddddddddddd'+result.rows[0].bd);
+        let text = 'select * from vistaObtenerUsuario WHERE id_usuario = $1';
+        let values = [req.body.id_user];
+        const result = await pool.query(text, values);
+        console.log('bbbbbbbbbbbbbbbddddddddddddd' + result.rows[0].bd);
         console.log(result.rows);
         if (result.rows[0].bd == "metrica") {
             api = await conexion.updateSessionId();
@@ -22,32 +22,34 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
         else {
             console.log('Otra base de datos');
             //registros tomados de github documentacion db
-            api = await conexion.sessionOtherDb(result.rows[0].correo,result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
+            api = await conexion.sessionOtherDb(result.rows[0].correo, result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
         }
         console.log(api);
-        const results = await api.call("Get", {
-            typeName: "Zone",//Route a Zone por geocercasearch por name, id, externalReference
+        const zones = await api.call("Get", {
+            typeName: "Group",//para sacar id
             search: {
-                //id:"b1D5"
-                //name: "Ruta de pruebad"
-                //externalReference:"metrica"
-            },
-            resultsLimit: 100
+                "name": "rutas"
+                //checkpoints
+            }
         });
-        //console.log(results);
-        //res.json(result[1].name);
-        var Routes=[];
-        var Points=[];
-        for(var i=0;i<results.length;i++)
-        {
-            Routes[i]=results[i].name;
-            Points[i]=results[i].points;
+        console.log(zones[0]);
+        const zonesRoutes = await api.call("Get", {
+            typeName: "Zone",
+            search: {
+            }
+        });
+        var Rutas = [];
+        for (var i = 0; i < zonesRoutes.length; i++) {
+            if (zonesRoutes[i].groups[0].id == zones[0].id) {
+                // hola.push(zonesRoutes[i]);
+                Rutas.push({ id: zonesRoutes[i].id, name: zonesRoutes[i].name });
+            }
         }
-       // console.log(Routes);
-        //res.json(Routes);
-        res.json({Routes,Points});
-        console.log(Routes[1]);
-        //JSON.parse(await JSON.stringify(await updateSessionId()));
+        console.log(zonesRoutes[2]);
+        res.json({ Rutas });
+        console.log(Rutas[3]);
+        console.log(Rutas.length);
+        console.log(zones[0].id);
     }
     catch (e) {
         console.log('ERROR RUTAS' + e);
@@ -73,10 +75,6 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
         const results = await api.call("Get", {
             typeName: "Device",//search por name, id, externalReference
             search: {
-                //id:"b1" DEVICE ID sale en ROUTES usar para buscar vehiculos
-                //name: "Ruta de pruebad"
-                //externalReference:"metrica"
-                //deviceType:"GO6"
              },
             resultsLimit: 100
         });
@@ -92,20 +90,44 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
     }
 };
 
-// //Alta Puntos de Rutas
-// qryCtrlRoutes.CreateUser = async(req,res)=>{
-//     try{
-//         for (var i=0; i < req.body.length; i++) {
-//             let text = ('SELECT cambiarRolaUsuario($1,$2)');
-//             let values = [req.body[i].id_user, req.body[i].id_rol];
-//              await pool.query(text, values);
-//         }
-//         res.json({status:'Rol Applied!'});
-//     }
-//     catch(e){
-//         res.json({status:e});
-//     }
-// };
+qryCtrlRoutes.QueryCheckpoints = async (req, res) => {
+    try {
+        var api;
+        console.log(req.body.id_user);
+        let text = 'select * from vistaObtenerUsuario WHERE id_usuario = $1';
+        let values = [req.body.id_user];
+        const result = await pool.query(text, values);
+        console.log('bbbbbbbbbbbbbbbddddddddddddd' + result.rows[0].bd);
+        console.log(result.rows);
+        if (result.rows[0].bd == "metrica") {
+            api = await conexion.updateSessionId();
+            console.log(api);
+        }
+        else {
+            console.log('Otra base de datos');
+            //registros tomados de github documentacion db
+            api = await conexion.sessionOtherDb(result.rows[0].correo, result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
+        }
+        console.log(api);
+        const zonesCheckPoints = await api.call("Get", {
+            typeName: "Zone",
+            search: {
+            }
+        });
+        var Checkpoints = [];
+        for (var i = 0; i < zonesCheckPoints.length; i++) {
+            if (zonesCheckPoints[i].groups[0].id == zones[0].id) {
+                Checkpoints.push({ id: zonesCheckPoints[i].id, name: zonesCheckPoints[i].name });
+            }
+        }
+        console.log(zonesCheckPoints[2]);
+        res.json({ Checkpoints });
+        console.log(zones[0].id);
+    }
+    catch (e) {
+        console.log('ERROR RUTAS' + e);
+    }
+};
 
 
 module.exports = qryCtrlRoutes;
