@@ -98,6 +98,7 @@ qryCtrlRoutes.QueryCheckpoints = async (req, res) => {
         const result = await pool.query(text, values);
         console.log('bbbbbbbbbbbbbbbddddddddddddd' + result.rows[0].bd);
         console.log(result.rows);
+        console.log('CheckPOINTS');
         if (result.rows[0].bd == "metrica") {
             api = await conexion.updateSessionId();
             console.log(api);
