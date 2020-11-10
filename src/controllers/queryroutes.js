@@ -47,14 +47,20 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
         console.log(zonesRoutes[0].name);
         for (let i = 0; i < zonesRoutes.length; i++) 
         {
-            if (zonesRoutes[i].groups[0].id == zones[0].id) {
-                // hola.push(zonesRoutes[i]);
-                console.log(i);
-                Rutas.push({ id: zonesRoutes[i].id, name: zonesRoutes[i].name });
+            if(zonesRoutes[i].groups[0].id){
+                if (zonesRoutes[i].groups[0].id == zones[0].id) {
+                    // hola.push(zonesRoutes[i]);
+                    console.log(i);
+                    Rutas.push({ id: zonesRoutes[i].id, name: zonesRoutes[i].name });
+                }
+                else{
+                    console.log('no existe');
+                }
             }
             else{
-                console.log('no existe');
+                console.log('registro incompleto',i);
             }
+            
         }
         console.log('afuera');
         res.json({ Rutas });
