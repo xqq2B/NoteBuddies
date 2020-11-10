@@ -107,22 +107,23 @@ qryCtrlRoutes.QueryCheckpoints = async (req, res) => {
             //registros tomados de github documentacion db
             api = await conexion.sessionOtherDb(result.rows[0].correo, result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
         }
-        console.log(api);
+        console.log('CheckPOINTS');
         const zones = await api.call("Get", {
             typeName: "Group",//para sacar id
             search: {
-                "name": "checkpoints"
+                "name":"checkpoints"
             }
         });
         console.log(zones[0]);
-        const zonesCheckPoints = await api.call("Get", {
-            typeName: "Zone",
-            search: {
+        const zonesCheckPoints= await api.call("Get",{
+            typeName:"Zone",
+            search:{
             }
         });
-        var Checkpoints = [];
-        for (var i = 0; i < zonesCheckPoints.length; i++) {
-            if (zonesCheckPoints[i].groups[0].id == zones[0].id) {
+        var Checkpoints=[];
+    for (var i = 0; i < zonesCheckPoints.length; i++)
+    {
+        if(zonesCheckPoints[i].groups[0].id==zones[0].id){
                 Checkpoints.push({ id: zonesCheckPoints[i].id, name: zonesCheckPoints[i].name });
             }
         }
