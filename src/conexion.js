@@ -80,12 +80,14 @@ async function updateSessionId() {
         }
 
     } catch (err) {
-        // const api = new GeotabApi(username, password, null, database, server);
-        // const session = await api.authenticateAsync();
-        // await saveSession(session.credentials.sessionId, session.path);
+        //agregado caduco sesion 12112020
+        const passGeoDev = await  fs.readFileSync('unknown.txt','utf8');
+        const api = await new GeotabApi({credentials:{userName:username,database:database,password:passGeoDev}});
+        const session = await api.authenticate();//no reconoce Async
+        await saveSession(session.credentials.sessionId, session.path);
         console.log('ERROR SESION ID' + err);
         //getLogger.error('function updateSessionId'+err);
-        //return api;
+        return api;
     }
 }
 

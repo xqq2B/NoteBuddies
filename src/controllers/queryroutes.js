@@ -86,7 +86,7 @@ qryCtrlRoutes.QueryDevice = async (req, res) => {
             typeName: "Device",//search por name, id, externalReference
             search: {
             },
-            resultsLimit: 100
+          
         });
         var Devices = [];
         for (var i = 0; i < results.length; i++) {
@@ -106,7 +106,7 @@ qryCtrlRoutes.QueryCheckpoints = async (req, res) => {
         let text = 'select * from vistaObtenerUsuario WHERE id_usuario = $1';
         let values = [req.body.id_user];
         const result = await pool.query(text, values);
-        console.log('bbbbbbbbbbbbbbbddddddddddddd' + result.rows[0].bd);
+        console.log(result.rows[0].bd);
         console.log(result.rows);
         console.log('CheckPOINTS');
         if (result.rows[0].bd == "metrica") {
@@ -149,5 +149,64 @@ qryCtrlRoutes.QueryCheckpoints = async (req, res) => {
 
 
 
+//Drivers
+qryCtrlRoutes.QueryDriver = async (req, res) => {
+    try {
+        var api;
+        let text = 'SELECT * FROM vistaObtenerUsuario WHERE id_usuario = $1';
+        let values = [req.body.id_user];
+        const result = await pool.query(text, values);
+        if (result.rows[0].bd == "metrica") {
+            api = await conexion.updateSessionId();
+            console.log(api);
+        }
+        else {
+            console.log('hi');
+            api = await conexion.sessionOtherDb(result.rows[0].correo, result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
+        }
+        console.log('Drivers');
+        const drivers = await api.call("Get", {
+            typeName: "User",//para sacar id
+            search: {
+                isDriver: "true"
+            }
+        });
+        console.log(drivers[0].name);
+        const driver = [];
+        console.log(drivers.length);
+        for (var i = 0; i < drivers.length; i++) {
+            if (drivers[i].name != null) {
+                driver.push({ name: drivers[i].name });
+            }
+        }
+        res.json({ driver });
+    }
+    catch (e) {
+        console.log('ERROR RUTAS' + e);
+    }
+};
+
+
+// //Create Routes
+// qryCtrlRoutes.CreateRoute = async (req, res) => {
+//     try {
+//         console.log(req.body);
+//         //verificar si ya existen campos
+//         let text = 'Buscar en RUTAS DONDE $1,$2,$3,$4,$5,$6,$7,$8,$9 WHERE id_usuario = $1';
+//         let values = [req.body.id_user];
+//         const result = await pool.query(text, values);
+//         //si hay un campo repetido regresar ese campo
+//         if(repetido==true){
+//             res.json({repetidos:row.campo1,row.campo2});
+//         }
+//         //crear ruta
+//         let text = 'CREATE RUTA INSERT $1,$2,$3,$4,$5,$6,$7,$8,$9 WHERE id_usuario = $1';
+//         let values = [req.body.id_user];
+//         const result = await pool.query(text, values);
+//     }
+//     catch (e) {
+//         console.log('ERROR CREANDO RUTAS' + e);
+//     }
+// };
 
 module.exports = qryCtrlRoutes;
