@@ -10,7 +10,7 @@ const database = process.env.database_geo;
 var sessionIde;
 var serverIde;
 
-updateSessionId();
+//updateSessionId();
 
 schedule.scheduleJob('* * 23 * * *', function () {
     updateSessionId();
