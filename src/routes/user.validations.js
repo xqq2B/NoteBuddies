@@ -65,7 +65,7 @@ router.post('/config/devices',qryCtrlRoutes.QueryDevice);//vehiculos
 //Consulta drivers      
 router.post('/config/routes/drivers',qryCtrlRoutes.QueryDriver);
 //Crear Ruta
-//router.post('/config/routes/create',qryCtrlRoutes.CreateRoute);
+router.post('/config/routes/create',qryCtrlRoutes.CreateRoute);
 
 
 

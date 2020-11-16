@@ -187,26 +187,28 @@ qryCtrlRoutes.QueryDriver = async (req, res) => {
 };
 
 
-// //Create Routes
-// qryCtrlRoutes.CreateRoute = async (req, res) => {
-//     try {
-//         console.log(req.body);
-//         //verificar si ya existen campos
-//         let text = 'Buscar en RUTAS DONDE $1,$2,$3,$4,$5,$6,$7,$8,$9 WHERE id_usuario = $1';
-//         let values = [req.body.id_user];
-//         const result = await pool.query(text, values);
-//         //si hay un campo repetido regresar ese campo
-//         if(repetido==true){
-//             res.json({repetidos:row.campo1,row.campo2});
-//         }
-//         //crear ruta
-//         let text = 'CREATE RUTA INSERT $1,$2,$3,$4,$5,$6,$7,$8,$9 WHERE id_usuario = $1';
-//         let values = [req.body.id_user];
-//         const result = await pool.query(text, values);
-//     }
-//     catch (e) {
-//         console.log('ERROR CREANDO RUTAS' + e);
-//     }
-// };
+//Create Routes
+qryCtrlRoutes.CreateRoute = async (req, res) => {
+    try {
+        console.log(req.body);
+         var ruta=req.body;
+         console.log('ruta guardada');
+        //verificar si ya existen campos
+        // let text = 'Buscar en RUTAS DONDE $1,$2,$3,$4,$5,$6,$7,$8,$9 WHERE id_usuario = $1';
+        // let values = [req.body.id_user];
+        // const result = await pool.query(text, values);
+        // //si hay un campo repetido regresar ese campo
+        // if(repetido==true){
+        //     res.json({repetidos:row.campo1,row.campo2});
+        // }
+        // //crear ruta
+        // let text = 'CREATE RUTA INSERT $1,$2,$3,$4,$5,$6,$7,$8,$9 WHERE id_usuario = $1';
+        // let values = [req.body.id_user];
+        // const result = await pool.query(text, values);
+    }
+    catch (e) {
+        console.log('ERROR CREANDO RUTAS' + e);
+    }
+};
 
 module.exports = qryCtrlRoutes;
