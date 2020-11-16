@@ -192,7 +192,7 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
     try {
         console.log(req.body);
          var ruta=req.body;
-         console.log('ruta guardada');
+         console.log(ruta);
         //verificar si ya existen campos
         // let text = 'Buscar en RUTAS DONDE $1,$2,$3,$4,$5,$6,$7,$8,$9 WHERE id_usuario = $1';
         // let values = [req.body.id_user];
@@ -205,6 +205,7 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
         // let text = 'CREATE RUTA INSERT $1,$2,$3,$4,$5,$6,$7,$8,$9 WHERE id_usuario = $1';
         // let values = [req.body.id_user];
         // const result = await pool.query(text, values);
+        res.json({status:ok});
     }
     catch (e) {
         console.log('ERROR CREANDO RUTAS' + e);
