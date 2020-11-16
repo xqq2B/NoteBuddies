@@ -193,7 +193,7 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
         console.log(req.body);
          var ruta=req.body;
          console.log(ruta);
-        //verificar si ya existen campos
+        //verificar si ya existen campos y conductor se puede repetir cuando tenga horarios diferentes
         // let text = 'Buscar en RUTAS DONDE $1,$2,$3,$4,$5,$6,$7,$8,$9 WHERE id_usuario = $1';
         // let values = [req.body.id_user];
         // const result = await pool.query(text, values);

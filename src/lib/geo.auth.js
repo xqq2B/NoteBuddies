@@ -56,8 +56,8 @@ geoCtrl.loginGeo = async (req, res) => {
                 let values2=[ide_usuario,req.body.database];
                 await pool.query(text2,values2);
                 console.log('debio guardar');
-                //////////////////////////////////
-                res.json({status: rows[0] });//cambio a status para llegue igual que login SESSION DATABASE
+                //////////////////////////////////se agrego despues de rows
+                res.json({status: rows[0],db:req.body.database,path:req.body.path,sessionId:session.credentials.sessionId });//cambio a status para llegue igual que login SESSION DATABASE
             }
         }, (error) => {
             res.json('Wrong Credentials!');
