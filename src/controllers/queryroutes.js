@@ -201,7 +201,14 @@ qryCtrlRoutes.QueryTrailer = async (req, res) => {
             console.log('hi');
             api = await conexion.sessionOtherDb(result.rows[0].correo, result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
         }
-        //console.log(trailers);
+        //console.log('Trailer');
+        const trailers = await api.call("Get", {
+            typeName: "Trailer",//para sacar id
+            search: {
+                //isDriver:"true"
+            }
+        });
+        console.log(trailers);
         const trailer = [];
         console.log(trailers.length);
         for (var i = 0; i < trailers.length; i++) {
