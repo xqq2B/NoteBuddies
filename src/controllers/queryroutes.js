@@ -186,6 +186,36 @@ qryCtrlRoutes.QueryDriver = async (req, res) => {
     }
 };
 
+//Trailers
+qryCtrlRoutes.QueryTrailer = async (req, res) => {
+    try {
+        var api;
+        let text = 'SELECT * FROM vistaObtenerUsuario WHERE id_usuario = $1';
+        let values = [req.body.id_user];
+        const result = await pool.query(text, values);
+        if (result.rows[0].bd == "metrica") {
+            api = await conexion.updateSessionId();
+            console.log(api);
+        }
+        else {
+            console.log('hi');
+            api = await conexion.sessionOtherDb(result.rows[0].correo, result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
+        }
+        //console.log(trailers);
+        const trailer = [];
+        console.log(trailers.length);
+        for (var i = 0; i < trailers.length; i++) {
+            if(trailers[i].name!= null){
+            trailer.push({ name: trailers[i].name,id:trailers[i].id });
+        }
+        }
+        res.json({ trailer });
+    }
+    catch (e) {
+        console.log('ERROR RUTAS' + e);
+    }
+};
+
 
 //Create Routes
 qryCtrlRoutes.CreateRoute = async (req, res) => {
@@ -209,6 +239,31 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
     }
     catch (e) {
         console.log('ERROR CREANDO RUTAS' + e);
+    }
+};
+
+//Edit Routes
+qryCtrlRoutes.EditRoute = async (req, res) => {
+    try {
+        console.log(req.body);
+         var ruta=req.body;
+         console.log('editando ruta');
+        //verificar si ya existen campos y conductor se puede repetir cuando tenga horarios diferentes
+        // let text = 'Buscar en RUTAS DONDE $1,$2,$3,$4,$5,$6,$7,$8,$9 WHERE id_usuario = $1';
+        // let values = [req.body.id_user];
+        // const result = await pool.query(text, values);
+        // //si hay un campo repetido regresar ese campo
+        // if(repetido==true){
+        //     res.json({repetidos:row.campo1,row.campo2});
+        // }
+        // //crear ruta
+        // let text = 'CREATE RUTA INSERT $1,$2,$3,$4,$5,$6,$7,$8,$9 WHERE id_usuario = $1';
+        // let values = [req.body.id_user];
+        // const result = await pool.query(text, values);
+        res.json({status:'ok'});
+    }
+    catch (e) {
+        console.log('ERROR EDITANDO RUTAS' + e);
     }
 };
 

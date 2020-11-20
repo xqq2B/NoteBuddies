@@ -20,8 +20,9 @@ schedule.scheduleJob('* * 23 * * *', function () {
 
 
 //expira la sesion y trata de autenticar en ciclo por siempre
-
-
+//al parecer faltaba cuando da error de credenciales pero se corrigio
+//y se calento el cpu el sabado 14 nov ppor el ciclo, esperar a que venza la sesion
+//intentar meter sesion erronea a ver que pasa
 ////////////////////////////////////////////////////
 
 // const authentication = {
