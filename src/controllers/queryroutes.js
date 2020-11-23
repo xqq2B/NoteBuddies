@@ -278,12 +278,15 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
             for (var i = 0; i < rows.length; i++) {
                 console.log('hola');
                 if (ruta.conductor == rows[i].conductor || ruta.name_vehiculo == rows[i].vehiculo) {
+                    console.log('conductor/vehiculo repetido');
                     // var dDateConvert=rutadb[i].fsalida+" "+rutadb[i].hsalida;
                     // var dDateDb = new Date(dDateConvert);
                     // var aDateConvert=rutadb[i].fllegada+" "+rutadb[i].hllegada;
                     // var aDateDb = new Date(aDateConvert);
                     var dDate = new Date(rows[i].fecha_salida);
                     var aDate = new Date(rows[i].fecha_llegada);
+                    console.log(dDate);
+                    console.log(decha_llegada);
                     // if ((rutadb[i].fsalida == ruta.fsalida) || (rutadb[i].fllegada == ruta.fllegada)) {
                     //     if ((ruta.hsalida >= rutadb[i].hsalida && rutahsalida <= rutadb[i].hllegada) ||
                     //         (ruta.hllegada >= rutadb[i].hsalida && ruta.hllegada <= rutadb[i].hllegada)) {
@@ -291,6 +294,7 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                     //     }
                     // }
                     if ((dDate == fsalida) || (aDate == fllegada)) {
+                        console.log('entre fechas');
                         var dHour = new Date(rows[i].hora_salida);
                         var aHour = new Date(rows[i].hora_llegada);
                         if ((hsalida >= dHour && hsalida <= aHour) ||
