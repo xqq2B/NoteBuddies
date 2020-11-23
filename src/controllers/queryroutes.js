@@ -231,7 +231,7 @@ async function makeIdRoute() {
     for ( var i = 0; i < 20; i++ ) {
        result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
-    const text = 'SELECT * FROM ruta WHERE ideruta= $1';
+    const text = 'SELECT * FROM ruta WHERE id_ruta= $1';
     const value =[result];
     const{rows}= await pool.query(text,value);
     if(rows.length>0) {
@@ -270,13 +270,13 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
         else {
             for (var i = 0; i < rows.length; i++) {
                 console.log('hola');
-                if (ruta.conductor == rows[i].ide_conductor || ruta.name_vehiculo == rows[i].vehiculo) {
+                if (ruta.conductor == rows[i].conductor || ruta.name_vehiculo == rows[i].vehiculo) {
                     // var dDateConvert=rutadb[i].fsalida+" "+rutadb[i].hsalida;
                     // var dDateDb = new Date(dDateConvert);
                     // var aDateConvert=rutadb[i].fllegada+" "+rutadb[i].hllegada;
                     // var aDateDb = new Date(aDateConvert);
-                    var dDate = new Date(rows[i].fsalida);
-                    var aDate = new Date(rows[i].fllegada);
+                    var dDate = new Date(rows[i].fecha_salida);
+                    var aDate = new Date(rows[i].fecha_llegada);
                     // if ((rutadb[i].fsalida == ruta.fsalida) || (rutadb[i].fllegada == ruta.fllegada)) {
                     //     if ((ruta.hsalida >= rutadb[i].hsalida && rutahsalida <= rutadb[i].hllegada) ||
                     //         (ruta.hllegada >= rutadb[i].hsalida && ruta.hllegada <= rutadb[i].hllegada)) {
@@ -284,8 +284,8 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                     //     }
                     // }
                     if ((dDate == fsalida) || (aDate == fllegada)) {
-                        var dHour = new Date(rows[i].hsalida);
-                        var aHour = new Date(rows[i].hllegada);
+                        var dHour = new Date(rows[i].hora_salida);
+                        var aHour = new Date(rows[i].hora_llegada);
                         if ((hsalida >= dHour && hsalida <= aHour) ||
                             (hllegada >= dHour && hllegada <= aHour)) {
                             res.json({ status: 'Horarios Incompatibles' });
