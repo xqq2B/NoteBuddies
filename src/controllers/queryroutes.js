@@ -227,22 +227,60 @@ qryCtrlRoutes.QueryTrailer = async (req, res) => {
 //Create Routes
 qryCtrlRoutes.CreateRoute = async (req, res) => {
     try {
-        console.log(req.body);
-         var ruta=req.body;
-         console.log(ruta);
-        //verificar si ya existen campos y conductor se puede repetir cuando tenga horarios diferentes
-        // let text = 'Buscar en RUTAS DONDE $1,$2,$3,$4,$5,$6,$7,$8,$9 WHERE id_usuario = $1';
-        // let values = [req.body.id_user];
-        // const result = await pool.query(text, values);
-        // //si hay un campo repetido regresar ese campo
-        // if(repetido==true){
-        //     res.json({repetidos:row.campo1,row.campo2});
-        // }
-        // //crear ruta
-        // let text = 'CREATE RUTA INSERT $1,$2,$3,$4,$5,$6,$7,$8,$9 WHERE id_usuario = $1';
-        // let values = [req.body.id_user];
-        // const result = await pool.query(text, values);
-        res.json({status:'ok'});
+        var ruta = req.body;
+        console.log(ruta);
+        const rutadb = await pool.query('SELECT * FROM ruta');
+        console.log(rutadb);
+        var fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia);
+        var fllegada = new Date(ruta.fechaFin.anio, ruta.fechaFin.mes, ruta.fechaFin.dia);
+        // var dDate = new Date(ruta.fechaIni.anio,ruta.fechaIni.mes,ruta.fechaIni.dia,ruta.horaIni.hora,ruta.horaIni.minutos);
+        // var aDate = new Date(ruta.fechaFin.anio,ruta.fechaFin.mes,ruta.fechaFin.dia,ruta.horaFin.hora,ruta.horaFin.minutos);
+
+        var hsalida = new Date(0, 0, 0, ruta.horaIni.hora, ruta.horaIni.minutos);
+        var hllegada = new Date(0, 0, 0, ruta.horaFin.hora + ruta.horaFin.minutos);
+
+        if (rutadb.length == 0) {
+            let idRuta = await makeIdRoute();
+            let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)';
+            let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
+                ruta.name_vehicle, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, db];
+            const { rows } = await pool.query(text, values);
+            res.json({ status: 'ok' });
+        }
+        else {
+            for (var i = 0; i < rutadb.length; i++) {
+                if (ruta.conductor == rutadb[i].ide_conductor || ruta.name_vehiculo == rutadb[i].vehiculo) {
+                    // var dDateConvert=rutadb[i].fsalida+" "+rutadb[i].hsalida;
+                    // var dDateDb = new Date(dDateConvert);
+                    // var aDateConvert=rutadb[i].fllegada+" "+rutadb[i].hllegada;
+                    // var aDateDb = new Date(aDateConvert);
+                    var dDate = new Date(rutadb[i].fsalida);
+                    var aDate = new Date(rutadb[i].fllegada);
+                    // if ((rutadb[i].fsalida == ruta.fsalida) || (rutadb[i].fllegada == ruta.fllegada)) {
+                    //     if ((ruta.hsalida >= rutadb[i].hsalida && rutahsalida <= rutadb[i].hllegada) ||
+                    //         (ruta.hllegada >= rutadb[i].hsalida && ruta.hllegada <= rutadb[i].hllegada)) {
+                    //         res.json({ status: 'Horarios Incompatibles' });
+                    //     }
+                    // }
+                    if ((dDate == fsalida) || (aDate == fllegada)) {
+                        var dHour = new Date(rutadb[i].hsalida);
+                        var aHour = new Date(rutadb[i].hllegada);
+                        if ((hsalida >= dHour && hsalida <= aHour) ||
+                            (hllegada >= dHour && hllegada <= aHour)) {
+                            res.json({ status: 'Horarios Incompatibles' });
+                        }
+                    }
+                }
+                else {
+                    let idRuta = await makeIdRoute();
+                    let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)';
+                    let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
+                        ruta.name_vehicle, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, db];
+                    const { rows } = await pool.query(text, values);
+                    res.json({ status: 'ok' });
+                }
+            }
+        }
     }
     catch (e) {
         console.log('ERROR CREANDO RUTAS' + e);

@@ -64,12 +64,12 @@ router.post('/config/routes/checkpoints',qryCtrlRoutes.QueryCheckpoints);
 router.post('/config/devices',qryCtrlRoutes.QueryDevice);//vehiculos
 //Consulta drivers      
 router.post('/config/routes/drivers',qryCtrlRoutes.QueryDriver);
+//Consulta Trailer      
+router.post('/config/routes/trailers',qryCtrlRoutes.QueryTrailer);
 //Crear Ruta
 router.post('/config/routes/create',qryCtrlRoutes.CreateRoute);
 //Editar Ruta
-router.post('/config/routes/create',qryCtrlRoutes.EditRoute);
-//Consulta Trailer      
-router.post('/config/routes/trailers',qryCtrlRoutes.QueryTrailer);
+router.post('/config/routes/edit',qryCtrlRoutes.EditRoute);
 
 
 
