@@ -260,11 +260,18 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
         console.log(rows.length);
         if (rows.length == 0) {
             let idRuta = await makeIdRoute();
+            fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
+            fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
+            hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
+            hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
             console.log('entre a sin registros');
-            let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)';
+            console.log(hllegada);
+            console.log(fllegada);
+            let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)';
             let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
-                ruta.name_vehicle, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db];
-            const { rows } = await pool.query(text, values);
+                ruta.name_vehicle, ruta.id_trailer,ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db];
+            await pool.query(text, values);
+
             res.json({ status: 'ok' });
         }
         else {
