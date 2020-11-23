@@ -231,7 +231,7 @@ async function makeIdRoute() {
     for ( var i = 0; i < 20; i++ ) {
        result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
-    const text = 'SELECT * FROM ruta WHERE ide_ruta= $1';
+    const text = 'SELECT * FROM ruta WHERE ideruta= $1';
     const value =[result];
     const{rows}= await pool.query(text,value);
     if(rows.length>0) {
