@@ -286,7 +286,8 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                     var dDate = new Date(rows[i].fecha_salida);
                     var aDate = new Date(rows[i].fecha_llegada);
                     console.log(dDate);
-                    console.log(decha_llegada);
+                    console.log(rows[i].fecha_llegada);
+                    console.log(fsalida);
                     // if ((rutadb[i].fsalida == ruta.fsalida) || (rutadb[i].fllegada == ruta.fllegada)) {
                     //     if ((ruta.hsalida >= rutadb[i].hsalida && rutahsalida <= rutadb[i].hllegada) ||
                     //         (ruta.hllegada >= rutadb[i].hsalida && ruta.hllegada <= rutadb[i].hllegada)) {
@@ -297,6 +298,9 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                         console.log('entre fechas');
                         var dHour = new Date(rows[i].hora_salida);
                         var aHour = new Date(rows[i].hora_llegada);
+                        console.log(aHour);
+                    console.log(rows[i].hora_llegada);
+                    console.log(hsalida);
                         if ((hsalida >= dHour && hsalida <= aHour) ||
                             (hllegada >= dHour && hllegada <= aHour)) {
                             res.json({ status: 'Horarios Incompatibles' });
