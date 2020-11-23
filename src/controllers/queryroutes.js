@@ -252,6 +252,8 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
         console.log(rows[0]);
         var fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia);
         var fllegada = new Date(ruta.fechaFin.anio, ruta.fechaFin.mes, ruta.fechaFin.dia);
+        console.log(fsalida);
+                    console.log(fllegada);
         // var dDate = new Date(ruta.fechaIni.anio,ruta.fechaIni.mes,ruta.fechaIni.dia,ruta.horaIni.hora,ruta.horaIni.minutos);
         // var aDate = new Date(ruta.fechaFin.anio,ruta.fechaFin.mes,ruta.fechaFin.dia,ruta.horaFin.hora,ruta.horaFin.minutos);
 
@@ -288,6 +290,7 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                     console.log(dDate);
                     console.log(rows[i].fecha_llegada);
                     console.log(fsalida);
+                    console.log(fllegada);
                     // if ((rutadb[i].fsalida == ruta.fsalida) || (rutadb[i].fllegada == ruta.fllegada)) {
                     //     if ((ruta.hsalida >= rutadb[i].hsalida && rutahsalida <= rutadb[i].hllegada) ||
                     //         (ruta.hllegada >= rutadb[i].hsalida && ruta.hllegada <= rutadb[i].hllegada)) {
