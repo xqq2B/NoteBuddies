@@ -224,6 +224,25 @@ qryCtrlRoutes.QueryTrailer = async (req, res) => {
 };
 
 
+async function makeIdRoute() {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < 20; i++ ) {
+       result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    const text = 'SELECT * FROM ruta WHERE ide_ruta= $1';
+    const value =[result];
+    const{rows}= await pool.query(text,value);
+    if(rows.length>0) {
+        console.log('id ruta repetido');
+        makeIdRoute();}
+        else{
+            return result;
+        }
+ }
+
+
 //Create Routes
 qryCtrlRoutes.CreateRoute = async (req, res) => {
     try {
@@ -241,9 +260,10 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
 
         if (rutadb.length == 0) {
             let idRuta = await makeIdRoute();
+            console.log('entre a sin registros');
             let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)';
             let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
-                ruta.name_vehicle, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, db];
+                ruta.name_vehicle, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db];
             const { rows } = await pool.query(text, values);
             res.json({ status: 'ok' });
         }
@@ -273,6 +293,7 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                 }
                 else {
                     let idRuta = await makeIdRoute();
+                    console.log(idRuta);
                     let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)';
                     let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
                         ruta.name_vehicle, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, db];
