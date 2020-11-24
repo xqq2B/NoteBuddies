@@ -297,8 +297,8 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                     console.log(dDate);
                     console.log(rows[i].fecha_llegada);
                     //modificando mes menos 1
-                    var mesS=parseInt(ruta.fechaIni.mes) - 1;
-                    var mesL=parseInt(ruta.fechaFin.mes) - 1;
+                    var mesS=parseInt(ruta.fechaIni.mes) ;
+                    var mesL=parseInt(ruta.fechaFin.mes) ;
                     console.log('MEEEEEEEEEEESSSSSSSSSSS'+mesS);
                     console.log('MEEEEEEEEEEESSSSSSSSSSS'+mesL);
                     ///////////////////
