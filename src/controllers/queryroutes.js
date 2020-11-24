@@ -391,15 +391,14 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
         const routes = await pool.query(text, values);
 
         let cPoints =await pool.query('SELECT * FROM ruta_checkpoint');
-        console.log(routes[0]);
-        console.log(routes[0].rows);
+        console.log(routes.rows[0]);
         console.log(cPoints.rows[0]);
         console.log(cPoints.rows[0].idruta);
         var rutaCompleta = [];
         for (var i = 0; i < cPoints.length; i++) {
             for(var j=0; j< routes.lenght;j++){
-                if (cPoints[i].id_ruta == routes[j].id_ruta) {
-                    rutaCompleta.push({ ruta: routes[j], checkpoits: cPoints[i] });
+                if (cPoints.rows[i].id_ruta == routes.rows[j].id_ruta) {
+                    rutaCompleta.push({ ruta: routes.rows[j], checkpoits: cPoints.rows[i] });
                 }
             }
                 
