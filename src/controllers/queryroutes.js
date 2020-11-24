@@ -4,7 +4,7 @@ const qryCtrlRoutes = {};
 const conexion = require('../conexion');
 const { pool } = require('../database');
 
-
+//cambiar a todo a uSessionId si no se rebota//////////////////////////////
 //Consulta Rutas
 qryCtrlRoutes.QueryRoute = async (req, res) => {
     try {
