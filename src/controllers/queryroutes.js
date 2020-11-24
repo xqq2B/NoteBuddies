@@ -373,6 +373,7 @@ qryCtrlRoutes.EditRoute = async (req, res) => {
          console.log('editando ruta');
          let text=('SELECT * FROM ruta WHERE id_ruta=$1');
          let values=[ruta.id_ruta];
+         var response= false;
          const {rows} = await pool.query(text,values);
          if(rows.length==0){
              res.json({status:'Not Found!'});
