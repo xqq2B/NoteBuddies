@@ -444,7 +444,7 @@ qryCtrlRoutes.DeleteRoute = async (req, res) => {
     try {
         console.log(req.params);
          let text=('SELECT deleteRuta($1)');
-         let values=[req.params.id_ruta];
+         let values=[req.params.id_route];
          await pool.query(text,values);
         res.json({status:'ok'});
     }
