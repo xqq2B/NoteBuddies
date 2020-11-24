@@ -302,6 +302,11 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                     fllegada.setMonth(+1);
                     console.log(fsalida);
                     console.log(fllegada);
+                    console.log('fechas');
+                    console.log(dDate.getDate);
+                    console.log(fsalida.getDate);
+                    console.log(aDate.getDate);
+                    console.log(fllegada.getDate);
                     if ((dDate.getDate == fsalida.getDate) || (aDate.getDate == fllegada.getDate)) {
                         console.log('entre fechas');
                         var dates = rows[i].hora_salida.split(':');
@@ -390,27 +395,17 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
         let values = [req.body.db];
         const routes = await pool.query(text, values);
 
-        let cPoints =await pool.query('SELECT * FROM ruta_checkpoint');
-        console.log(routes.rows[0]);
-        console.log(cPoints.rows[0]);
-        console.log(cPoints.rows[0].id_ruta);
-        console.log(cPoints.rows.length);
-        console.log(routes.rows.length);
+        let cPoints = await pool.query('SELECT * FROM ruta_checkpoint');
         var rutaCompleta = [];
         for (var i = 0; i < cPoints.rows.length; i++) {
-            console.log(i);
-            for(var j=0; j < routes.rows.length;j++){
-                console.log(j);
+            for (var j = 0; j < routes.rows.length; j++) {
                 if (cPoints.rows[i].id_ruta == routes.rows[j].id_ruta) {
                     rutaCompleta.push({ ruta: routes.rows[j], checkpoits: cPoints.rows[i] });
-                    console.log(j);
                 }
-                console.log(rutaCompleta);
             }
-                
-            }
-        console.log(rutaCompleta)
-        res.json({rutaCompleta});
+        }
+        //console.log(rutaCompleta)
+        res.json({ rutaCompleta });
 
 
         // let text2 = ('SELECT * FROM ruta_checkpoint WHERE id_ruta=$1');
@@ -444,12 +439,11 @@ qryCtrlRoutes.DeleteRoute = async (req, res) => {
     try {
          let text=('SELECT deleteRuta($1)');
          let values=[req.body.id_ruta];
-         const{rows} = await pool.query(text,values);
-         //deleteRuta(ide_ruta varchar(30))
+         await pool.query(text,values);
         res.json({status:'ok'});
     }
     catch (e) {
-        console.log('ERROR EDITANDO RUTAS' + e);
+        console.log('ERROR BORRANDO RUTAS' + e);
     }
 };
 
