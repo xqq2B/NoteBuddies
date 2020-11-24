@@ -301,12 +301,10 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                     if ((dDate.getDate == fsalida.getDate) || (aDate.getDate == fllegada.getDate)) {
                         console.log('entre fechas');
                         //AGREGAR MES DIA ANIO
-                        
-                        var aa = "0-0-0";
-                        var xs = aa + " " + rows[i].hora_salida;
-                        var xl = aa + " " + rows[i].hora_llegada;
-                        var dHour = new Date(xs);
-                        var aHour = new Date(xl);
+                        var dates = rows[i].hora_salida.split(':');
+                        var datel = rows[i].hora_llegada.split(':');
+                        var dHour = new Date(0,0,0,dates[0],dates[1]);
+                        var aHour = new Date(0,0,0,datel[0],datel[1]);
                         console.log(aHour);
                         console.log(dHour);
                     console.log(rows[i].hora_llegada);
