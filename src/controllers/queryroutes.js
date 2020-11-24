@@ -471,10 +471,15 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
                     //////
                     c=routes.rows[j];
                     d=routes.rows[j-1];
-                    if(d==c)
+                    if(d==c){
+
+                        console.log('ok');
                     rutaCompleta.push({ checkpoints: cPoints.rows[i] });
+                }
                     /////
-                    else
+                    else{
+                        console.log('nooo');
+                    }
                     rutaCompleta.push({ ruta: routes.rows[j], checkpoints: cPoints.rows[i] });
                 }
             }
