@@ -371,20 +371,76 @@ qryCtrlRoutes.EditRoute = async (req, res) => {
         console.log(req.body);
          var ruta=req.body;
          console.log('editando ruta');
-        //verificar si ya existen campos y conductor se puede repetir cuando tenga horarios diferentes
-        // let text = 'Buscar en RUTAS DONDE $1,$2,$3,$4,$5,$6,$7,$8,$9 WHERE id_usuario = $1';
-        // let values = [req.body.id_user];
-        // const result = await pool.query(text, values);
-        // //si hay un campo repetido regresar ese campo
-        // if(repetido==true){
-        //     res.json({repetidos:row.campo1,row.campo2});
-        // }
-        // //crear ruta
-        // let text = 'CREATE RUTA INSERT $1,$2,$3,$4,$5,$6,$7,$8,$9 WHERE id_usuario = $1';
-        // let values = [req.body.id_user];
-        // const result = await pool.query(text, values);
-        res.json({status:'ok'});
-    }
+         let text=('SELECT * FROM ruta WHERE id_ruta=$1');
+         let values=[ruta.id_ruta];
+         const {rows} = await pool.query(text,values);
+         if(rows.length==0){
+             res.json({status:'Not Found!'});
+         }
+         if (rows.length >0) {
+                if (ruta.conductor == rows[0].conductor || ruta.name_vehiculo == rows[0].vehiculo) {
+                    console.log('conductor/vehiculo repetido');
+                    var dDate = new Date(rows[0].fecha_salida);
+                    var aDate = new Date(rows[0].fecha_llegada);
+                    console.log(dDate);
+                    console.log(rows[0].fecha_llegada);
+                    var mesS=parseInt(ruta.fechaIni.mes) ;
+                    var mesL=parseInt(ruta.fechaFin.mes) ;
+                    mesS=mesS-1;mesL=mesL-1;
+                    var fsalida = new Date(ruta.fechaIni.anio, mesS, ruta.fechaIni.dia);
+                    var fllegada = new Date(ruta.fechaFin.anio, mesL, ruta.fechaFin.dia);
+                    //fsalida.setMonth(+1);
+                    //fllegada.setMonth(+1);
+                    console.log(fsalida);
+                    console.log(fllegada);
+                    console.log('fechas');
+                    console.log(dDate.getTime());
+                    console.log(fsalida.getTime());
+                    console.log(aDate.getTime());
+                    console.log(fllegada.getTime());
+                    if ((dDate.getTime() == fsalida.getTime()) || (aDate.getTime() == fllegada.getTime())) {
+                        console.log('entre fechas');
+                        var dates = rows[0].hora_salida.split(':');
+                        var datel = rows[0].hora_llegada.split(':');
+                        var dHour = new Date(0,0,0,dates[0],dates[1]);
+                        var aHour = new Date(0,0,0,datel[0],datel[1]);
+                        console.log(aHour);
+                        console.log(dHour);
+                    console.log(rows[0].hora_llegada);
+                    console.log(hsalida);
+                    console.log(dHour);
+                    console.log(aHour);
+                    console.log(i);
+                        if ((hsalida >= dHour && hsalida <= aHour) ||
+                            (hllegada >= dHour && hllegada <= aHour)) {
+                                console.log('ultima parte');
+                            response= true;
+                            res.json({ status: 'Horarios Incompatibles' });
+                        }
+                    }
+                }
+            }
+            if(response == false){
+                let idRuta = await makeIdRoute();
+                console.log(idRuta);
+                let fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
+                let fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
+                hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
+                hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
+                let text = 'SELECT updateRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)';
+                //se agrego status pedirlo para editar ruta
+                let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
+                    ruta.name_vehicle, ruta.id_trailer, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada,ruta.status, ruta.db];
+                await pool.query(text, values);
+                for (let y = 0; y < ruta.checkpoints.length; y++) {
+                    let text2 = 'SELECT edicionRuta_Checkpoint($1,$2,$3,$4,$5)';
+                    //pedir hora y fecha ya que lo solicita la db
+                    let values2 = [idRuta, ruta.checkpoints[y].id_punto, ruta.checkpoints[y].name_punto,ruta.checkpoints[y].hora,ruta.checkpoints[y].fecha];
+                    await pool.query(text2, values2);
+                }
+                res.json({ status: 'ok' });
+            }
+        }
     catch (e) {
         console.log('ERROR EDITANDO RUTAS' + e);
     }
@@ -405,7 +461,7 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
         for (var i = 0; i < cPoints.rows.length; i++) {
             for (var j = 0; j < routes.rows.length; j++) {
                 if (cPoints.rows[i].id_ruta == routes.rows[j].id_ruta) {
-                    rutaCompleta.push({ ruta: routes.rows[j], checkpoits: cPoints.rows[i] });
+                    rutaCompleta.push({ ruta: routes.rows[j], checkpoints: cPoints.rows[i] });
                 }
             }
         }
@@ -446,6 +502,9 @@ qryCtrlRoutes.DeleteRoute = async (req, res) => {
          let text=('SELECT deleteRuta($1)');
          let values=[req.params.id_route];
          await pool.query(text,values);
+         /*ERROR BORRANDO RUTASerror: update or delete on table "ruta" 
+         violates foreign key constraint "fk_id_ruta_ruta_checkpoint" 
+         on table "ruta_checkpoint"*/
         res.json({status:'ok'});
     }
     catch (e) {

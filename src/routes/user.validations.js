@@ -5,6 +5,9 @@ const userCtrl = require('../controllers/users');
 const geoCtrl = require ('../lib/geo.auth');
 const qryCtrl = require('../controllers/querycontrol');
 const qryCtrlRoutes = require ('../controllers/queryroutes');
+const qryCtrlMonitor = require ('../controllers/querymonitor');
+
+
 //ver todos
 router.get('/',userCtrl.getUsers); 
 
@@ -75,5 +78,9 @@ router.post('/config/routes/qall',qryCtrlRoutes.QueryAll);//get all
 //Delete Ruta
 router.delete('/config/routes/delete/:id_route',qryCtrlRoutes.DeleteRoute);//get all
 
+
+//MONITOREO
+//Edicion Especial Checkpoints
+router.post('/monitor/edit/checkpoints',qryCtrlMonitor.EditCheckPoint);
 
 module.exports=router;
