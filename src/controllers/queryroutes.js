@@ -341,10 +341,13 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
             await pool.query(text, values);
             console.log('antes',ruta.checkpoints[0].id_punto);
             console.log(ruta.checkpoints.length);
+            console.log(ruta.checkpoints[0].id_punto);
             for (let y = 0; y < ruta.checkpoints.length; y++) {
                 console.log('dentro1');
                 let text2 = 'SELECT createRuta_Checkpoint($1,$2,$3)';
+                console.log('dentro1.5');
                 let values2 = [idRuta, ruta.checkpoints[y].id_punto, ruta.checkpoints[y].name_punto];//, ruta.id_user];
+                console.log('dentro1.75');
                 await pool.query(text2, values2);
                 console.log('dentro2');
             }
