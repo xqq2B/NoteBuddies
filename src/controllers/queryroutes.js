@@ -61,7 +61,7 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
         console.log(Rutas.length);
     }
     catch (e) {
-        console.log('ERROR RUTAS' + e);
+        console.log('ERROR QUERY RUTAS' + e);
     }
 };
 
@@ -94,7 +94,7 @@ qryCtrlRoutes.QueryDevice = async (req, res) => {
         res.json({ Devices });
     }
     catch (e) {
-        console.log('ERROR RUTAS' + e);
+        console.log('ERROR QUERY DEVICE RUTAS' + e);
     }
 };
 
@@ -142,7 +142,7 @@ qryCtrlRoutes.QueryCheckpoints = async (req, res) => {
         res.json({ Checkpoints });
     }
     catch (e) {
-        console.log('ERROR RUTAS' + e);
+        console.log('ERROR QUERY CHECKPOINTS RUTAS' + e);
     }
 };
 
@@ -181,7 +181,7 @@ qryCtrlRoutes.QueryDriver = async (req, res) => {
         res.json({ driver });
     }
     catch (e) {
-        console.log('ERROR RUTAS' + e);
+        console.log('ERROR QUERY DRIVER RUTAS' + e);
     }
 };
 
@@ -218,7 +218,7 @@ qryCtrlRoutes.QueryTrailer = async (req, res) => {
         res.json({ trailer });
     }
     catch (e) {
-        console.log('ERROR RUTAS' + e);
+        console.log('ERROR QUERY TRAILER RUTAS' + e);
     }
 };
 
