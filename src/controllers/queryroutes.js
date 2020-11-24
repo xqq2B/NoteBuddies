@@ -478,7 +478,7 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
                     var a=0;
                     while(cPoints.rows[i].id_ruta == routes.rows[a].id_ruta)
                     {
-                        rutaCompleta.push({ ruta: routes.rows[a], checkpoints: cPoints.rows[i] });  
+                        rutaCompleta[i]=({ ruta: routes.rows[a], checkpoints: cPoints.rows[i] });  
                         a++;  
                     }
                 //     if(d==c){
