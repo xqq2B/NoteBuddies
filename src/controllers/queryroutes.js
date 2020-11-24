@@ -397,7 +397,7 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
          let text2=('SELECT * FROM ruta_checkpoint WHERE id_ruta= $1');
          let values2=[routes.rows[0].id_ruta];
          const cPoints = await pool.query(text2,values2);
-        res.json(routes.rows,cPoints.rows);
+        res.json({Rutas:routes.rows,Puntos:cPoints.rows});
     }
     catch (e) {
         console.log('ERROR CONSULTANDO RUTAS' + e);
