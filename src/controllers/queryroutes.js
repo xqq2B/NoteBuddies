@@ -279,7 +279,7 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
 
             res.json({ status: 'ok' });
         }
-        else if (rows.length >0) {
+        if (rows.length >0) {
             for (var i = 0; i < rows.length; i++) {
                 console.log('hola');
                 if (ruta.conductor == rows[i].conductor || ruta.name_vehiculo == rows[i].vehiculo) {
@@ -350,7 +350,7 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                 // }
             }
         }
-        else if(response == false){
+        if(response == false){
             let idRuta = await makeIdRoute();
             console.log(idRuta);
             fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
