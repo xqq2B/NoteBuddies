@@ -353,10 +353,8 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
             console.log(ruta.checkpoints[0].id_punto);
             for (let y = 0; y < ruta.checkpoints.length; y++) {
                 let text2 = 'SELECT createRuta_Checkpoint($1,$2,$3)';
-                let values2 = [idRuta, ruta.checkpoints[y].id_punto, ruta.checkpoints[y].name_punto];//, ruta.id_user];
-                console.log('dentro1.75');
+                let values2 = [idRuta, ruta.checkpoints[y].id_punto, ruta.checkpoints[y].name_punto];
                 await pool.query(text2, values2);
-                console.log('dentro2');
             }
             console.log('despues');
             res.json({ status: 'ok' });
@@ -444,8 +442,9 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
 //Delete Route
 qryCtrlRoutes.DeleteRoute = async (req, res) => {
     try {
+        console.log(req.params);
          let text=('SELECT deleteRuta($1)');
-         let values=[req.body.id_ruta];
+         let values=[req.params.id_ruta];
          await pool.query(text,values);
         res.json({status:'ok'});
     }
