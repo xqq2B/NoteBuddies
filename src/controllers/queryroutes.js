@@ -292,9 +292,10 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                     var aDate = new Date(rows[i].fecha_llegada);
                     console.log(dDate);
                     console.log(rows[i].fecha_llegada);
-                    /////////////////////////ARREGLAR AGREGAR MES/////////
-                    //fsalida.setMonth(+1);
-                    //fllegada.setMonth(+1);
+                    fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia);
+                    fllegada = new Date(ruta.fechaFin.anio, ruta.fechaFin.mes, ruta.fechaFin.dia);
+                    fsalida.setMonth(+1);
+                    fllegada.setMonth(+1);
                     console.log(fsalida);
                     console.log(fllegada);
                     // if ((rutadb[i].fsalida == ruta.fsalida) || (rutadb[i].fllegada == ruta.fllegada)) {
@@ -373,6 +374,21 @@ qryCtrlRoutes.EditRoute = async (req, res) => {
         // let values = [req.body.id_user];
         // const result = await pool.query(text, values);
         res.json({status:'ok'});
+    }
+    catch (e) {
+        console.log('ERROR EDITANDO RUTAS' + e);
+    }
+};
+
+
+
+//Show All by db
+qryCtrlRoutes.QueryAll = async (req, res) => {
+    try {
+         let text=('SELECT * FROM ruta WHERE db=$1');
+         let values=[req.body.db];
+         const{rows} = await pool.query(text,values);
+        res.json({rows});
     }
     catch (e) {
         console.log('ERROR EDITANDO RUTAS' + e);
