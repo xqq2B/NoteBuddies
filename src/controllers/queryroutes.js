@@ -288,8 +288,8 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                     var aDate = new Date(rows[i].fecha_llegada);
                     console.log(dDate);
                     console.log(rows[i].fecha_llegada);
-                    fsalida.setMonth(+1);
-                    fllegada.setMonth(+1);
+                    await fsalida.setMonth(+1);
+                    await fllegada.setMonth(+1);
                     console.log(fsalida);
                     console.log(fllegada);
                     // if ((rutadb[i].fsalida == ruta.fsalida) || (rutadb[i].fllegada == ruta.fllegada)) {
@@ -300,9 +300,15 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                     // }
                     if ((dDate.getDate == fsalida.getDate) || (aDate.getDate == fllegada.getDate)) {
                         console.log('entre fechas');
-                        var dHour = new Date(rows[i].hora_salida);
-                        var aHour = new Date(rows[i].hora_llegada);
+                        //AGREGAR MES DIA ANIO
+                        
+                        var aa = "0-0-0";
+                        var xs = aa + " " + rows[i].hora_salida;
+                        var xl = aa + " " + rows[i].hora_llegada;
+                        var dHour = new Date(xs);
+                        var aHour = new Date(xl);
                         console.log(aHour);
+                        console.log(dHour);
                     console.log(rows[i].hora_llegada);
                     console.log(hsalida);
                         if ((hsalida >= dHour && hsalida <= aHour) ||
