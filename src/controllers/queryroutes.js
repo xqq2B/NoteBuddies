@@ -16,7 +16,7 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
         console.log(result.rows);
         if (result.rows[0].bd == "metrica") {
             api = await conexion.updateSessionId();
-            console.log(api);
+           // console.log(api);
         }
         else {
             console.log('Otra base de datos');
@@ -39,7 +39,7 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
         });
         var Rutas = [];
         console.log(zones[0].id)
-        console.log(zonesRoutes[0]);
+       // console.log(zonesRoutes[0]);
         // console.log(zonesRoutes[175]);
         // console.log(zonesRoutes[175].groups[0]);
         for (let i = 0; i < zonesRoutes.length; i++) 
@@ -74,7 +74,7 @@ qryCtrlRoutes.QueryDevice = async (req, res) => {
         const result = await pool.query(text, values);
         if (result.rows[0].bd == "metrica") {
             api = await conexion.updateSessionId();
-            console.log(api);
+           // console.log(api);
         }
         else {
             console.log('hi');
@@ -110,7 +110,7 @@ qryCtrlRoutes.QueryCheckpoints = async (req, res) => {
         console.log('CheckPOINTS');
         if (result.rows[0].bd == "metrica") {
             api = await conexion.updateSessionId();
-            console.log(api);
+            //console.log(api);
         }
         else {
             console.log('Otra base de datos');
@@ -124,7 +124,7 @@ qryCtrlRoutes.QueryCheckpoints = async (req, res) => {
                 "name":"checkpoints"
             }
         });
-        console.log(zones[0]);
+       // console.log(zones[0]);
         const zonesCheckPoints= await api.call("Get",{
             typeName: "Zone",
             search: {
@@ -138,7 +138,7 @@ qryCtrlRoutes.QueryCheckpoints = async (req, res) => {
                 }
             }
         }
-        console.log(zonesCheckPoints[2]);
+       // console.log(zonesCheckPoints[2]);
         res.json({ Checkpoints });
     }
     catch (e) {
@@ -157,7 +157,7 @@ qryCtrlRoutes.QueryDriver = async (req, res) => {
         const result = await pool.query(text, values);
         if (result.rows[0].bd == "metrica") {
             api = await conexion.updateSessionId();
-            console.log(api);
+            //console.log(api);
         }
         else {
             console.log('hi');
@@ -170,7 +170,7 @@ qryCtrlRoutes.QueryDriver = async (req, res) => {
                 isDriver: "true"
             }
         });
-        console.log(drivers[0].name);
+       // console.log(drivers[0].name);
         const driver = [];
         console.log(drivers.length);
         for (var i = 0; i < drivers.length; i++) {
@@ -207,7 +207,7 @@ qryCtrlRoutes.QueryTrailer = async (req, res) => {
                 //isDriver:"true"
             }
         });
-        console.log(trailers);
+        //console.log(trailers);
         const trailer = [];
         console.log(trailers.length);
         for (var i = 0; i < trailers.length; i++) {
@@ -249,11 +249,8 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
         var ruta = req.body;
         console.log(ruta);
         console.log(ruta.fechaFin);
-        console.log(ruta.fechaIni);
         const {rows} = await pool.query('SELECT * FROM ruta');
         console.log(rows[0]);
-        console.log(ruta['fechaFin'].anio);
-        console.log(ruta['fechaFin']['anio']);
         
         var fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia);
         console.log(ruta.fechaIni.anio);
@@ -393,22 +390,40 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
         let values = [req.body.db];
         const routes = await pool.query(text, values);
 
-
-        const cPoints = await pool.query('SELECT * FROM ruta_checkpoint');
-        var result = [];
-        var resultFinal = [];
-        console.log('1',routes.rows[0]);
-        for (var i = 0; i < routes.length; i++) {
-            for (var j = 0; j < cPoints.length; j++) {
-                if (routes.rows[i].id_ruta == cPoints.rows[j].id_ruta) {
-                    result.push(cPoints.rows[j]);
+        let cPoints =await pool.quert('SELECT * FROM ruta_checkpoint');
+        
+        var rutaCompleta = [];
+        for (var i = 0; i < cPoints.length; i++) {
+            if (cPoints[i].groups[0] != null) {
+                if (cPoints[i].id_ruta == routes[0].id_ruta) {
+                    rutaCompleta.push({ ruta: routes[i], checkpoits: cPoints[i] });
                 }
             }
-           
-            resultFinal.push({ruta:routes.rows[i],checkpoints:result});
-            result = [];
         }
-        res.json({ Rutas: resultFinal });
+        console.log(rutaCompleta)
+        res.json({rutaCompleta});
+
+
+        // let text2 = ('SELECT * FROM ruta_checkpoint WHERE id_ruta=$1');
+        // let values2 = [routes.rows[i].id_ruta];
+        // const routes2 = await pool.query(text2, values2);
+
+
+        // const cPoints = await pool.query('SELECT * FROM ruta_checkpoint');
+        // var result = [];
+        // var resultFinal = [];
+        // console.log('1',routes.rows[0]);
+        // for (var i = 0; i < routes.length; i++) {
+        //     for (var j = 0; j < cPoints.length; j++) {
+        //         if (routes.rows[i].id_ruta == cPoints.rows[j].id_ruta) {
+        //             result.push(cPoints.rows[j]);
+        //         }
+        //     }
+           
+        //     resultFinal.push({ruta:routes.rows[i],checkpoints:result});
+        //     result = [];
+        // }
+        // res.json({ Rutas: resultFinal });
     }
     catch (e) {
         console.log('ERROR CONSULTANDO RUTAS' + e);
