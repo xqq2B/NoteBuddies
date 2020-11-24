@@ -12,7 +12,7 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
         let text = 'select * from vistaObtenerUsuario WHERE id_usuario = $1';
         let values = [req.body.id_user];
         const result = await pool.query(text, values);
-        console.log('bbbbbbbbbbbbbbbddddddddddddd' + result.rows[0].bd);
+        //console.log('bbbbbbbbbbbbbbbddddddddddddd' + result.rows[0].bd);
         console.log(result.rows);
         if (result.rows[0].bd == "metrica") {
             api = await conexion.updateSessionId();
@@ -394,12 +394,13 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
         
         var rutaCompleta = [];
         for (var i = 0; i < cPoints.length; i++) {
-            if (cPoints[i].groups[0] != null) {
-                if (cPoints[i].id_ruta == routes[0].id_ruta) {
-                    rutaCompleta.push({ ruta: routes[i], checkpoits: cPoints[i] });
+            for(var j=0; j< routes.lenght;j++){
+                if (cPoints[i].id_ruta == routes[j].id_ruta) {
+                    rutaCompleta.push({ ruta: routes[j], checkpoits: cPoints[i] });
                 }
             }
-        }
+                
+            }
         console.log(rutaCompleta)
         res.json({rutaCompleta});
 
