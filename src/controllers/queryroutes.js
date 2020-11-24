@@ -277,6 +277,11 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                 ruta.name_vehicle, ruta.id_trailer,ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db];
             await pool.query(text, values);
 
+            for (let y = 0; y < ruta.checkpoints.length; y++) {
+                let text2 = 'SELECT createRuta_Checkpoint($1,$2,$3,$4)';
+                let values2 = [idRuta, ruta.checkpoints[y].id_punto, ruta.checkpoints[y].name_punto, ruta.id_user];
+                await pool.query(text2, values2);
+            }
             res.json({ status: 'ok' });
         }
         if (rows.length >0) {
@@ -294,15 +299,8 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                     fllegada.setMonth(+1);
                     console.log(fsalida);
                     console.log(fllegada);
-                    // if ((rutadb[i].fsalida == ruta.fsalida) || (rutadb[i].fllegada == ruta.fllegada)) {
-                    //     if ((ruta.hsalida >= rutadb[i].hsalida && rutahsalida <= rutadb[i].hllegada) ||
-                    //         (ruta.hllegada >= rutadb[i].hsalida && ruta.hllegada <= rutadb[i].hllegada)) {
-                    //         res.json({ status: 'Horarios Incompatibles' });
-                    //     }
-                    // }
                     if ((dDate.getDate == fsalida.getDate) || (aDate.getDate == fllegada.getDate)) {
                         console.log('entre fechas');
-                        //AGREGAR MES DIA ANIO
                         var dates = rows[i].hora_salida.split(':');
                         var datel = rows[i].hora_llegada.split(':');
                         var dHour = new Date(0,0,0,dates[0],dates[1]);
@@ -320,34 +318,8 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                             response= true;
                             res.json({ status: 'Horarios Incompatibles' });
                         }
-                        // else{
-                        //     let idRuta = await makeIdRoute();
-                        //     console.log(idRuta);
-                        //     fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
-                        //     fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
-                        //     hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
-                        //     hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
-                        //     let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)';
-                        //     let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
-                        //         ruta.name_vehicle, ruta.id_trailer, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db];
-                        //     await pool.query(text, values);
-                        //     res.json({ status: 'ok' });
-                        // }
                     }
                 }
-                // else {
-                //     let idRuta = await makeIdRoute();
-                //     console.log(idRuta);
-                //     fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
-                //     fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
-                //     hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
-                //     hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
-                //     let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)';
-                //     let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
-                //         ruta.name_vehicle, ruta.id_trailer, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db];
-                //     await pool.query(text, values);
-                //     res.json({ status: 'ok' });
-                // }
             }
         }
         if(response == false){
@@ -361,6 +333,12 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
             let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
                 ruta.name_vehicle, ruta.id_trailer, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db];
             await pool.query(text, values);
+            for (let y = 0; y < ruta.checkpoints.length; y++) {
+                let text2 = 'SELECT createRuta_Checkpoint($1,$2,$3,$4)';
+                let values2 = [idRuta, ruta.checkpoints[y].id_punto, ruta.checkpoints[y].name_punto, ruta.id_user];
+                await pool.query(text2, values2);
+            }
+
             res.json({ status: 'ok' });
         }
     }
