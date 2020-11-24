@@ -155,3 +155,12 @@ Content-Type: application/json
 {
     "id_user":"1F_5x8Fv1-8d1l2pbFclfw"
 }   
+
+
+###
+POST http://35.209.128.105:3389/api/auth/config/routes/qall
+Content-Type: application/json
+
+{
+    "db":"metrica"
+}   

@@ -390,7 +390,7 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
         let values = [req.body.db];
         const routes = await pool.query(text, values);
 
-        let cPoints =await pool.quert('SELECT * FROM ruta_checkpoint');
+        let cPoints =await pool.query('SELECT * FROM ruta_checkpoint');
         
         var rutaCompleta = [];
         for (var i = 0; i < cPoints.length; i++) {
