@@ -422,17 +422,16 @@ qryCtrlRoutes.EditRoute = async (req, res) => {
                 }
             }
             if(response == false){
-                let idRuta = await makeIdRoute();
-                console.log(idRuta);
                 let fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
                 let fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
                 hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
                 hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
                 let text = 'SELECT updateRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)';
-                //se agrego status pedirlo para editar ruta
-                let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
+                //se agrego status pedirlo para editar ruta y id de ruta propia
+                let values = [ruta.id_routep, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
                     ruta.name_vehicle, ruta.id_trailer, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada,ruta.status, ruta.db];
                 await pool.query(text, values);
+                console.log('ruta bn');
                 for (let y = 0; y < ruta.checkpoints.length; y++) {
                     let text2 = 'SELECT edicionRuta_Checkpoint($1,$2,$3,$4,$5)';
                     //pedir hora y fecha ya que lo solicita la db
