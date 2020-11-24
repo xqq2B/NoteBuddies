@@ -390,10 +390,14 @@ qryCtrlRoutes.EditRoute = async (req, res) => {
 //Show All by db
 qryCtrlRoutes.QueryAll = async (req, res) => {
     try {
-         let text=('SELECT * FROM ruta WHERE db=$1');
+        //console.log(req.body);
+         let text=('SELECT * FROM ruta WHERE bd=$1');
          let values=[req.body.db];
          const{rows} = await pool.query(text,values);
-        res.json({rows});
+         let text2=('SELECT * FROM ruta_checkpoint WHERE id_ruta= $1');
+         let values2=[rows.id_ruta];
+         const cPoints = await pool.query(text2,values2);
+        res.json({rows,cPoints});
     }
     catch (e) {
         console.log('ERROR EDITANDO RUTAS' + e);
