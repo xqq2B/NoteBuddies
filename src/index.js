@@ -1,4 +1,4 @@
-require('./database');
+//require('./database');
 //require('./conexion');
 // const conexion = require('./conexion');
 // conexion.updateSessionId();
