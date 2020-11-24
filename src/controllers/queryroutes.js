@@ -393,6 +393,8 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
         let values = [req.body.db];
         const routes = await pool.query(text, values);
 
+
+
         const cPoints = await pool.query('SELECT * FROM ruta_checkpoint');
         var result = [];
         var resultFinal = [];
@@ -402,7 +404,7 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
                     result.push(cPoints[j].id_ruta);
                 }
             }
-            routes.rows[i].push(result);
+            routes.rows[i] = {ruta:routes.rows[i],checkpoints:result};
             result = [];
         }
         res.json({ Rutas: routes.rows });
