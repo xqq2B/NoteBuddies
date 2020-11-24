@@ -374,7 +374,10 @@ qryCtrlRoutes.EditRoute = async (req, res) => {
          let text=('SELECT * FROM ruta WHERE id_ruta=$1');
          let values=[ruta.id_routep];
          var response= false;
-         /*ERROR EDITANDO RUTASerror: column "ide_ruta" does not exist*/
+         
+         var hsalida = new Date(0, 0, 0, ruta.horaIni.hora, ruta.horaIni.minutos);
+        var hllegada = new Date(0, 0, 0, ruta.horaFin.hora + ruta.horaFin.minutos);
+
          const {rows} = await pool.query(text,values);
          if(rows.length==0){
              res.json({status:'Not Found!'});
@@ -425,8 +428,8 @@ qryCtrlRoutes.EditRoute = async (req, res) => {
             if(response == false){
                 let fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
                 let fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
-                let hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
-                let hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
+                hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
+                hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
                 let text = 'SELECT updateRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)';
                 //se agrego status pedirlo para editar ruta y id de ruta propia
                 let values = [ruta.id_routep, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
