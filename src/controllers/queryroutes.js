@@ -467,38 +467,43 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
         console.log(routes.rows.length);
         var x=-1;
         /////
-        for (var j = 0; j < routes.rows.length; j++) {
-            for (var i = 0; i < cPoints.rows.length; i++) {
-                if (cPoints.rows[i].id_ruta == routes.rows[j].id_ruta) {
-                   rutaCompleta.push({ ruta: routes.rows[j]});
-                   rutaCompletaCP.push({checkpoints: cPoints.rows[i]}); 
+        // for (var j = 0; j < routes.rows.length; j++) {
+        //     var a = -1;
+        //     for (var i = 0; i < cPoints.rows.length; i++) {
+        //         if (cPoints.rows[i].id_ruta == routes.rows[j].id_ruta) {
+        //             a++;//veces que se repite
+        //             if (cPoints.rows[i + 1].id_ruta == routes.rows[j + 1].id_ruta) {
+        //                 b = j;//valor de j
+        //                 rutaCompleta.push({ ruta: routes.rows[j] });
+        //                 for (var k = 0; k < a; k++) {
+        //                     rutaCompletaCP.push({ checkpoints: cPoints.rows[i] });
+        //                 }
+        //             }
+
+        //             //    rutaCompleta.push({ ruta: routes.rows[j]});
+        //             //    rutaCompletaCP.push({checkpoints: cPoints.rows[i]}); 
+        //         }
+        //         if (a!=-1)
+        //         ultima.push({ ruta:routes.rows[a],checkpoints:cPoints.rows[i] });
+        //     }
+        // }
+        // //console.log(rutaCompleta)
+        // res.json({ ruta:rutaCompleta,checkpoints:rutaCompletaCP });
+
+        var result = [];
+        var resultFinal = [];
+        console.log('1',routes.rows[0]);
+        for (var i = 0; i < routes.rows.length; i++) {
+            for (var j = 0; j < cPoints.rows.length; j++) {
+                if (routes.rows[i].id_ruta == cPoints.rows[j].id_ruta) {
+                    result.push(cPoints.rows[j]);
                 }
             }
-        }
-        //console.log(rutaCompleta)
-        res.json({ ruta:rutaCompleta,checkpoints:rutaCompletaCP });
-
-
-        // let text2 = ('SELECT * FROM ruta_checkpoint WHERE id_ruta=$1');
-        // let values2 = [routes.rows[i].id_ruta];
-        // const routes2 = await pool.query(text2, values2);
-
-
-        // const cPoints = await pool.query('SELECT * FROM ruta_checkpoint');
-        // var result = [];
-        // var resultFinal = [];
-        // console.log('1',routes.rows[0]);
-        // for (var i = 0; i < routes.length; i++) {
-        //     for (var j = 0; j < cPoints.length; j++) {
-        //         if (routes.rows[i].id_ruta == cPoints.rows[j].id_ruta) {
-        //             result.push(cPoints.rows[j]);
-        //         }
-        //     }
            
-        //     resultFinal.push({ruta:routes.rows[i],checkpoints:result});
-        //     result = [];
-        // }
-        // res.json({ Rutas: resultFinal });
+            resultFinal.push({ruta:routes.rows[i],checkpoints:result});
+            result = [];
+        }
+        res.json({ Rutas: resultFinal });
     }
     catch (e) {
         console.log('ERROR CONSULTANDO RUTAS' + e);
