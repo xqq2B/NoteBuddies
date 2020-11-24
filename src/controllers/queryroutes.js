@@ -298,8 +298,8 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                     console.log(rows[i].fecha_llegada);
                     fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia);
                     fllegada = new Date(ruta.fechaFin.anio, ruta.fechaFin.mes, ruta.fechaFin.dia);
-                    fsalida.setMonth(+1);
-                    fllegada.setMonth(+1);
+                    //fsalida.setMonth(+1);
+                    //fllegada.setMonth(+1);
                     console.log(fsalida);
                     console.log(fllegada);
                     console.log('fechas');
