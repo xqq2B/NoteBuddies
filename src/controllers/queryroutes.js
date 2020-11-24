@@ -466,32 +466,8 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
         var c=[],d=[];
         for (var i = 0; i < cPoints.rows.length; i++) {
             for (var j = 0; j < routes.rows.length; j++) {
-                c=routes.rows[j].id_ruta;
-                if(j==0)
-                d=routes.rows[0].id_ruta;
-                else
-                    d=routes.rows[j-1].id_ruta;
-                    console.log(c);
-                    console.log(d);
                 if (cPoints.rows[i].id_ruta == routes.rows[j].id_ruta) {
-                    //////
-                    var a=0;
-                    while(cPoints.rows[i].id_ruta == routes.rows[a].id_ruta)
-                    {
-                        rutaCompleta[i]=({ ruta: routes.rows[a], checkpoints: cPoints.rows[i] });  
-                        a++;  
-                    }
-                //     if(d==c){
-
-                //         console.log('ok');
-                //     rutaCompleta.push({ checkpoints: cPoints.rows[i] });
-                // }
-                //     /////
-                //     else{
-                //         console.log('nooo');
-                //     }
-                    
-                //     rutaCompleta.push({ ruta: routes.rows[j], checkpoints: cPoints.rows[i] });
+                    rutaCompleta[i]({ ruta: routes.rows[j], checkpoints: cPoints.rows[i] });
                 }
             }
         }
