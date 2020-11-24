@@ -290,7 +290,7 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
         if (rows.length >0) {
             for (var i = 0; i < rows.length; i++) {
                 console.log('hola');
-                if (ruta.conductor == rows[i].conductor || ruta.name_vehiculo == rows[i].vehiculo || ruta.id_trailer == rows[i].id_trailer) {
+                if ((ruta.conductor == rows[i].conductor) || (ruta.name_vehiculo == rows[i].vehiculo) || (ruta.id_trailer == rows[i].id_trailer)) {
                     console.log('conductor/vehiculo repetido');
                     var dDate = new Date(rows[i].fecha_salida);
                     var aDate = new Date(rows[i].fecha_llegada);
@@ -310,9 +310,9 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                     console.log(fsalida);
                     console.log(fllegada);
                     console.log('fechas');
-                    console.log(dDate.getTime());
-                    console.log(fsalida.getTime());
-                    console.log(aDate.getTime());
+                    console.log(dDate.getTime());//salida bd
+                    console.log(fsalida.getTime());//
+                    console.log(aDate.getTime());//llegada db
                     console.log(fllegada.getTime());
                     if ((dDate.getTime() == fsalida.getTime()) || (aDate.getTime() == fllegada.getTime())) {
                         console.log('entre fechas');
