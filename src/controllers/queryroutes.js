@@ -248,9 +248,12 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
     try {
         var ruta = req.body;
         console.log(ruta);
+        console.log(ruta.fechaFin);
+        console.log(ruta.fechaIni);
         const {rows} = await pool.query('SELECT * FROM ruta');
         console.log(rows[0]);
-        console.log(ruta.fechaFin.anio);
+        console.log(ruta['fechaFin'].anio);
+        console.log(ruta['fechaFin']['anio']);
         
         var fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia);
         console.log(ruta.fechaIni.anio);
