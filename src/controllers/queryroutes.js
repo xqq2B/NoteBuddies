@@ -251,7 +251,7 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
         console.log(ruta.fechaFin);
         const {rows} = await pool.query('SELECT * FROM ruta');
         console.log(rows[0]);
-        
+        //el mes es el problema disminuir en 1 plz solo para donde se mete diferente/////////////////////////////
         var fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia);
         console.log(ruta.fechaIni.anio);
         var fllegada = new Date(ruta.fechaFin.anio, ruta.fechaFin.mes, ruta.fechaFin.dia);
@@ -296,8 +296,13 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                     var aDate = new Date(rows[i].fecha_llegada);
                     console.log(dDate);
                     console.log(rows[i].fecha_llegada);
-                    fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia);
-                    fllegada = new Date(ruta.fechaFin.anio, ruta.fechaFin.mes, ruta.fechaFin.dia);
+                    //modificando mes menos 1
+                    var mesS=ruta.fechaIni.mes -1;
+                    var mesL=ruta.fechaFin.mes -1;
+                    console.log('MEEEEEEEEEEESSSSSSSSSSS'+mesS)
+                    ///////////////////
+                    fsalida = new Date(ruta.fechaIni.anio, mesS, ruta.fechaIni.dia);
+                    fllegada = new Date(ruta.fechaFin.anio, mesL, ruta.fechaFin.dia);
                     //fsalida.setMonth(+1);
                     //fllegada.setMonth(+1);
                     console.log(fsalida);
