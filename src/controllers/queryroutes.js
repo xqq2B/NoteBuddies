@@ -463,7 +463,7 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
         let cPoints = await pool.query('SELECT * FROM ruta_checkpoint');
         var rutaCompleta = [];
         /////
-        var c,d;
+        var c=[],d=[];
         for (var i = 0; i < cPoints.rows.length; i++) {
             for (var j = 0; j < routes.rows.length; j++) {
                 
@@ -471,6 +471,8 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
                     //////
                     c=routes.rows[j];
                     d=routes.rows[j-1];
+                    console.log(c);
+                    console.log(d);
                     if(d==c){
 
                         console.log('ok');
