@@ -311,8 +311,12 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                         console.log(dHour);
                     console.log(rows[i].hora_llegada);
                     console.log(hsalida);
+                    console.log(dHour);
+                    console.log(aHour);
+                    console.log(i);
                         if ((hsalida >= dHour && hsalida <= aHour) ||
                             (hllegada >= dHour && hllegada <= aHour)) {
+                                console.log('ultima parte');
                             response= true;
                             res.json({ status: 'Horarios Incompatibles' });
                         }
