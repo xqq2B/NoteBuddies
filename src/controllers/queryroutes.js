@@ -402,7 +402,7 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
                     result.push(cPoints[j].id_ruta);
                 }
             }
-            routes.rows[i].push({ checkpoints: result });
+            routes.rows[i].push(result);
             result = [];
         }
         res.json({ Rutas: routes.rows });
