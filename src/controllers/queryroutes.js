@@ -343,9 +343,7 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
             console.log(ruta.checkpoints.length);
             console.log(ruta.checkpoints[0].id_punto);
             for (let y = 0; y < ruta.checkpoints.length; y++) {
-                console.log('dentro1');
                 let text2 = 'SELECT createRuta_Checkpoint($1,$2,$3)';
-                console.log('dentro1.5');
                 let values2 = [idRuta, ruta.checkpoints[y].id_punto, ruta.checkpoints[y].name_punto];//, ruta.id_user];
                 console.log('dentro1.75');
                 await pool.query(text2, values2);
@@ -391,14 +389,24 @@ qryCtrlRoutes.EditRoute = async (req, res) => {
 qryCtrlRoutes.QueryAll = async (req, res) => {
     try {
         //console.log(req.body);
-         let text=('SELECT * FROM ruta WHERE bd=$1');
-         let values=[req.body.db];
-         const routes = await pool.query(text,values);
-         let text2=('SELECT * FROM ruta_checkpoint WHERE id_ruta= $1');
-         console.log(routes.rows.id_ruta);
-         let values2=[routes.rows.id_ruta];
-         const cPoints = await pool.query(text2,values2);
-        res.json({Rutas:routes.rows,Puntos:cPoints.rows,loquesea:cPoints});
+        let text = ('SELECT * FROM ruta WHERE bd=$1');
+        let values = [req.body.db];
+        const routes = await pool.query(text, values);
+
+        const cPoints = await pool.query('SELECT * FROM ruta_checkpoint');
+        var result=[];
+        var resultFinal=[];
+        for(var i=0; i< cPoints.length;i++)
+        {
+            if(routes.rows[i].id_ruta == cPoints.rows[i].id_ruta)
+            {
+                result.push({CheckPoints:cPoints[i]});
+//                resultFinal+=routes[i]+result[i];
+            }
+            routes.rows[i].push(result);
+            result=[];
+        }
+        res.json({ Rutas: routes.rows });
     }
     catch (e) {
         console.log('ERROR CONSULTANDO RUTAS' + e);
