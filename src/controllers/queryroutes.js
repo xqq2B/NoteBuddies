@@ -394,7 +394,6 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
         const routes = await pool.query(text, values);
 
 
-
         const cPoints = await pool.query('SELECT * FROM ruta_checkpoint');
         var result = [];
         var resultFinal = [];
@@ -404,6 +403,9 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
                     result.push(cPoints[j].id_ruta);
                 }
             }
+            console.log('1',routes.rows[i]);
+            console.log('2',routes[i].rows);
+            console.log('3',routes[i]);
             routes.rows[i] = {ruta:routes.rows[i],checkpoints:result};
             result = [];
         }
