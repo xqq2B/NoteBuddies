@@ -405,10 +405,10 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
                 }
             }
            
-            routes.rows[i] = {ruta:routes.rows[i],checkpoints:result};
+            resultFinal.push({ruta:routes.rows[i],checkpoints:result});
             result = [];
         }
-        res.json({ Rutas: routes.rows });
+        res.json({ Rutas: resultFinal });
     }
     catch (e) {
         console.log('ERROR CONSULTANDO RUTAS' + e);
