@@ -319,9 +319,9 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                         else{
                             let idRuta = await makeIdRoute();
                             console.log(idRuta);
-                            let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)';
+                            let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)';
                             let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
-                                ruta.name_vehicle, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db];
+                                ruta.name_vehicle, ruta.id_trailer, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db];
                             await pool.query(text, values);
                             res.json({ status: 'ok' });
                         }
@@ -330,9 +330,9 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                 else {
                     let idRuta = await makeIdRoute();
                     console.log(idRuta);
-                    let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)';
+                    let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)';
                     let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
-                        ruta.name_vehicle, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db];
+                        ruta.name_vehicle, ruta.id_trailer, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db];
                     await pool.query(text, values);
                     res.json({ status: 'ok' });
                 }
