@@ -24,7 +24,7 @@ qryCtrlMonitor.EditCheckPoint = async (req, res) => {
             for (let y = 0; y < rows.length; y++) {
                 let text2 = 'SELECT edicionRuta_Checkpoint($1,$2,$3,$4,$5)';
                 //pedir hora y fecha ya que lo solicita la db para ingresar manualmente
-                let values2 = [checkpoints.id_route, checkpoints.checkpoints[y].id_punto, checkpoints.checkpoints[y].name_punto,checkpoints.checkpoints[y].hora,checkpoints.checkpoints[y].fecha];
+                let values2 = [checkpoints.id_route, checkpoints.checkpoints[y].id_punto, checkpoints.checkpoints[y].name_punto,checkpoints.checkpoints[y].fecha,checkpoints.checkpoints[y].hora];
                 await pool.query(text2, values2);
             }
             res.json({ status: 'ok' });
