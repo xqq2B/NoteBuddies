@@ -260,6 +260,7 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
         var hsalida = new Date(0, 0, 0, ruta.horaIni.hora, ruta.horaIni.minutos);
         var hllegada = new Date(0, 0, 0, ruta.horaFin.hora + ruta.horaFin.minutos);
         console.log(rows.length);
+        var response= false;
         if (rows.length == 0) {
             
             fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
@@ -278,16 +279,11 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
 
             res.json({ status: 'ok' });
         }
-        else {
+        else if (rows.length >0) {
             for (var i = 0; i < rows.length; i++) {
                 console.log('hola');
                 if (ruta.conductor == rows[i].conductor || ruta.name_vehiculo == rows[i].vehiculo) {
                     console.log('conductor/vehiculo repetido');
-                    // var dDateConvert=rutadb[i].fsalida+" "+rutadb[i].hsalida;
-                    // var dDateDb = new Date(dDateConvert);
-                    // var aDateConvert=rutadb[i].fllegada+" "+rutadb[i].hllegada;
-                    // var aDateDb = new Date(aDateConvert);
-                    
                     var dDate = new Date(rows[i].fecha_salida);
                     var aDate = new Date(rows[i].fecha_llegada);
                     console.log(dDate);
@@ -317,37 +313,51 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                     console.log(hsalida);
                         if ((hsalida >= dHour && hsalida <= aHour) ||
                             (hllegada >= dHour && hllegada <= aHour)) {
+                            response= true;
                             res.json({ status: 'Horarios Incompatibles' });
                         }
-                        else{
-                            let idRuta = await makeIdRoute();
-                            console.log(idRuta);
-                            fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
-                            fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
-                            hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
-                            hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
-                            let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)';
-                            let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
-                                ruta.name_vehicle, ruta.id_trailer, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db];
-                            await pool.query(text, values);
-                            res.json({ status: 'ok' });
-                        }
+                        // else{
+                        //     let idRuta = await makeIdRoute();
+                        //     console.log(idRuta);
+                        //     fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
+                        //     fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
+                        //     hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
+                        //     hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
+                        //     let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)';
+                        //     let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
+                        //         ruta.name_vehicle, ruta.id_trailer, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db];
+                        //     await pool.query(text, values);
+                        //     res.json({ status: 'ok' });
+                        // }
                     }
                 }
-                else {
-                    let idRuta = await makeIdRoute();
-                    console.log(idRuta);
-                    fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
-                    fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
-                    hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
-                    hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
-                    let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)';
-                    let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
-                        ruta.name_vehicle, ruta.id_trailer, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db];
-                    await pool.query(text, values);
-                    res.json({ status: 'ok' });
-                }
+                // else {
+                //     let idRuta = await makeIdRoute();
+                //     console.log(idRuta);
+                //     fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
+                //     fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
+                //     hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
+                //     hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
+                //     let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)';
+                //     let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
+                //         ruta.name_vehicle, ruta.id_trailer, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db];
+                //     await pool.query(text, values);
+                //     res.json({ status: 'ok' });
+                // }
             }
+        }
+        else if(response == false){
+            let idRuta = await makeIdRoute();
+            console.log(idRuta);
+            fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
+            fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
+            hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
+            hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
+            let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)';
+            let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
+                ruta.name_vehicle, ruta.id_trailer, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db];
+            await pool.query(text, values);
+            res.json({ status: 'ok' });
         }
     }
     catch (e) {
