@@ -372,8 +372,9 @@ qryCtrlRoutes.EditRoute = async (req, res) => {
          var ruta=req.body;
          console.log('editando ruta');
          let text=('SELECT * FROM ruta WHERE id_ruta=$1');
-         let values=[ruta.id_ruta];
+         let values=[ruta.id_routep];
          var response= false;
+         /*ERROR EDITANDO RUTASerror: column "ide_ruta" does not exist*/
          const {rows} = await pool.query(text,values);
          if(rows.length==0){
              res.json({status:'Not Found!'});
@@ -411,7 +412,7 @@ qryCtrlRoutes.EditRoute = async (req, res) => {
                     console.log(hsalida);
                     console.log(dHour);
                     console.log(aHour);
-                    console.log(i);
+//                    console.log(i);
                         if ((hsalida >= dHour && hsalida <= aHour) ||
                             (hllegada >= dHour && hllegada <= aHour)) {
                                 console.log('ultima parte');
