@@ -72,7 +72,8 @@ router.post('/config/routes/create',qryCtrlRoutes.CreateRoute);//falla agregar m
 router.post('/config/routes/edit',qryCtrlRoutes.EditRoute);//aun no listo
 //GET de las rutas
 router.post('/config/routes/qall',qryCtrlRoutes.QueryAll);//get all
-
+//Delete Ruta
+router.delete('/config/routes/delete',qryCtrlRoutes.DeleteRoute);//get all
 
 
 module.exports=router;

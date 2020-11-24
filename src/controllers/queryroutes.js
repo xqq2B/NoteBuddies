@@ -339,12 +339,16 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
             let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
                 ruta.name_vehicle, ruta.id_trailer, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db];
             await pool.query(text, values);
+            console.log('antes',ruta.checkpoints[0].id_punto);
+            console.log(ruta.checkpoints.length);
             for (let y = 0; y < ruta.checkpoints.length; y++) {
+                console.log('dentro1');
                 let text2 = 'SELECT createRuta_Checkpoint($1,$2,$3,$4)';
                 let values2 = [idRuta, ruta.checkpoints[y].id_punto, ruta.checkpoints[y].name_punto, ruta.id_user];
                 await pool.query(text2, values2);
+                console.log('dentro2');
             }
-
+            console.log('despues');
             res.json({ status: 'ok' });
         }
     }
@@ -394,12 +398,13 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
 };
 
 //Delete Route
-qryCtrlRoutes.QueryAll = async (req, res) => {
+qryCtrlRoutes.DeleteRoute = async (req, res) => {
     try {
-         let text=('SELECT * FROM ruta WHERE db=$1');
-         let values=[req.body.db];
+         let text=('SELECT deleteRuta($1)');
+         let values=[req.body.id_ruta];
          const{rows} = await pool.query(text,values);
-        res.json({rows});
+         //deleteRuta(ide_ruta varchar(30))
+        res.json({status:'ok'});
     }
     catch (e) {
         console.log('ERROR EDITANDO RUTAS' + e);
