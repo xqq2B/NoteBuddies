@@ -439,7 +439,7 @@ qryCtrlRoutes.EditRoute = async (req, res) => {
                 for (let y = 0; y < ruta.checkpoints.length; y++) {
                     let text2 = 'SELECT edicionRuta_Checkpoint($1,$2,$3,$4,$5)';
                     //pedir hora y fecha ya que lo solicita la db
-                    let values2 = [ruta.id_routep, ruta.checkpoints[y].id_punto, ruta.checkpoints[y].name_punto,ruta.checkpoints[y].hora,ruta.checkpoints[y].fecha];
+                    let values2 = [ruta.id_routep, ruta.checkpoints[y].id_punto, ruta.checkpoints[y].name_punto,ruta.checkpoints[y].fecha,ruta.checkpoints[y].hora];
                     await pool.query(text2, values2);
                 }
                 res.json({ status: 'ok' });
