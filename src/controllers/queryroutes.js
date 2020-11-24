@@ -462,23 +462,21 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
 
         let cPoints = await pool.query('SELECT * FROM ruta_checkpoint');
         var rutaCompleta = [];
+        var rutaCompletaCP = [];
         console.log(cPoints.rows.length);   
         console.log(routes.rows.length);
         var x=-1;
         /////
         for (var j = 0; j < routes.rows.length; j++) {
-            x++;
-            rutaCompleta[x].concat({ ruta: routes.rows[j]});
             for (var i = 0; i < cPoints.rows.length; i++) {
                 if (cPoints.rows[i].id_ruta == routes.rows[j].id_ruta) {
-                   // rutaCompleta[x]=({ ruta: routes.rows[j], checkpoints: cPoints.rows[i] });
-                   rutaCompleta[x].concat({checkpoints: cPoints.rows[i] });
+                   rutaCompleta.push({ ruta: routes.rows[j]});
+                   rutaCompletaCP.push({checkpoints: cPoints.rows[i]}); 
                 }
-                console.log('hello');
             }
         }
         //console.log(rutaCompleta)
-        res.json({ rutaCompleta });
+        res.json({ ruta:rutaCompleta,checkpoints:rutaCompletaCP });
 
 
         // let text2 = ('SELECT * FROM ruta_checkpoint WHERE id_ruta=$1');
