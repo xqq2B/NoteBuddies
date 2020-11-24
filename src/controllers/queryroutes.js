@@ -250,7 +250,10 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
         console.log(ruta);
         const {rows} = await pool.query('SELECT * FROM ruta');
         console.log(rows[0]);
+        console.log(ruta.fechaFin.anio);
+        
         var fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia);
+        console.log(ruta.fechaIni.anio);
         var fllegada = new Date(ruta.fechaFin.anio, ruta.fechaFin.mes, ruta.fechaFin.dia);
         console.log(fsalida);
                     console.log(fllegada);
@@ -375,6 +378,19 @@ qryCtrlRoutes.EditRoute = async (req, res) => {
 
 
 //Show All by db
+qryCtrlRoutes.QueryAll = async (req, res) => {
+    try {
+         let text=('SELECT * FROM ruta WHERE db=$1');
+         let values=[req.body.db];
+         const{rows} = await pool.query(text,values);
+        res.json({rows});
+    }
+    catch (e) {
+        console.log('ERROR EDITANDO RUTAS' + e);
+    }
+};
+
+//Delete Route
 qryCtrlRoutes.QueryAll = async (req, res) => {
     try {
          let text=('SELECT * FROM ruta WHERE db=$1');
