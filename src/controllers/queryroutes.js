@@ -241,6 +241,7 @@ async function makeIdRoute() {
         }
  }
 
+ 
 
 //Create Routes
 qryCtrlRoutes.CreateRoute = async (req, res) => {
@@ -260,7 +261,7 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
         var hllegada = new Date(0, 0, 0, ruta.horaFin.hora + ruta.horaFin.minutos);
         console.log(rows.length);
         if (rows.length == 0) {
-            let idRuta = await makeIdRoute();
+            
             fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
             fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
             hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
@@ -268,6 +269,8 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
             console.log('entre a sin registros');
             console.log(hllegada);
             console.log(fllegada);
+            createRoute();
+            let idRuta = await makeIdRoute();
             let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)';
             let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
                 ruta.name_vehicle, ruta.id_trailer,ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db];
@@ -313,6 +316,15 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                             (hllegada >= dHour && hllegada <= aHour)) {
                             res.json({ status: 'Horarios Incompatibles' });
                         }
+                        else{
+                            let idRuta = await makeIdRoute();
+                            console.log(idRuta);
+                            let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)';
+                            let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
+                                ruta.name_vehicle, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db];
+                            await pool.query(text, values);
+                            res.json({ status: 'ok' });
+                        }
                     }
                 }
                 else {
@@ -320,7 +332,7 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                     console.log(idRuta);
                     let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)';
                     let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
-                        ruta.name_vehicle, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, db];
+                        ruta.name_vehicle, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db];
                     await pool.query(text, values);
                     res.json({ status: 'ok' });
                 }
