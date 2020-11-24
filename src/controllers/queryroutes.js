@@ -292,8 +292,8 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                     var aDate = new Date(rows[i].fecha_llegada);
                     console.log(dDate);
                     console.log(rows[i].fecha_llegada);
-                    await fsalida.setMonth(+1);
-                    await fllegada.setMonth(+1);
+                    fsalida.setMonth(+1);
+                    fllegada.setMonth(+1);
                     console.log(fsalida);
                     console.log(fllegada);
                     // if ((rutadb[i].fsalida == ruta.fsalida) || (rutadb[i].fllegada == ruta.fllegada)) {
