@@ -49,7 +49,7 @@ async function getSession() {
         return params;
 
     } catch (err) {
-        console.log('GETSESSIONERROR' + err);
+        console.log('GETSESSIONERROR' + err);//
         //getLogger.error('function getSession '+ err);
     }
 }
