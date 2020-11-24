@@ -466,13 +466,14 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
         var c=[],d=[];
         for (var i = 0; i < cPoints.rows.length; i++) {
             for (var j = 0; j < routes.rows.length; j++) {
-                
-                if (cPoints.rows[i].id_ruta == routes.rows[j].id_ruta) {
-                    //////
-                    c=routes.rows[j].id_ruta;
+                c=routes.rows[j].id_ruta;
                     d=routes.rows[j-1].id_ruta;
                     console.log(c);
                     console.log(d);
+                if (cPoints.rows[i].id_ruta == routes.rows[j].id_ruta) {
+                    //////
+                    
+                   
                     if(d==c){
 
                         console.log('ok');
