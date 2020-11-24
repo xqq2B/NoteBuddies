@@ -273,7 +273,7 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
             console.log('entre a sin registros');
             console.log(hllegada);
             console.log(fllegada);
-            createRoute();
+            //createRoute();
             let idRuta = await makeIdRoute();
             let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)';
             let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
