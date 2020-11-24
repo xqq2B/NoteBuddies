@@ -10,7 +10,7 @@ const database = process.env.database_geo;
 var sessionIde;
 var serverIde;
 
-updateSessionId();
+
 
 schedule.scheduleJob('* * 23 * * *', function () {
     updateSessionId();
@@ -107,5 +107,9 @@ async function sessionOtherDb(user, db, session, servo) {
         console.log('ERROR SESION ID' + err);
     }
 }
+
+
+updateSessionId();
+
 exports.updateSessionId = updateSessionId;
 exports.sessionOtherDb = sessionOtherDb;
