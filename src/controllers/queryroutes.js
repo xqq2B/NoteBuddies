@@ -287,6 +287,7 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                     // var dDateDb = new Date(dDateConvert);
                     // var aDateConvert=rutadb[i].fllegada+" "+rutadb[i].hllegada;
                     // var aDateDb = new Date(aDateConvert);
+                    
                     var dDate = new Date(rows[i].fecha_salida);
                     var aDate = new Date(rows[i].fecha_llegada);
                     console.log(dDate);
@@ -319,6 +320,10 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                         else{
                             let idRuta = await makeIdRoute();
                             console.log(idRuta);
+                            fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
+                            fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
+                            hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
+                            hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
                             let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)';
                             let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
                                 ruta.name_vehicle, ruta.id_trailer, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db];
@@ -330,6 +335,10 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                 else {
                     let idRuta = await makeIdRoute();
                     console.log(idRuta);
+                    fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
+                    fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
+                    hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
+                    hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
                     let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)';
                     let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
                         ruta.name_vehicle, ruta.id_trailer, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db];
