@@ -290,7 +290,7 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
         if (rows.length >0) {
             for (var i = 0; i < rows.length; i++) {
                 console.log('hola');
-                if (ruta.conductor == rows[i].conductor || ruta.name_vehiculo == rows[i].vehiculo) {
+                if (ruta.conductor == rows[i].conductor || ruta.name_vehiculo == rows[i].vehiculo || ruta.id_trailer == rows[i].id_trailer) {
                     console.log('conductor/vehiculo repetido');
                     var dDate = new Date(rows[i].fecha_salida);
                     var aDate = new Date(rows[i].fecha_llegada);
@@ -383,7 +383,7 @@ qryCtrlRoutes.EditRoute = async (req, res) => {
              res.json({status:'Not Found!'});
          }
          if (rows.length >0) {
-                if (ruta.conductor == rows[0].conductor || ruta.name_vehiculo == rows[0].vehiculo) {
+                if (ruta.conductor == rows[0].conductor || ruta.name_vehiculo == rows[0].vehiculo || ruta.id_trailer == rows[0].id_trailer) {
                     console.log('conductor/vehiculo repetido');
                     var dDate = new Date(rows[0].fecha_salida);
                     var aDate = new Date(rows[0].fecha_llegada);
