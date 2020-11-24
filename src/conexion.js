@@ -69,7 +69,7 @@ async function updateSessionId() {
             const session = await api.authenticate();//no reconoce Async
             console.log('paso');
             await saveSession(session.credentials.sessionId, session.path);
-           // return api;
+            return api;
         } else {
             const serverIde = server[1];
             console.log(server);
@@ -77,7 +77,7 @@ async function updateSessionId() {
             sessionIde = sessionId[0];
             const api = await new GeotabApi({ credentials: { userName: username, database: database, sessionId: sessionIde }, path: serverIde });//authenticationSId);//(username, null, sessionId, database, server[1]);
             console.log(api);
-           // return api;
+            return api;
         }
 
     } catch (err) {
@@ -88,7 +88,7 @@ async function updateSessionId() {
         await saveSession(session.credentials.sessionId, session.path);
         console.log('ERROR SESION ID' + err);
         //getLogger.error('function updateSessionId'+err);
-        //return api;
+        return api;
     }
 }
 
@@ -108,17 +108,6 @@ async function sessionOtherDb(user, db, session, servo) {
     }
 }
 
-//agregado no reboot
-async function uSessionId() {
-    const passGeoDev = await  fs.readFileSync('unknown.txt','utf8');
-    console.log(passGeoDev);
-    const api = await new GeotabApi({credentials:{userName:username,database:database,password:passGeoDev}});//authentication);
-    console.log(api);
-    const session = await api.authenticate();//no reconoce Async
-    await saveSession(session.credentials.sessionId, session.path);
-    return api;
-}
 
-//exports.updateSessionId = updateSessionId;
-exports.updateSessionId = uSessionId;
+exports.updateSessionId = updateSessionId;
 exports.sessionOtherDb = sessionOtherDb;
