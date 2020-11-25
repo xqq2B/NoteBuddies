@@ -21,7 +21,7 @@ qryCtrlMonitor.EditCheckPoint = async (req, res) => {
              res.json({status:'Not Found!'});
          }
          else{
-            for (let y = 0; y < rows.length; y++) {
+            for (let y = 0; y < checkpoints.checkpoints.length; y++) {
                 //let text2 = 'SELECT edicionRuta_Checkpoint($1,$2,$3,$4,$5)';
                 let text2 = 'INSERT INTO Ruta_Checkpoint VALUES ($1,$2,$3,$4,$5)';
                 // let text2 = 'SELECT createRuta_Checkpoint($1,$2,$3)';    
