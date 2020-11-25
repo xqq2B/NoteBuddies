@@ -3,7 +3,7 @@ const fs = require('fs');
 require('dotenv').config();
 //no implementado
 const schedule = require('node-schedule');
-
+//
 const username = process.env.user_geo;
 //const password = process.env.password_geo;
 const database = process.env.database_geo;
