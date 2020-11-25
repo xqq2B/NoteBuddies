@@ -63,6 +63,8 @@ async function updateSessionId() {
         if (!sessionId[0]) {
             const passGeoDev = await  fs.readFileSync('unknown.txt','utf8');
             console.log(passGeoDev);
+            console.log(database);
+            console.log(username);
             const api = await new GeotabApi({credentials:{userName:username,database:database,password:passGeoDev}});//authentication);
             console.log('paso1');
             console.log(api);
