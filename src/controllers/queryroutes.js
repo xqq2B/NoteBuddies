@@ -261,7 +261,7 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
         // var aDate = new Date(ruta.fechaFin.anio,ruta.fechaFin.mes,ruta.fechaFin.dia,ruta.horaFin.hora,ruta.horaFin.minutos);
 
         var hsalida = new Date(0, 0, 0, ruta.horaIni.hora, ruta.horaIni.minutos);
-        var hllegada = new Date(0, 0, 0, ruta.horaFin.hora + ruta.horaFin.minutos);
+        var hllegada = new Date(0, 0, 0, ruta.horaFin.hora, ruta.horaFin.minutos);
         console.log(rows.length);
         var response= false;
         if (rows.length == 0) {
@@ -320,7 +320,7 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                         var datel = rows[i].hora_llegada.split(':');
                         var dHour = new Date(0,0,0,dates[0],dates[1]);
                         var aHour = new Date(0,0,0,datel[0],datel[1]);
-                        console.log(aHour);
+                        console.log(aHour);//1 y 3 si iguales
                         console.log(dHour);
                         console.log(hsalida);
                         console.log(hllegada);
