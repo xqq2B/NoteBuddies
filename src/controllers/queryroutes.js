@@ -322,6 +322,8 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                         var aHour = new Date(0,0,0,datel[0],datel[1]);
                         console.log(aHour);
                         console.log(dHour);
+                        console.log(hsalida);
+                        console.log(hllegada);
                     //console.log(rows[i].hora_llegada);
                     console.log(hsalida.getTime());
                     console.log(hllegada.getTime());
