@@ -377,19 +377,18 @@ qryCtrlRoutes.EditRoute = async (req, res) => {
          console.log('editando ruta');
          let text=('SELECT * FROM ruta WHERE id_ruta!=$1');
          let values=[ruta.id_routep];
-         var response= null;//ojo aquiiiiiiiiiiiiii///////////////////////////// y en la parte de arriba
+         var response= false;//ojo aquiiiiiiiiiiiiii///////////////////////////// y en la parte de arriba
          
          var hsalida = new Date(0, 0, 0, ruta.horaIni.hora, ruta.horaIni.minutos);
         var hllegada = new Date(0, 0, 0, ruta.horaFin.hora + ruta.horaFin.minutos);
 
          const {rows} = await pool.query(text,values);
 //         console.log(rows);
-         if(rows.length==0){
-             res.json({status:'Not Found!'});
-         }//que no se compare con si misma
+        //  if(rows.length==0){
+        //      res.json({status:'Not Found!'});
+         //}//que no se compare con si misma
          if (rows.length >0) {
             for (var i = 0; i < rows.length; i++) {
-                response=false;
                 if ((ruta.conductor == rows[i].conductor) || (ruta.name_vehicle == rows[i].vehiculo) || (ruta.id_trailer == rows[i].id_trailer)) {
                     console.log('conductor/vehiculo repetido');
                     var dDate = new Date(rows[i].fecha_salida);
