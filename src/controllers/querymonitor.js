@@ -23,7 +23,7 @@ qryCtrlMonitor.EditCheckPoint = async (req, res) => {
          else{
             for (let y = 0; y < rows.length; y++) {
                 //let text2 = 'SELECT edicionRuta_Checkpoint($1,$2,$3,$4,$5)';
-                let text2 = 'SELECT edicionRuta_Checkpoint($1,$2,$3,$4,$5)';
+                let text2 = 'INSERT INTO Ruta_Checkpoint($1,$2,$3,$4,$5)';
                 // let text2 = 'SELECT createRuta_Checkpoint($1,$2,$3)';    
                 //pedir hora y fecha ya que lo solicita la db para ingresar manualmente funcionando ver formatos fecha y hora al pedir
                 let values2 = [checkpoints.id_routep, checkpoints.checkpoints[y].id_punto, checkpoints.checkpoints[y].name_punto,checkpoints.checkpoints[y].fecha,checkpoints.checkpoints[y].hora];
