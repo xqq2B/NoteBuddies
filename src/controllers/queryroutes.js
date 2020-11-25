@@ -290,6 +290,7 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
         if (rows.length >0) {
             for (var i = 0; i < rows.length; i++) {
                 console.log('hola');
+                response=false;
                 if ((ruta.conductor == rows[i].conductor) || (ruta.name_vehicle == rows[i].vehiculo) || (ruta.id_trailer == rows[i].id_trailer)) {
                     console.log('conductor/vehiculo repetido');
                     var dDate = new Date(rows[i].fecha_salida);
@@ -314,7 +315,6 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                     console.log(fsalida.getTime());//
                     console.log(aDate.getTime());//llegada db
                     console.log(fllegada.getTime());
-                    response=false;
                     if ((dDate.getTime() == fsalida.getTime()) || (aDate.getTime() == fllegada.getTime())) {
                         console.log('entre fechas');
                         var dates = rows[i].hora_salida.split(':');
@@ -375,7 +375,7 @@ qryCtrlRoutes.EditRoute = async (req, res) => {
         console.log(req.body);
          var ruta=req.body;
          console.log('editando ruta');
-         let text=('SELECT * FROM ruta WHERE id_ruta=$1');
+         let text=('SELECT * FROM ruta WHERE id_ruta!=$1');
          let values=[ruta.id_routep];
          var response= null;//ojo aquiiiiiiiiiiiiii///////////////////////////// y en la parte de arriba
          
@@ -383,16 +383,19 @@ qryCtrlRoutes.EditRoute = async (req, res) => {
         var hllegada = new Date(0, 0, 0, ruta.horaFin.hora + ruta.horaFin.minutos);
 
          const {rows} = await pool.query(text,values);
+//         console.log(rows);
          if(rows.length==0){
              res.json({status:'Not Found!'});
-         }
+         }//que no se compare con si misma
          if (rows.length >0) {
-                if (ruta.conductor == rows[0].conductor || ruta.name_vehicle == rows[0].vehiculo || ruta.id_trailer == rows[0].id_trailer) {
+            for (var i = 0; i < rows.length; i++) {
+                response=false;
+                if ((ruta.conductor == rows[i].conductor) || (ruta.name_vehicle == rows[i].vehiculo) || (ruta.id_trailer == rows[i].id_trailer)) {
                     console.log('conductor/vehiculo repetido');
-                    var dDate = new Date(rows[0].fecha_salida);
-                    var aDate = new Date(rows[0].fecha_llegada);
+                    var dDate = new Date(rows[i].fecha_salida);
+                    var aDate = new Date(rows[i].fecha_llegada);
                     console.log(dDate);
-                    console.log(rows[0].fecha_llegada);
+                    console.log(rows[i].fecha_llegada);
                     var mesS=parseInt(ruta.fechaIni.mes) ;
                     var mesL=parseInt(ruta.fechaFin.mes) ;
                     mesS=mesS-1;mesL=mesL-1;
@@ -407,11 +410,10 @@ qryCtrlRoutes.EditRoute = async (req, res) => {
                     console.log(fsalida.getTime());
                     console.log(aDate.getTime());
                     console.log(fllegada.getTime());
-                    response=false;
                     if ((dDate.getTime() == fsalida.getTime()) || (aDate.getTime() == fllegada.getTime())) {
                         console.log('entre fechas');
-                        var dates = rows[0].hora_salida.split(':');
-                        var datel = rows[0].hora_llegada.split(':');
+                        var dates = rows[i].hora_salida.split(':');
+                        var datel = rows[i].hora_llegada.split(':');
                         var dHour = new Date(0,0,0,dates[0],dates[1]);
                         var aHour = new Date(0,0,0,datel[0],datel[1]);
 //                         console.log(aHour);
@@ -440,6 +442,7 @@ qryCtrlRoutes.EditRoute = async (req, res) => {
                             }
                     }
                 }
+            }
             }
             if(response == false){
                 let fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
