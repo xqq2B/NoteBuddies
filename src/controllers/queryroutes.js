@@ -263,7 +263,7 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
         var hsalida = new Date(0, 0, 0, ruta.horaIni.hora, ruta.horaIni.minutos);
         var hllegada = new Date(0, 0, 0, ruta.horaFin.hora, ruta.horaFin.minutos);
         console.log(rows.length);
-        var response= false;
+        var response= null;
         if (rows.length == 0) {
             
             fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
@@ -320,13 +320,13 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                         var datel = rows[i].hora_llegada.split(':');
                         var dHour = new Date(0,0,0,dates[0],dates[1]);
                         var aHour = new Date(0,0,0,datel[0],datel[1]);
-                        console.log(aHour);//1 y 3 si iguales
-                        console.log(dHour);
+                        console.log(aHour);//1 y 4 si iguales
+                        console.log(dHour);//2 y 3 iguales
                         console.log(hsalida);
                         console.log(hllegada);
                     //console.log(rows[i].hora_llegada);
-                    console.log(hsalida.getTime());
-                    console.log(hllegada.getTime());
+                    console.log(hsalida.getTime());//1 y 3
+                    console.log(hllegada.getTime());//2 y 3
                     console.log(dHour.getTime());
                     console.log(aHour.getTime());
                     console.log(i);
@@ -376,7 +376,7 @@ qryCtrlRoutes.EditRoute = async (req, res) => {
          console.log('editando ruta');
          let text=('SELECT * FROM ruta WHERE id_ruta=$1');
          let values=[ruta.id_routep];
-         var response= false;
+         var response= null;//ojo aquiiiiiiiiiiiiii///////////////////////////// y en la parte de arriba
          
          var hsalida = new Date(0, 0, 0, ruta.horaIni.hora, ruta.horaIni.minutos);
         var hllegada = new Date(0, 0, 0, ruta.horaFin.hora + ruta.horaFin.minutos);
@@ -429,7 +429,7 @@ qryCtrlRoutes.EditRoute = async (req, res) => {
                         console.log(hllegada.getTime());
                         console.log(dHour.getTime());
                         console.log(aHour.getTime());
-                        console.log(i);
+                        
                             if (((hsalida.getTime() >= dHour.getTime()) && (hsalida.getTime() <= aHour.getTime())) ||
                                 ((hllegada.getTime() >= dHour.getTime()) && (hllegada.getTime() <= aHour.getTime()))) {
                                     console.log('ultima parte');
@@ -451,9 +451,9 @@ qryCtrlRoutes.EditRoute = async (req, res) => {
                 await pool.query(text, values);
                 console.log('ruta bn');
                 for (let y = 0; y < ruta.checkpoints.length; y++) {
-                    let text2 = 'SELECT edicionRuta_Checkpoint($1,$2,$3,$4,$5)';
+                    let text2 = 'SELECT edicionRuta_Checkpoint($1,$2,$3';//,$4,$5)';
                     //pedir hora y fecha ya que lo solicita la db
-                    let values2 = [ruta.id_routep, ruta.checkpoints[y].id_punto, ruta.checkpoints[y].name_punto,ruta.checkpoints[y].fecha,ruta.checkpoints[y].hora];
+                    let values2 = [ruta.id_routep, ruta.checkpoints[y].id_punto, ruta.checkpoints[y].name_punto];//,ruta.checkpoints[y].fecha,ruta.checkpoints[y].hora];
                     await pool.query(text2, values2);
                 }
                 res.json({ status: 'ok' });

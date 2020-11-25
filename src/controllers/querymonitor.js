@@ -1,5 +1,5 @@
 const qryCtrlMonitor = {};
-const conexion = require('../conexion');
+//const conexion = require('../conexion');
 const { pool } = require('../database');
 
 //Edicion Checkpoints sin Registrar
