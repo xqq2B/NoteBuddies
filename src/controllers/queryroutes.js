@@ -290,13 +290,13 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
         if (rows.length >0) {
             for (var i = 0; i < rows.length; i++) {
                 console.log('hola');
-                if ((ruta.conductor == rows[i].conductor) || (ruta.name_vehiculo == rows[i].vehiculo) || (ruta.id_trailer == rows[i].id_trailer)) {
+                if ((ruta.conductor == rows[i].conductor) || (ruta.name_vehicle == rows[i].vehiculo) || (ruta.id_trailer == rows[i].id_trailer)) {
                     console.log('conductor/vehiculo repetido');
                     var dDate = new Date(rows[i].fecha_salida);
                     var aDate = new Date(rows[i].fecha_llegada);
                     console.log(dDate);
                     console.log(rows[i].fecha_llegada);
-                    //modificando mes menos 1
+                    //modificando mes menos 1   
                     var mesS=parseInt(ruta.fechaIni.mes) ;
                     var mesL=parseInt(ruta.fechaFin.mes) ;
                     mesS=mesS-1;mesL=mesL-1;
@@ -322,13 +322,14 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                         var aHour = new Date(0,0,0,datel[0],datel[1]);
                         console.log(aHour);
                         console.log(dHour);
-                    console.log(rows[i].hora_llegada);
-                    console.log(hsalida);
-                    console.log(dHour);
-                    console.log(aHour);
+                    //console.log(rows[i].hora_llegada);
+                    console.log(hsalida.getTime());
+                    console.log(hllegada.getTime());
+                    console.log(dHour.getTime());
+                    console.log(aHour.getTime());
                     console.log(i);
-                        if ((hsalida >= dHour && hsalida <= aHour) ||
-                            (hllegada >= dHour && hllegada <= aHour)) {
+                        if (((hsalida.getTime() >= dHour.getTime()) && (hsalida.getTime() <= aHour.getTime())) ||
+                            ((hllegada.getTime() >= dHour.getTime()) && (hllegada.getTime() <= aHour.getTime()))) {
                                 console.log('ultima parte');
                             response= true;
                             res.json({ status: 'Horarios Incompatibles' });
@@ -383,7 +384,7 @@ qryCtrlRoutes.EditRoute = async (req, res) => {
              res.json({status:'Not Found!'});
          }
          if (rows.length >0) {
-                if (ruta.conductor == rows[0].conductor || ruta.name_vehiculo == rows[0].vehiculo || ruta.id_trailer == rows[0].id_trailer) {
+                if (ruta.conductor == rows[0].conductor || ruta.name_vehicle == rows[0].vehiculo || ruta.id_trailer == rows[0].id_trailer) {
                     console.log('conductor/vehiculo repetido');
                     var dDate = new Date(rows[0].fecha_salida);
                     var aDate = new Date(rows[0].fecha_llegada);
@@ -409,19 +410,30 @@ qryCtrlRoutes.EditRoute = async (req, res) => {
                         var datel = rows[0].hora_llegada.split(':');
                         var dHour = new Date(0,0,0,dates[0],dates[1]);
                         var aHour = new Date(0,0,0,datel[0],datel[1]);
-                        console.log(aHour);
-                        console.log(dHour);
-                    console.log(rows[0].hora_llegada);
-                    console.log(hsalida);
-                    console.log(dHour);
-                    console.log(aHour);
-//                    console.log(i);
-                        if ((hsalida >= dHour && hsalida <= aHour) ||
-                            (hllegada >= dHour && hllegada <= aHour)) {
-                                console.log('ultima parte');
-                            response= true;
-                            res.json({ status: 'Horarios Incompatibles' });
-                        }
+//                         console.log(aHour);
+//                         console.log(dHour);
+//                     console.log(rows[0].hora_llegada);
+//                     console.log(hsalida);
+//                     console.log(dHour);
+//                     console.log(aHour);
+// //                    console.log(i);
+//                         if ((hsalida >= dHour && hsalida <= aHour) ||
+//                             (hllegada >= dHour && hllegada <= aHour)) {
+//                                 console.log('ultima parte');
+//                             response= true;
+//                             res.json({ status: 'Horarios Incompatibles' });
+//                         }
+                        console.log(hsalida.getTime());
+                        console.log(hllegada.getTime());
+                        console.log(dHour.getTime());
+                        console.log(aHour.getTime());
+                        console.log(i);
+                            if (((hsalida.getTime() >= dHour.getTime()) && (hsalida.getTime() <= aHour.getTime())) ||
+                                ((hllegada.getTime() >= dHour.getTime()) && (hllegada.getTime() <= aHour.getTime()))) {
+                                    console.log('ultima parte');
+                                response= true;
+                                res.json({ status: 'Horarios Incompatibles' });
+                            }
                     }
                 }
             }
