@@ -314,6 +314,7 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                     console.log(fsalida.getTime());//
                     console.log(aDate.getTime());//llegada db
                     console.log(fllegada.getTime());
+                    response=false;
                     if ((dDate.getTime() == fsalida.getTime()) || (aDate.getTime() == fllegada.getTime())) {
                         console.log('entre fechas');
                         var dates = rows[i].hora_salida.split(':');
@@ -406,6 +407,7 @@ qryCtrlRoutes.EditRoute = async (req, res) => {
                     console.log(fsalida.getTime());
                     console.log(aDate.getTime());
                     console.log(fllegada.getTime());
+                    response=false;
                     if ((dDate.getTime() == fsalida.getTime()) || (aDate.getTime() == fllegada.getTime())) {
                         console.log('entre fechas');
                         var dates = rows[0].hora_salida.split(':');
