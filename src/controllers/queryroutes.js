@@ -456,9 +456,11 @@ qryCtrlRoutes.EditRoute = async (req, res) => {
                 console.log('ruta bn');
                 var nullHora=null;
                 var nullFecha=null;
-                let text2 = "DELETE FROM ruta_checkpoint WHERE id_ruta=$1";
+                let text2 = "DELETE FROM Ruta_Checkpoint WHERE id_ruta=$1";
                 let values2=[ruta.id_ruta];
                 await pool.query(text2,values2);
+                const {rows}=await pool.query('SELECT * FROM Ruta_Checkpoint');
+                console.log(rows);
                 console.log('borro');
                 for (let y = 0; y < ruta.checkpoints.length; y++) {
                     //let text2 = 'SELECT edicionRuta_Checkpoint($1,$2,$3,$4,$5)';
