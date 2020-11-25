@@ -452,10 +452,12 @@ qryCtrlRoutes.EditRoute = async (req, res) => {
                     ruta.name_vehicle, ruta.id_trailer, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada,ruta.status, ruta.db];
                 await pool.query(text, values);
                 console.log('ruta bn');
+                var nullHora=null;
+                var nullFecha=null;
                 for (let y = 0; y < ruta.checkpoints.length; y++) {
-                    let text2 = 'SELECT edicionRuta_Checkpoint($1,$2,$3)';//,$4,$5)';
+                    let text2 = 'SELECT edicionRuta_Checkpoint($1,$2,$3,$4,$5)';
                     //pedir hora y fecha ya que lo solicita la db
-                    let values2 = [ruta.id_routep, ruta.checkpoints[y].id_punto, ruta.checkpoints[y].name_punto];//,ruta.checkpoints[y].fecha,ruta.checkpoints[y].hora];
+                    let values2 = [ruta.id_routep, ruta.checkpoints[y].id_punto, ruta.checkpoints[y].name_punto,nullFecha,nullHora];//,ruta.checkpoints[y].fecha,ruta.checkpoints[y].hora];
                     await pool.query(text2, values2);
                 }
                 res.json({ status: 'ok' });
