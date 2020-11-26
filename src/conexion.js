@@ -76,7 +76,7 @@ async function updateSessionId() {
             const serverIde = server[1];
             const sessionIde = sessionId[0];
             console.log('ya hay sesion');
-            //const api = await new GeotabApi({ credentials: { userName: username, database: database, sessionId: sessionIde }, path: serverIde });//authenticationSId);//(username, null, sessionId, database, server[1]);
+            ///const api = await new GeotabApi({ credentials: { userName: username, database: database, sessionId: sessionIde }, path: serverIde });//authenticationSId);//(username, null, sessionId, database, server[1]);
             //agregado la linea siguiente
             const api = await new GeotabApi({ credentials: { userName: username, database: database, sessionId: sessionIde }, path: serverIde });
             console.log(api);
