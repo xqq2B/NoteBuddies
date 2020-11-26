@@ -11,8 +11,7 @@ var sessionIde;
 var serverIde;
 
 
-
-schedule.scheduleJob('* * 23 * * *', function () {
+schedule.scheduleJob('* * 23 * * *', function () {//'* * 23 * * *'
     updateSessionId();
 });
 
@@ -79,7 +78,14 @@ async function updateSessionId() {
             ///const api = await new GeotabApi({ credentials: { userName: username, database: database, sessionId: sessionIde }, path: serverIde });//authenticationSId);//(username, null, sessionId, database, server[1]);
             //agregado la linea siguiente
             const api = new GeotabApi({ credentials: { userName: username, database: database, sessionId: sessionIde }, path: serverIde });
-            //console.log(api);
+            console.log('hacer call');
+            await api.call("Get", {
+                typeName: "User",//search por name, id, externalReference
+                search: {
+                },
+              resultsLimit:0
+            });
+            console.log('Credentials ok!');
             return api;
         }
 

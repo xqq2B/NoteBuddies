@@ -153,7 +153,7 @@ POST http://35.209.128.105:3389/api/auth/config/routes/query
 Content-Type: application/json
 
 {
-    "id_user":"1F_5x8Fv1-8d1l2pbFclfw"
+    "id_user":"BXU1KEvN9ShL1q3hqDjKCQ"
 }   
 
 
