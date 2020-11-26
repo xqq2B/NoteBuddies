@@ -36,7 +36,7 @@ schedule.scheduleJob('* * 23 * * *', function () {
 
 async function saveSession(sessionId, server) {
     console.log('save session');
-    await fs.writeFileSync("file.txt", sessionId + ',' + server, { flag: 'w' });
+    fs.writeFileSync("file.txt", sessionId + ',' + server, { flag: 'w' });
     //actua como promesa pero no es... require fs promises.
     //ver documentacion para usarlo como promesa.
 }
@@ -78,15 +78,15 @@ async function updateSessionId() {
             console.log('ya hay sesion');
             ///const api = await new GeotabApi({ credentials: { userName: username, database: database, sessionId: sessionIde }, path: serverIde });//authenticationSId);//(username, null, sessionId, database, server[1]);
             //agregado la linea siguiente
-            const api = await new GeotabApi({ credentials: { userName: username, database: database, sessionId: sessionIde }, path: serverIde });
+            const api = new GeotabApi({ credentials: { userName: username, database: database, sessionId: sessionIde }, path: serverIde });
             //console.log(api);
             return api;
         }
 
     } catch (err) {
         //agregado caduco sesion 12112020
-        const passGeoDev = await  fs.readFileSync('unknown.txt','utf8');
-         const api = await new GeotabApi({credentials:{userName:username,database:database,password:passGeoDev}});
+        const passGeoDev = fs.readFileSync('unknown.txt','utf8');
+         const api =  new GeotabApi({credentials:{userName:username,database:database,password:passGeoDev}});
          console.log('entro a error');
         const session = await api.authenticate();//no reconoce Async
         console.log(session);
