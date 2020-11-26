@@ -41,13 +41,13 @@ async function saveSession(sessionId, server) {
     //ver documentacion para usarlo como promesa.
 }
 
-
-async function getSession() {
+//fuera await y async
+ function getSession() {
     try {
         console.log('getting session');
-        const session = await fs.readFileSync('file.txt', 'utf8');
+        const session = fs.readFileSync('file.txt', 'utf8');
         const params = session.split(',');
-        console.log(params);
+        //console.log(params);
         return params;
 
     } catch (err) {
@@ -63,10 +63,10 @@ async function updateSessionId() {
         const server = await getSession();
         console.log(server[1]);
         if (!sessionId[0]) {//quitado !
-            const passGeoDev = await  fs.readFileSync('unknown.txt','utf8');
-            console.log(passGeoDev);
+            const passGeoDev =   fs.readFileSync('unknown.txt','utf8');
+            //console.log(passGeoDev);
         const api = await new GeotabApi({credentials:{userName:username,database:database,password:passGeoDev}});//authentication);
-            console.log('paso1');
+            
             console.log(api);
             const session = await api.authenticate();//no reconoce Async
             console.log('paso');
@@ -79,7 +79,7 @@ async function updateSessionId() {
             ///const api = await new GeotabApi({ credentials: { userName: username, database: database, sessionId: sessionIde }, path: serverIde });//authenticationSId);//(username, null, sessionId, database, server[1]);
             //agregado la linea siguiente
             const api = await new GeotabApi({ credentials: { userName: username, database: database, sessionId: sessionIde }, path: serverIde });
-            console.log(api);
+            //console.log(api);
             return api;
         }
 
@@ -87,7 +87,7 @@ async function updateSessionId() {
         //agregado caduco sesion 12112020
         const passGeoDev = await  fs.readFileSync('unknown.txt','utf8');
          const api = await new GeotabApi({credentials:{userName:username,database:database,password:passGeoDev}});
-         console.log('333');
+         console.log('entro a error');
         const session = await api.authenticate();//no reconoce Async
         console.log(session);
         await saveSession(session.credentials.sessionId, session.path);
