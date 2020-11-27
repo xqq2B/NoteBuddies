@@ -81,7 +81,7 @@ geoCtrl.registerGeo =async (req,res)=>{
 
 
 
-    let text2 = 'SELECT * FROM vistaObtenerUsuario WHERE id_correo = $1';
+    let text2 = 'SELECT * FROM vistaObtenerUsuario WHERE correo = $1';
     let values2 = [req.body.email];
     let { rows } = await pool.query(text2, values2);
     console.log(rows[0]);
@@ -99,12 +99,13 @@ geoCtrl.registerGeo =async (req,res)=>{
         }
         console.log(groups[0].companyGroups[0].id);
         console.log(groups.length);
+
         for(i=0;i<groups.length;i++){
         let text3 = ('SELECT setGrupo($1,$2');
         let values2 = [User.email,groups[0].companyGroups[i].id];
         await pool.query(text3,values2);
         }
-        let text2 = 'SELECT * FROM vistaObtenerUsuario WHERE id_correo = $1';
+        let text2 = 'SELECT * FROM vistaObtenerUsuario WHERE correo = $1';
         let values2 = [req.body.email];
         let { rows } = await pool.query(text2, values2);
 
