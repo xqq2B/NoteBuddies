@@ -72,28 +72,30 @@ geoCtrl.registerGeo =async (req,res)=>{
     console.log(User);
     //nuevo para api no reconocida
     //let text = 'SELECT * FROM Usuario WHERE correo = $1';
-    let text = 'SELECT * FROM vistaObtenerUsuario WHERE id_usuario = $1';
-    let values = [req.body.email];
-    const { rows } = await pool.query(text, values);
-    console.log(rows[0]);
-    const api = await new GeotabApi({credentials:{userName:rows[0].correo,database:rows[0].db,sessionId:rows[0].sessionId},path:rows[0].path});
-    try {
-        const group=await api.call("Get", {
-            typeName: "User",//si es user y es el companyGroups
-            search: {
-                name:User.email
-            },
-        });
-        var groups=[];
-        for(var i=0;i<group[0].companyGroups.length;i++){
-            groups.push(group[0].companyGroups[i].id);
-        }
+    
         ////////////////
         let text = 'SELECT setGeotab($1,$2,$3,$4)';
         let values = [User.email, User.username, User.lastname, User.telephone];
         await pool.query(text, values);
         //setGrupo(ide_usuario varchar(60),ide_grupo varchar(60))
 
+
+    let text2 = 'SELECT * FROM vistaObtenerUsuario WHERE id_usuario = $1';
+    let values2 = [req.body.email];
+    const { rows } = await pool.query(text2, values2);
+    console.log(rows[0]);
+    const api = await new GeotabApi({ credentials: { userName: rows[0].correo, database: rows[0].db, sessionId: rows[0].sessionId }, path: rows[0].path });
+    try {
+        const group = await api.call("Get", {
+            typeName: "User",//si es user y es el companyGroups
+            search: {
+                name: User.email
+            },
+        });
+        var groups=[];
+        for(var i=0;i<group[0].companyGroups.length;i++){
+            groups.push(group[0].companyGroups[i].id);
+        }
 
         for(i=0;i<groups.length;i++){
         let text3 = ('SELECT setGrupo($1,$2');
@@ -102,9 +104,9 @@ geoCtrl.registerGeo =async (req,res)=>{
         }
 
 
-        let text2 = 'SELECT * FROM vistaObtenerUsuario WHERE correo =$1';
-        let value =[User.email];
-        const {rows} = await pool.query(text2,value);
+        // let text2 = 'SELECT * FROM vistaObtenerUsuario WHERE correo =$1';
+        // let value =[User.email];
+        // const {rows} = await pool.query(text2,value);
         console.log(rows);
         res.json({status:rows});//status:'Registered!',id_rol:rows.id_rol});
     } catch (e) {
