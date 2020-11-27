@@ -83,7 +83,7 @@ geoCtrl.registerGeo =async (req,res)=>{
 
     let text2 = 'SELECT * FROM vistaObtenerUsuario WHERE id_correo = $1';
     let values2 = [req.body.email];
-    const { rows } = await pool.query(text2, values2);
+    let { rows } = await pool.query(text2, values2);
     console.log(rows[0]);
     const api = await new GeotabApi({ credentials: { userName: rows[0].correo, database: rows[0].db, sessionId: rows[0].sessionId }, path: rows[0].path });
     try {
@@ -97,13 +97,16 @@ geoCtrl.registerGeo =async (req,res)=>{
         for(var i=0;i<group[0].companyGroups.length;i++){
             groups.push(group[0].companyGroups[i].id);
         }
-
+        console.log(groups[0].companyGroups[0].id);
+        console.log(groups.length);
         for(i=0;i<groups.length;i++){
         let text3 = ('SELECT setGrupo($1,$2');
         let values2 = [User.email,groups[0].companyGroups[i].id];
         await pool.query(text3,values2);
         }
-
+        let text2 = 'SELECT * FROM vistaObtenerUsuario WHERE id_correo = $1';
+        let values2 = [req.body.email];
+        let { rows } = await pool.query(text2, values2);
 
         // let text2 = 'SELECT * FROM vistaObtenerUsuario WHERE correo =$1';
         // let value =[User.email];

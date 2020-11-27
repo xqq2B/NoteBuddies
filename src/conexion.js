@@ -78,31 +78,31 @@ async function updateSessionId() {
             ///const api = await new GeotabApi({ credentials: { userName: username, database: database, sessionId: sessionIde }, path: serverIde });//authenticationSId);//(username, null, sessionId, database, server[1]);
             //agregado la linea siguiente
             const api = new GeotabApi({ credentials: { userName: username, database: database, sessionId: sessionIde }, path: serverIde });
-            const muestra=await api.call("Get", {
-                typeName: "User",//si es user y es el companyGroups
-                search: {
-                },
-              resultsLimit:5
-            });
+            // const muestra=await api.call("Get", {
+            //     typeName: "User",//si es user y es el companyGroups
+            //     search: {
+            //     },
+            //   resultsLimit:5
+            // });
             
-            console.log(muestra);
-            console.log(muestra[0].companyGroups);
-            const zones = await api.call("Get", {
-                typeName: "Group",//para sacar id
-                search: {
-                    "name": "rutas"
-                    //checkpoints
-                }
-            });
-            console.log(zones[0]);
-            const zonesRoutes = await api.call("Get", {
-                typeName: "Zone",
-                search: {
-                },
-                resultsLimit:1
-            });
+            // console.log(muestra);
+            // console.log(muestra[0].companyGroups);
+            // const zones = await api.call("Get", {
+            //     typeName: "Group",//para sacar id
+            //     search: {
+            //         "name": "rutas"
+            //         //checkpoints
+            //     }
+            // });
+            // console.log(zones[0]);
+            // const zonesRoutes = await api.call("Get", {
+            //     typeName: "Zone",
+            //     search: {
+            //     },
+            //     resultsLimit:1
+            // });
             
-            console.log(zonesRoutes)
+            // console.log(zonesRoutes)
             console.log('Credentials ok!');
             return api;
         }
