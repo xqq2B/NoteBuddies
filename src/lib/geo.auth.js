@@ -71,7 +71,8 @@ geoCtrl.registerGeo =async (req,res)=>{
     User = req.body;
     console.log(User);
     //nuevo para api no reconocida
-    let text = 'SELECT * FROM Usuario WHERE correo = $1';
+    //let text = 'SELECT * FROM Usuario WHERE correo = $1';
+    let text = 'SELECT * FROM vistaObtenerUsuario WHERE id_usuario = $1';
     let values = [req.body.email];
     const { rows } = await pool.query(text, values);
     console.log(rows[0]);
