@@ -80,7 +80,8 @@ geoCtrl.registerGeo =async (req,res)=>{
         //setGrupo(ide_usuario varchar(60),ide_grupo varchar(60))
 
 
-    let text2 = 'SELECT * FROM vistaObtenerUsuario WHERE id_usuario = $1';
+
+    let text2 = 'SELECT * FROM vistaObtenerUsuario WHERE id_correo = $1';
     let values2 = [req.body.email];
     const { rows } = await pool.query(text2, values2);
     console.log(rows[0]);
