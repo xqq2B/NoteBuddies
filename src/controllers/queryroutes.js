@@ -167,7 +167,8 @@ qryCtrlRoutes.QueryDriver = async (req, res) => {
         const drivers = await api.call("Get", {
             typeName: "User",//para sacar id
             search: {
-                isDriver: "true"
+                isDriver: "true",
+                group:oaksokas
             }
         });
        // console.log(drivers[0].name);
@@ -351,6 +352,22 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
             let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)';
             let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
                 ruta.name_vehicle, ruta.id_trailer, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db];
+
+
+
+                //para crear ruta con end point
+
+
+
+                'SELECT createUsuario_Ruta(id_usuarioqueloestacreando,idRuta,grupo/sdeusuario)';
+                'SELECT setGrupo($1,$2')
+                //checar que front si manda el id_user
+                grupos:{
+                    id:123123,
+                    id:123123.
+                }
+
+
             await pool.query(text, values);
             console.log('antes',ruta.checkpoints[0].id_punto);
             console.log(ruta.checkpoints.length);
@@ -483,6 +500,8 @@ qryCtrlRoutes.EditRoute = async (req, res) => {
 qryCtrlRoutes.QueryAll = async (req, res) => {
     try {
         //console.log(req.body);
+        //id de usuario para ver que rutas le corresponden
+        //agregar end points
         let text = ('SELECT * FROM ruta WHERE bd=$1');
         let values = [req.body.db];
         const routes = await pool.query(text, values);
@@ -493,6 +512,14 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
         console.log(cPoints.rows.length);   
         console.log(routes.rows.length);
         var x=-1;
+
+
+        let text=('select * from verRutasyCheckpoints where id_ruta = 
+        (select id_ruta from Usuario_Ruta where id_grupo = (select id_grupo from Usuario_Grupo where id_usuario = $1))');
+        //AGREGAR SACAR COORDENADAS DE CHECKPOINTS Y DE ENDPOINTS Y AGREGARLO A LO QUE SE DEVUELVE DE verrutasycheckpoints
+        
+        //solo entrara id_usuario
+
         /////
         // for (var j = 0; j < routes.rows.length; j++) {
         //     var a = -1;
