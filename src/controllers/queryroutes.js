@@ -359,13 +359,13 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
 
 
 
-                'SELECT createUsuario_Ruta(id_usuarioqueloestacreando,idRuta,grupo/sdeusuario)';
-                'SELECT setGrupo($1,$2')
-                //checar que front si manda el id_user
-                grupos:{
-                    id:123123,
-                    id:123123.
-                }
+                // 'SELECT createUsuario_Ruta(id_usuarioqueloestacreando,idRuta,grupo/sdeusuario)';
+                // 'SELECT setGrupo($1,$2')
+                // //checar que front si manda el id_user
+                // grupos:{
+                //     id:123123,
+                //     id:123123.
+                // }
 
 
             await pool.query(text, values);
