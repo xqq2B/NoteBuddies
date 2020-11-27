@@ -70,6 +70,12 @@ geoCtrl.loginGeo = async (req, res) => {
 geoCtrl.registerGeo =async (req,res)=>{      
     User = req.body;
     console.log(User);
+    //nuevo para api no reconocida
+    let text = 'SELECT * FROM Usuario WHERE correo = $1';
+    let values = [req.body.email];
+    const { rows } = await pool.query(text, values);
+    console.log(rows[0]);
+    const api = await new GeotabApi({credentials:{userName:rows[0].correo,database:rows[0].db,sessionId:rows[0].sessionId},path:rows[0].path});
     try {
         const group=await api.call("Get", {
             typeName: "User",//si es user y es el companyGroups
