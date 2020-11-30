@@ -212,19 +212,9 @@ qryCtrlRoutes.QueryDriver = async (req, res) => {
         }
         console.log('Drivers');
         
-        //se cambio lo de abajo
-        // const drivers = await api.call("Get", {
-        //     typeName: "User",//para sacar id
-        //     search: {
-        //         isDriver: "true",
-        //         group:oaksokas
-        //     }
-        // });
-       // console.log(drivers[0].name);
-       //se pedira los grupos a los que pertenece de la vista obtener usuario  results.rows[0].groups
+
        var driver=[];
        
-       console.log('1'+result.rows[0]);
 
        for(j=0;j<result.rows[0].json_build_object.grupo.length;j++){
         await api.call('Get', { typeName: 'Device', search: { groups: [{ id: result.rows[0].json_build_object.grupo[j],isDriver:"true" }] }, resultsLimit: 55 })
@@ -290,18 +280,18 @@ qryCtrlRoutes.QueryTrailer = async (req, res) => {
         // res.json({ trailer });
         var trailer=[];
         var rep=false;
-        for(j=0;j<results.rows[0].groups.length;j++){
-        await api.call('Get', { typeName: 'Trailer', search: { groups: [{ id: results.rows[0].groups[j].id }] }, resultsLimit: 15 })
-                .then(result => {
-                    for (var i = 0; i < result.length; i++) {
-                        if(result[i].name!= null){
+        for(j=0;j<result.rows[0].json_build_object.grupo.length;j++){
+        await api.call('Get', { typeName: 'Trailer', search: { groups: [{ id: result.rows[0].json_build_object.grupo[j]}]}, resultsLimit: 15 })
+                .then(results => {
+                    for (var i = 0; i < results.length; i++) {
+                        if(results[i].name!= null){
                             for(k=0;k<trailer.length;k++){
-                                if(trailer[k].id==result[i].id){
+                                if(trailer[k].id==results[i].id){
                                     rep=true;
                                 }
                             }
                             if (rep == false)
-                                trailer.push({ name: result[i].name, id: result[i].id });
+                                trailer.push({ name: results[i].name, id: results[i].id });
                         }
                     }
                 })
@@ -346,18 +336,18 @@ qryCtrlRoutes.QueryDevice = async (req, res) => {
         // }
         var device=[];
         var rep=false;
-        for(j=0;j<results.rows[0].groups.length;j++){
-        await api.call('Get', { typeName: 'Device', search: { groups: [{ id: results.rows[0].groups[j].id }] }, resultsLimit: 15 })
-                .then(result => {
-                    for (var i = 0; i < result.length; i++) {
-                        if(result[i].name!= null){
+        for(j=0;j<result.rows[0].json_build_object.grupo.length;j++){
+        await api.call('Get', { typeName: 'Device', search: { groups: [{ id: result.rows[0].json_build_object.grupo[j]}]}, resultsLimit: 15 })
+                .then(results => {
+                    for (var i = 0; i < results.length; i++) {
+                        if(results[i].name!= null){
                             for(k=0;k<device.length;k++){
-                                if(device[k].id==result[i].id){
+                                if(device[k].id==results[i].id){
                                     rep=true;
                                 }
                             }
                             if (rep == false)
-                                device.push({ name: result[i].name, id: result[i].id });
+                                device.push({ name: results[i].name, id: results[i].id });
                         }
                     }
                 })

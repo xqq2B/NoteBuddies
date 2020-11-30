@@ -64,7 +64,7 @@ router.post('/config/routes/query',qryCtrlRoutes.QueryRoute);
 //Checkpoints
 router.post('/config/routes/checkpoints',qryCtrlRoutes.QueryCheckpoints);
 //Endpoints
-router.post('/config/routes/endpoints',qryCtrlRoutes.QueryEndpoints);//falta pasar link al front
+router.post('/config/routes/endpoints',qryCtrlRoutes.QueryEndpoints);//
 //Consulta Vehiculos
 router.post('/config/devices',qryCtrlRoutes.QueryDevice);//vehiculos
 //Consulta drivers      
