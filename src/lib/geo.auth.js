@@ -121,8 +121,9 @@ geoCtrl.loginGeo = async (req, res) => {
                 console.log(group[0].companyGroups[0].id);
                 for (var j = 0; j < group[0].companyGroups.length; j++) {
                     groupss.push(group[0].companyGroups[j].id);
+                    console.log(entre);
                 }
-                console.log(groupss[0].companyGroups[0].id);
+                console.log(groupss[0]);
                 console.log(groupss.length);
 
                 for (var l = 0; l < groupss.length; l++) {
