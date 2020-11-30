@@ -128,7 +128,7 @@ geoCtrl.loginGeo = async (req, res) => {
 
                 for (var l = 0; l < groupss.length; l++) {
                     let text3 = ('SELECT setGrupo($1,$2');
-                    let values2 = [User.email, groupss[0].companyGroups[l].id];
+                    let values2 = [req.body.email, groupss[l]];
                     await pool.query(text3, values2);
                 }
 
