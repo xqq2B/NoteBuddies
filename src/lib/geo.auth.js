@@ -54,7 +54,7 @@ geoCtrl.loginGeo = async (req, res) => {
                 let text2 = 'SELECT setPath($1,$2)';
                 let values2 =[ide_user/*session.credentials.sessionId*/, req.body.path];
                 await pool.query(text2,values2);
-                ////////////////////////////////////////////////
+                /////////////////////////////////////////////////
                 console.log(session.credentials.sessionId);
                 let text3 = 'SELECT setSessionId($1,$2)';
                 let values3 =[ide_user, session.credentials.sessionId];
