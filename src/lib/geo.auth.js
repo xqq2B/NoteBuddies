@@ -113,7 +113,7 @@ geoCtrl.registerGeo =async (req,res)=>{
     console.log(rows[0]);
     console.log(rows[0].sessionid);
     console.log(rows[0].path);
-    console.log(rows[0].db);
+    console.log(rows[0].bd);
     console.log(rows[0].correo);
     const api = await new GeotabApi({ credentials: { userName: rows[0].correo, database: rows[0].bd, sessionId: rows[0].sessionid }, path: rows[0].path });
     console.log(api);
@@ -124,7 +124,7 @@ geoCtrl.registerGeo =async (req,res)=>{
         const group = await api.call("Get", {
             typeName: "User",//si es user y es el companyGroups
             search: {
-                name: User.email
+                name: rows[0].correo
             },
         });
         var groups=[];
