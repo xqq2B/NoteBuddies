@@ -115,9 +115,10 @@ geoCtrl.loginGeo = async (req, res) => {
                         name: req.body.email
                     },
                 });
-                console.log(group.length);
+                console.log(group[0].companyGroups.length);
                 var groupss = [];
-                console.log(group[0].companyGroups.id);
+                console.log(group[0].companyGroups);
+                console.log(group[0].companyGroups[0].id);
                 for (var j = 0; j < group[0].companyGroups.length; j++) {
                     groupss.push(group[0].companyGroups[j].id);
                 }
