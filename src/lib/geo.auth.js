@@ -65,18 +65,16 @@ geoCtrl.loginGeo = async (req, res) => {
                         name: req.body.email
                     },
                 });
-                console.log(group.length);
-                var groups = [];
-                console.log(group[0]);
+                console.log(group[0].companyGroups.length);
+                var groups=[];
                 for (var i = 0; i < group[0].companyGroups.length; i++) {
                     groups.push(group[0].companyGroups[i].id);
                 }
-                console.log(groups[0].companyGroups[0].id);
                 console.log(groups.length);
 
                 for (i = 0; i < groups.length; i++) {
-                    let text3 = ('SELECT setGrupo($1,$2');
-                    let values2 = [User.email, groups[0].companyGroups[i].id];
+                    let text3 = ('SELECT setGrupo($1,$2)');
+                    let values2 = [req.body.email, groups[0]];
                     await pool.query(text3, values2);
                 }
                 /////////////////////////////////////////////////
@@ -126,11 +124,11 @@ geoCtrl.loginGeo = async (req, res) => {
                 console.log(groupss[0]);
                 console.log(groupss.length);
 
-                //for (var l = 0; l < groupss.length; l++) {
+                for (var l = 0; l < groupss.length; l++) {
                     let text3 = ('SELECT setGrupo($1,$2)');
                     let values22 = [req.body.email, groupss[0]];
                     await pool.query(text3, values22);
-                //}
+                }
                 console.log('paso insertar grupo');
 
                 let textt = 'SELECT * FROM vistaObtenerUsuario WHERE correo = $1';
