@@ -3,6 +3,22 @@ const geoCtrl ={};
 const {pool} = require('../database');
 
 
+async function checkId (){
+    const id_user = (Math.floor(Math.random() * (10000001)))+10000000;
+    const text = 'SELECT * FROM usuario WHERE id_usuario= $1';//id_user
+    const value =[id_user];
+    const{rows}= await pool.query(text,value);
+    if(rows.length>0) {
+        console.log('id user repetido');
+        checkId();}
+    else{
+        return id_user;
+    } 
+}
+
+
+
+
 
 geoCtrl.loginGeo = async (req, res) => {
     const authentication = {
@@ -26,15 +42,23 @@ geoCtrl.loginGeo = async (req, res) => {
             console.log(req.body.path);
             //const ide_usuario =rows[0].id_usuario;
             if (rows.length == 0) {
+                //generar ide usuario
+                var ide_user;
+                await checkId().then(res => ide_user = parseInt(res));
+                console.log(ide_user);
                 let session = await api.authenticate();
                 let text = 'SELECT createUsuario_Geotab($1,$2,$3)';
-                let values = [session.credentials.sessionId, session.credentials.userName, session.credentials.database];//username es email
+                let values = [ide_user/*session.credentials.sessionId*/, session.credentials.userName, session.credentials.database];//username es email
                 await pool.query(text, values);
                 ///setpath recibe session.credentials.sessionId para darle el path correcto
                 let text2 = 'SELECT setPath($1,$2)';
                 let values2 =[session.credentials.sessionId, req.body.path];
                 await pool.query(text2,values2);
                 ////////////////////////////////////////////////
+                console.log(session.credentials.sessionId);
+                let text3 = 'SELECT setSessionId($1,$2)';
+                let values3 =[ide_user, session.credentials.sessionId];
+                await pool.query(text3,values3);
                 res.json({ email: session.credentials.userName });
                 //await res.redirect('http://35.206.82.124/finalizar_registro');
                 console.log('insertado usuario GEOTAB en DB');    
@@ -67,6 +91,8 @@ geoCtrl.loginGeo = async (req, res) => {
     }
 };
 
+
+
 geoCtrl.registerGeo =async (req,res)=>{      
     User = req.body;
     console.log(User);
@@ -94,6 +120,7 @@ geoCtrl.registerGeo =async (req,res)=>{
             },
         });
         var groups=[];
+        console.log(group[0]);
         for(var i=0;i<group[0].companyGroups.length;i++){
             groups.push(group[0].companyGroups[i].id);
         }

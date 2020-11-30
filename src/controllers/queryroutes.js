@@ -24,17 +24,26 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
             api = await conexion.sessionOtherDb(result.rows[0].correo, result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
         }
         console.log(api);
-        const zones = await api.call("Get", {
-            typeName: "Group",//para sacar id
-            search: {
-                "name": "rutas"
-                //checkpoints
-            }
+        //cambiado para usar tipo de zona
+        // const zones = await api.call("Get", {
+        //     typeName: "Group",//para sacar id
+        //     search: {
+        //         "name": "rutas"
+        //         //checkpoints
+        //     }
+        // });
+        const zones= await api.call("Get",{
+            typeName:"ZoneType",
+            search:{
+                "name":'MM R Routes'        //para sacar entidad zonetype  filtrado por el nombre //MM R Checkpoints o MM R routes     
+            },
+            resultsLimit: 500
+
         });
-        console.log(zones[0]);
         const zonesRoutes = await api.call("Get", {
             typeName: "Zone",
             search: {
+                zoneTypes: [{id:zones[0].id}]
             }
         });
         var Rutas = [];
@@ -45,9 +54,9 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
         for (let i = 0; i < zonesRoutes.length; i++) 
         {
             if(zonesRoutes[i].groups[0]!= null){
-                if (zonesRoutes[i].groups[0].id == zones[0].id) {
-                    Rutas.push({ id: zonesRoutes[i].id, name: zonesRoutes[i].name });
-                }
+               // if (zonesRoutes[i].groups[0].id == zones[0].id) { quitado no se requiere por cambio de filtro
+                    Rutas.push({ id: zonesRoutes[i].id, name: zonesRoutes[i].name, points:zonesRoutes[i].points });
+                //}
                 // else{
                 //     console.log('no existe');
                 // }
@@ -65,38 +74,7 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
     }
 };
 
-//Consulta Vehiculos
-qryCtrlRoutes.QueryDevice = async (req, res) => {
-    try {
-        var api;
-        let text = 'SELECT * FROM vistaObtenerUsuario WHERE id_usuario = $1';
-        let values = [req.body.id_user];
-        const result = await pool.query(text, values);
-        if (result.rows[0].bd == "metrica") {
-            api = await conexion.updateSessionId();
-           // console.log(api);
-        }
-        else {
-            console.log('hi');
-            //api = await conexion.sessionOtherDb(req.body.username,req.body.db, req.body.session, req.body.servo);
-            api = await conexion.sessionOtherDb(result.rows[0].correo, result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
-        }
-        const results = await api.call("Get", {
-            typeName: "Device",//search por name, id, externalReference
-            search: {
-            },
-          
-        });
-        var Devices = [];
-        for (var i = 0; i < results.length; i++) {
-            Devices.push({ id: results[i].id, name: results[i].name });
-        }
-        res.json({ Devices });
-    }
-    catch (e) {
-        console.log('ERROR QUERY DEVICE RUTAS' + e);
-    }
-};
+
 
 qryCtrlRoutes.QueryCheckpoints = async (req, res) => {
     try {
@@ -118,31 +96,100 @@ qryCtrlRoutes.QueryCheckpoints = async (req, res) => {
             api = await conexion.sessionOtherDb(result.rows[0].correo, result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
         }
         console.log('CheckPOINTS');
-        const zones = await api.call("Get", {
-            typeName: "Group",//para sacar id
-            search: {
-                "name":"checkpoints"
-            }
+        //se cambio para buscar por zone type
+        // const zones = await api.call("Get", {
+        //     typeName: "Group",//para sacar id
+        //     search: {
+        //         "name":"checkpoints"
+        //     }
+        // });
+        const zones= await api.call("Get",{
+            typeName:"ZoneType",
+            search:{
+                name:'MM R Checkpoint'        //para sacar entidad zonetype  filtrado por el nombre //MM R Checkpoints o MM R routes     
+            },
+            resultsLimit: 500
+
         });
        // console.log(zones[0]);
         const zonesCheckPoints= await api.call("Get",{
             typeName: "Zone",
-            search: {
+            search: {//como se cambio se agrega el id para filtrar
+                zoneTypes: [{id:zones[0].id}]
             }
         });
         var Checkpoints = [];
         for (var i = 0; i < zonesCheckPoints.length; i++) {
             if (zonesCheckPoints[i].groups[0] != null) {
-                if (zonesCheckPoints[i].groups[0].id == zones[0].id) {
-                    Checkpoints.push({ id: zonesCheckPoints[i].id, name: zonesCheckPoints[i].name });
+               // if (zonesCheckPoints[i].groups[0].id == zones[0].id) { se quita pq ya filtro con lo nuevo
+                    Checkpoints.push({ id: zonesCheckPoints[i].id, name: zonesCheckPoints[i].name, points: zonesCheckPoints[i].points });
                 }
             }
-        }
+        
        // console.log(zonesCheckPoints[2]);
         res.json({ Checkpoints });
     }
     catch (e) {
         console.log('ERROR QUERY CHECKPOINTS RUTAS' + e);
+    }
+};
+
+
+qryCtrlRoutes.QueryEndpoints = async (req, res) => {
+    try {
+        var api;
+        console.log(req.body.id_user);
+        let text = 'select * from vistaObtenerUsuario WHERE id_usuario = $1';
+        let values = [req.body.id_user];
+        const result = await pool.query(text, values);
+        console.log(result.rows[0].bd);
+        console.log(result.rows);
+        console.log('ENDPOINTS');
+        if (result.rows[0].bd == "metrica") {
+            api = await conexion.updateSessionId();
+            //console.log(api);
+        }
+        else {
+            console.log('Otra base de datos');
+            //registros tomados de github documentacion db
+            api = await conexion.sessionOtherDb(result.rows[0].correo, result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
+        }
+        console.log('ENDPOINTS');
+        //se cambio para buscar por zone type
+        // const zones = await api.call("Get", {
+        //     typeName: "Group",//para sacar id
+        //     search: {
+        //         "name":"checkpoints"
+        //     }
+        // });
+        const zones= await api.call("Get",{
+            typeName:"ZoneType",
+            search:{
+                name:'MM R Endpoint'        //para sacar entidad zonetype  filtrado por el nombre //MM R Checkpoints o MM R routes     
+            },
+            resultsLimit: 500
+
+        });
+       // console.log(zones[0]);
+        const zonesEndPoints= await api.call("Get",{
+            typeName: "Zone",
+            search: {//como se cambio se agrega el id para filtrar
+                zoneTypes: [{id:zones[0].id}]
+            }
+        });
+        var Endpoints = [];
+        for (var i = 0; i < zonesEndPoints.length; i++) {
+            if (zonesEndPoints[i].groups[0] != null) {
+               // if (zonesCheckPoints[i].groups[0].id == zones[0].id) { se quita pq ya filtro con lo nuevo
+                    Endpoints.push({ id: zonesEndPoints[i].id, name: zonesEndPoints[i].name, points: zonesEndPoints[i].points });
+                }
+            }
+        
+       // console.log(zonesCheckPoints[2]);
+        res.json({ Endpoints });
+    }
+    catch (e) {
+        console.log('ERROR QUERY ENDPOINTS RUTAS' + e);
     }
 };
 
@@ -164,21 +211,41 @@ qryCtrlRoutes.QueryDriver = async (req, res) => {
             api = await conexion.sessionOtherDb(result.rows[0].correo, result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
         }
         console.log('Drivers');
-        const drivers = await api.call("Get", {
-            typeName: "User",//para sacar id
-            search: {
-                isDriver: "true",
-                group:oaksokas
-            }
-        });
+        
+        //se cambio lo de abajo
+        // const drivers = await api.call("Get", {
+        //     typeName: "User",//para sacar id
+        //     search: {
+        //         isDriver: "true",
+        //         group:oaksokas
+        //     }
+        // });
        // console.log(drivers[0].name);
-        const driver = [];
-        console.log(drivers.length);
-        for (var i = 0; i < drivers.length; i++) {
-            if (drivers[i].name != null) {
-                driver.push({ name: drivers[i].name });
-            }
+       //se pedira los grupos a los que pertenece de la vista obtener usuario  results.rows[0].groups
+       var driver=[];
+       for(j=0;j<results.rows[0].groups.length;j++){
+        await api.call('Get', { typeName: 'Device', search: { groups: [{ id: results.rows[0].groups[j].id,isDriver:"true" }] }, resultsLimit: 55 })
+            .then(result => {
+                for (var i = 0; i < result.length; i++) {
+                    if (result[i].name != null) {
+                    driver.push({ name: result[i].name });
+                    }
+                }
+                console.log(result[0]);
+            })
+            .catch(error => {
+                // some form of error occured with the request
+                console.log('ERROR DRIVERS APICALL', error);
+            });
         }
+        //const driver = [];
+        console.log(driver.length);
+        //modificado por nueva polita
+        // for (var i = 0; i < drivers.length; i++) {
+        //     if (drivers[i].name != null) {
+        //         driver.push({ name: drivers[i].name });
+        //     }
+        // }
         res.json({ driver });
     }
     catch (e) {
@@ -202,20 +269,44 @@ qryCtrlRoutes.QueryTrailer = async (req, res) => {
             api = await conexion.sessionOtherDb(result.rows[0].correo, result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
         }
         //console.log('Trailer');
-        const trailers = await api.call("Get", {
-            typeName: "Trailer",//para sacar id
-            search: {
-                //isDriver:"true"
+        //se cancela por nueva politicca
+        // const trailers = await api.call("Get", {
+        //     typeName: "Trailer",//para sacar id
+        //     search: {
+        //         //isDriver:"true"
+        //     }
+        // });
+        // //console.log(trailers);
+        // const trailer = [];
+        // console.log(trailers.length);
+        // for (var i = 0; i < trailers.length; i++) {
+        //     if(trailers[i].name!= null){
+        //     trailer.push({ name: trailers[i].name,id:trailers[i].id });
+        // }
+        // }
+        // res.json({ trailer });
+        var trailer=[];
+        var rep=false;
+        for(j=0;j<results.rows[0].groups.length;j++){
+        await api.call('Get', { typeName: 'Trailer', search: { groups: [{ id: results.rows[0].groups[j].id }] }, resultsLimit: 15 })
+                .then(result => {
+                    for (var i = 0; i < result.length; i++) {
+                        if(result[i].name!= null){
+                            for(k=0;k<trailer.length;k++){
+                                if(trailer[k].id==result[i].id){
+                                    rep=true;
+                                }
+                            }
+                            if (rep == false)
+                                trailer.push({ name: result[i].name, id: result[i].id });
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.log('ERROR TRAILER APICALL', error);
+                });
             }
-        });
-        //console.log(trailers);
-        const trailer = [];
-        console.log(trailers.length);
-        for (var i = 0; i < trailers.length; i++) {
-            if(trailers[i].name!= null){
-            trailer.push({ name: trailers[i].name,id:trailers[i].id });
-        }
-        }
+        console.log(trailer.length);
         res.json({ trailer });
     }
     catch (e) {
@@ -223,6 +314,61 @@ qryCtrlRoutes.QueryTrailer = async (req, res) => {
     }
 };
 
+//Consulta Vehiculos
+qryCtrlRoutes.QueryDevice = async (req, res) => {
+    try {
+        var api;
+        let text = 'SELECT * FROM vistaObtenerUsuario WHERE id_usuario = $1';
+        let values = [req.body.id_user];
+        const result = await pool.query(text, values);
+        if (result.rows[0].bd == "metrica") {
+            api = await conexion.updateSessionId();
+           // console.log(api);
+        }
+        else {
+            console.log('hi');
+            //api = await conexion.sessionOtherDb(req.body.username,req.body.db, req.body.session, req.body.servo);
+            api = await conexion.sessionOtherDb(result.rows[0].correo, result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
+        }
+        //cambiado por politica a grupos
+        // const results = await api.call("Get", {
+        //     typeName: "Device",//search por name, id, externalReference
+        //     search: {
+        //     },
+          
+        // });
+        // var Devices = [];
+        // for (var i = 0; i < results.length; i++) {
+        //     Devices.push({ id: results[i].id, name: results[i].name });
+        // }
+        var device=[];
+        var rep=false;
+        for(j=0;j<results.rows[0].groups.length;j++){
+        await api.call('Get', { typeName: 'Device', search: { groups: [{ id: results.rows[0].groups[j].id }] }, resultsLimit: 15 })
+                .then(result => {
+                    for (var i = 0; i < result.length; i++) {
+                        if(result[i].name!= null){
+                            for(k=0;k<device.length;k++){
+                                if(device[k].id==result[i].id){
+                                    rep=true;
+                                }
+                            }
+                            if (rep == false)
+                                device.push({ name: result[i].name, id: result[i].id });
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.log('ERROR TRAILER APICALL', error);
+                });
+            }
+        console.log(device.length);
+        res.json({ device });
+    }
+    catch (e) {
+        console.log('ERROR QUERY DEVICE RUTAS' + e);
+    }
+};
 
 async function makeIdRoute() {
     var result           = '';
@@ -357,7 +503,17 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
 
                 //para crear ruta con end point
 
+                let text3= 'SELECT createUsuario_Ruta(id_usuarioqueloestacreando,idRuta,grupo/sdeusuario)';//preguntar ultimo valor 
+                let values3= [ruta.id_user,idRuta,ruta.group];
+                await pool.query(text3,values3);
 
+                    for(let i=0; i<ruta.group.length;i++)
+                    {
+                        let text4=('SELECT setGrupo($1,$2');
+                        let values4 = [ruta.email,group[i]];
+                        await pool.query(text4,values4);     
+                    }
+              //  }
 
                 // 'SELECT createUsuario_Ruta(id_usuarioqueloestacreando,idRuta,grupo/sdeusuario)';
                 // 'SELECT setGrupo($1,$2')
@@ -573,9 +729,6 @@ qryCtrlRoutes.DeleteRoute = async (req, res) => {
          let text=('SELECT deleteRuta($1)');
          let values=[req.params.id_route];
          await pool.query(text,values);
-         /*ERROR BORRANDO RUTASerror: update or delete on table "ruta" 
-         violates foreign key constraint "fk_id_ruta_ruta_checkpoint" 
-         on table "ruta_checkpoint"*/
         res.json({status:'ok'});
     }
     catch (e) {
