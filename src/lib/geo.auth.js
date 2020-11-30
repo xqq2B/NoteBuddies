@@ -111,7 +111,15 @@ geoCtrl.registerGeo =async (req,res)=>{
     let values2 = [req.body.email];
     let { rows } = await pool.query(text2, values2);
     console.log(rows[0]);
+    console.log(rows[0].sessionid);
+    console.log(rows[0].path);
+    console.log(rows[0].db);
+    console.log(rows[0].correo);
     const api = await new GeotabApi({ credentials: { userName: rows[0].correo, database: rows[0].bd, sessionId: rows[0].sessionid }, path: rows[0].path });
+    console.log(api);
+    // console.log(user + db + session + servo);
+    //     const api = await new GeotabApi({ credentials: { userName: user, database: db, sessionId: session }, path: servo });
+    //     console.log(api);
     try {
         const group = await api.call("Get", {
             typeName: "User",//si es user y es el companyGroups
