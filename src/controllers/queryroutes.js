@@ -223,15 +223,18 @@ qryCtrlRoutes.QueryDriver = async (req, res) => {
        // console.log(drivers[0].name);
        //se pedira los grupos a los que pertenece de la vista obtener usuario  results.rows[0].groups
        var driver=[];
-       for(j=0;j<results.rows[0].groups.length;j++){
-        await api.call('Get', { typeName: 'Device', search: { groups: [{ id: results.rows[0].groups[j].id,isDriver:"true" }] }, resultsLimit: 55 })
-            .then(result => {
-                for (var i = 0; i < result.length; i++) {
-                    if (result[i].name != null) {
-                    driver.push({ name: result[i].name });
+       
+
+
+       for(j=0;j<result.rows[0].json_builder_object.grupo.length;j++){
+        await api.call('Get', { typeName: 'Device', search: { groups: [{ id: result.rows[0].json_builder_object.grupo[j],isDriver:"true" }] }, resultsLimit: 55 })
+            .then(results => {
+                for (var i = 0; i < results.length; i++) {
+                    if (results[i].name != null) {
+                    driver.push({ name: results[i].name });
                     }
                 }
-                console.log(result[0]);
+                console.log(results[0]);
             })
             .catch(error => {
                 // some form of error occured with the request
