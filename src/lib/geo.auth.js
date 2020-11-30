@@ -93,7 +93,8 @@ geoCtrl.loginGeo = async (req, res) => {
 
 
 
-geoCtrl.registerGeo =async (req,res)=>{      
+geoCtrl.registerGeo =async (req,res)=>{    
+    try {  
     User = req.body;
     console.log(User);
     //nuevo para api no reconocida
@@ -120,7 +121,7 @@ geoCtrl.registerGeo =async (req,res)=>{
     // console.log(user + db + session + servo);
     //     const api = await new GeotabApi({ credentials: { userName: user, database: db, sessionId: session }, path: servo });
     //     console.log(api);
-    try {
+    
         const group = await api.call("Get", {
             typeName: "User",//si es user y es el companyGroups
             search: {
@@ -140,15 +141,15 @@ geoCtrl.registerGeo =async (req,res)=>{
         let values2 = [User.email,groups[0].companyGroups[i].id];
         await pool.query(text3,values2);
         }
-        let text2 = 'SELECT * FROM vistaObtenerUsuario WHERE correo = $1';
-        let values2 = [req.body.email];
-        let { rows } = await pool.query(text2, values2);
+        let textt = 'SELECT * FROM vistaObtenerUsuario WHERE correo = $1';
+        let valuess = [req.body.email];
+        let result = await pool.query(textt, valuess);
 
         // let text2 = 'SELECT * FROM vistaObtenerUsuario WHERE correo =$1';
         // let value =[User.email];
         // const {rows} = await pool.query(text2,value);
-        console.log(rows);
-        res.json({status:rows});//status:'Registered!',id_rol:rows.id_rol});
+        console.log(result.rows);
+        res.json({status:result.rows});//status:'Registered!',id_rol:rows.id_rol});
     } catch (e) {
         console.log(e);
     }
