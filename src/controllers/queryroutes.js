@@ -37,7 +37,7 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
             search:{
                 "name":'MM R Routes'        //para sacar entidad zonetype  filtrado por el nombre //MM R Checkpoints o MM R routes     
             },
-            resultsLimit: 500
+            //resultsLimit: 500
 
         });
         const zonesRoutes = await api.call("Get", {
@@ -55,7 +55,7 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
         {
             if(zonesRoutes[i].groups[0]!= null){
                // if (zonesRoutes[i].groups[0].id == zones[0].id) { quitado no se requiere por cambio de filtro
-                    Rutas.push({ id: zonesRoutes[i].id, name: zonesRoutes[i].name, points:zonesRoutes[i].points });
+                    Rutas.push({ id: zonesRoutes[i].id, name: zonesRoutes[i].name/*, points:zonesRoutes[i].points*/ });
                 //}
                 // else{
                 //     console.log('no existe');
@@ -108,7 +108,7 @@ qryCtrlRoutes.QueryCheckpoints = async (req, res) => {
             search:{
                 name:'MM R Checkpoint'        //para sacar entidad zonetype  filtrado por el nombre //MM R Checkpoints o MM R routes     
             },
-            resultsLimit: 500
+            //resultsLimit: 500
 
         });
        // console.log(zones[0]);
@@ -122,7 +122,7 @@ qryCtrlRoutes.QueryCheckpoints = async (req, res) => {
         for (var i = 0; i < zonesCheckPoints.length; i++) {
             if (zonesCheckPoints[i].groups[0] != null) {
                // if (zonesCheckPoints[i].groups[0].id == zones[0].id) { se quita pq ya filtro con lo nuevo
-                    Checkpoints.push({ id: zonesCheckPoints[i].id, name: zonesCheckPoints[i].name, points: zonesCheckPoints[i].points });
+                    Checkpoints.push({ id: zonesCheckPoints[i].id, name: zonesCheckPoints[i].name/*, points: zonesCheckPoints[i].points*/ });
                 }
             }
         
@@ -167,7 +167,7 @@ qryCtrlRoutes.QueryEndpoints = async (req, res) => {
             search:{
                 name:'MM R Endpoint'        //para sacar entidad zonetype  filtrado por el nombre //MM R Checkpoints o MM R routes     
             },
-            resultsLimit: 500
+            //resultsLimit: 500
 
         });
        // console.log(zones[0]);
@@ -181,7 +181,7 @@ qryCtrlRoutes.QueryEndpoints = async (req, res) => {
         for (var i = 0; i < zonesEndPoints.length; i++) {
             if (zonesEndPoints[i].groups[0] != null) {
                // if (zonesCheckPoints[i].groups[0].id == zones[0].id) { se quita pq ya filtro con lo nuevo
-                    Endpoints.push({ id: zonesEndPoints[i].id, name: zonesEndPoints[i].name, points: zonesEndPoints[i].points });
+                    Endpoints.push({ id: zonesEndPoints[i].id, name: zonesEndPoints[i].name/*, points: zonesEndPoints[i].points*/ });
                 }
             }
         
@@ -217,7 +217,7 @@ qryCtrlRoutes.QueryDriver = async (req, res) => {
        
 
        for(j=0;j<result.rows[0].json_build_object.grupo.length;j++){
-        await api.call('Get', { typeName: 'Device', search: { groups: [{ id: result.rows[0].json_build_object.grupo[j],isDriver:"true" }] }, resultsLimit: 55 })
+        await api.call('Get', { typeName: 'Driver', search: { groups: [{ id: result.rows[0].json_build_object.grupo[j],isDriver:"true" }] }, /*resultsLimit: 55*/ })
             .then(results => {
                 for (var i = 0; i < results.length; i++) {
                     if (results[i].name != null) {
@@ -281,7 +281,7 @@ qryCtrlRoutes.QueryTrailer = async (req, res) => {
         var trailer=[];
         var rep=false;
         for(j=0;j<result.rows[0].json_build_object.grupo.length;j++){
-        await api.call('Get', { typeName: 'Trailer', search: { groups: [{ id: result.rows[0].json_build_object.grupo[j]}]}, resultsLimit: 15 })
+        await api.call('Get', { typeName: 'Trailer', search: { groups: [{ id: result.rows[0].json_build_object.grupo[j]}]}, /*resultsLimit: 15*/ })
                 .then(results => {
                     for (var i = 0; i < results.length; i++) {
                         if(results[i].name!= null){
@@ -337,7 +337,7 @@ qryCtrlRoutes.QueryDevice = async (req, res) => {
         var device=[];
         var rep=false;
         for(j=0;j<result.rows[0].json_build_object.grupo.length;j++){
-        await api.call('Get', { typeName: 'Device', search: { groups: [{ id: result.rows[0].json_build_object.grupo[j]}]}, resultsLimit: 15 })
+        await api.call('Get', { typeName: 'Device', search: { groups: [{ id: result.rows[0].json_build_object.grupo[j]}]}, /*resultsLimit: 15*/ })
                 .then(results => {
                     for (var i = 0; i < results.length; i++) {
                         if(results[i].name!= null){
