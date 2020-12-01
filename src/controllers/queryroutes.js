@@ -217,7 +217,7 @@ qryCtrlRoutes.QueryDriver = async (req, res) => {
        
 
        for(j=0;j<result.rows[0].json_build_object.grupo.length;j++){
-        await api.call('Get', { typeName: 'User', search: { groups: [{ id: result.rows[0].json_build_object.grupo[j],isDriver:"true" }] }, /*resultsLimit: 55*/ })
+        await api.call('Get', { typeName: 'User', search: { groups: [{ id: result.rows[0].json_build_object.grupo[j],isDriver:true }] }, /*resultsLimit: 55*/ })
             .then(results => {
                 for (var i = 0; i < results.length; i++) {
                     if (results[i].name != null) {
