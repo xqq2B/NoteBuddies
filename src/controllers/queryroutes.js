@@ -699,15 +699,17 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
 //HASTA AQUI
 //nueva modificacion
 
-        let text0 = 'SELECT * FROM vistaObtenerUsuario WHERE id_usuario = $1';
-        let values0 = [req.body.id_user];
-        const result0 = await pool.query(text0, values0);
+        // let text0 = 'SELECT * FROM vistaObtenerUsuario WHERE id_usuario = $1';
+        // let values0 = [req.body.id_user];
+        // const result0 = await pool.query(text0, values0);
 
 
-
-        let text = ('select * from verRutasyCheckpoints where BD = $1');
-        let values = [result0.rows[0].bd];
+        console.log('entro qall');
+        let text = 'SELECT * FROM verRutasyCheckpoints where BD = $1';
+        let values = [req.body.db];
         const { rows } = await pool(text, values);
+        console.log('paso qall');
+        console.log(rows.length);
 ///////////////////
         // let text=('SELECT * FROM verRutasyCheckpoints WHERE id_ruta = (SELECT id_ruta FROM Usuario_Ruta WHERE id_grupo = (SELECT id_grupo FROM Usuario_Grupo WHERE id_usuario = $1))');
         // let values=[req.body.id_user];
