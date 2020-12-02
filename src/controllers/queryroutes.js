@@ -498,13 +498,16 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
 //CREAR RUTA AL FINAL ID_ENDPOINT, NAME_ENDPOINT AL FINAL
                 //pedir el grupo
            // select 
+           console.log(ruta.id_user);
            let text0 = 'SELECT * FROM vistaObtenerUsuario WHERE id_usuario = $1';
-           let values0 = [req.body.id_user];
+           let values0 = [ruta.id_user];//cambiado de req.body.id_user
            const result0 = await pool.query(text0, values0);
            
+           console.log('mas de uno');
+
            for (var k=0; k<result0.rows[0].json_build_object.grupo.length;k++){
                 let text3= 'SELECT createUsuario_Ruta($1,$2,$3)';//preguntar ultimo valor 
-                let values3= [ruta.req.body.id_user,idRuta,result0.rows[0].json_build_object.grupo[k].id_grupo];
+                let values3= [ruta.id_user,idRuta,result0.rows[0].json_build_object.grupo[k].id_grupo];
                 await pool.query(text3,values3);
            }
             //id: result.rows[0].json_build_object.grupo[j]
