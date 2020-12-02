@@ -779,12 +779,12 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
                 
                 var EndPoints = [];
                 console.log('End'+zonesEndPoints.length);
-                console.log(zonesEndPoints[0]);
+               // console.log(zonesEndPoints[0]);
                 for (i = 0; i < zonesEndPoints.length; i++) {
-                    if (zonesEndPoints[i].groups[0] != null) {
+                    //if (zonesEndPoints[i].groups[0] != null) {
                        // if (zonesCheckPoints[i].groups[0].id == zones[0].id) { se quita pq ya filtro con lo nuevo
                             EndPoints.push({  points: zonesEndPoints[i].points });
-                        }
+                      //  }
                 }
                 //fin endpoints
                 //inicio rutaspoints
@@ -800,10 +800,10 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
                 var RoutePoints=[];
                 console.log('Route'+zonesRoutePoints.length);
                 for ( i = 0; i < zonesRoutePoints.length; i++) {
-                    if (zonesRoutePoints[i].groups[0] != null) {
+                   /// if (zonesRoutePoints[i].groups[0] != null) {
                        // if (zonesCheckPoints[i].groups[0].id == zones[0].id) { se quita pq ya filtro con lo nuevo
                             RoutePoints.push({  points: zonesRoutePoints[i].points });
-                        }
+                      //  }
                     }
                     console.log('routepoints');
                 //console.log(RoutePoints);
@@ -829,13 +829,13 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
                 //console.log(CheckPoints);
                 console.log('ultimo push');
 
-                completeRoute.push({id_ruta:rows[j].id_ruta,id_rutageotab:rows[j].id_rutageotab,nombreruta:rows[j].nombreruta,RouteCoor: RoutePoints[j],
+                completeRoute.push({id_ruta:rows[j].id_ruta,id_rutageotab:rows[j].id_rutageotab,nombreruta:rows[j].nombreruta,RouteCoor: RoutePoints,//[j] se quito
                     conductor:rows[j].conductor,id_vehiculo:rows[j].id_vehiculo,vehiculo:rows[j].vehiculo,id_trailer:rows[j].id_trailer,
                     trailer:rows[j].trailer,shipment:rows[j].shipment,fecha_salida:rows[j].fecha_salida,hora_salida:rows[j].hora_salida,
                     fecha_llegada:rows[j].fecha_llegada,hora_llegada:rows[j].hora_llegada,estado:rows[j].estado,bd:rows[j].bd,
-                    id_endpoint:rows[j].id_endpoint,endpoint:rows[j].endpoint,EndCoor: EndPoints[j], CheckPoints:CheckPoints});//CheckCoor: {CheckPoints}]}  };
+                    id_endpoint:rows[j].id_endpoint,endpoint:rows[j].endpoint,EndCoor: EndPoints/*[j]*/, CheckPoints:CheckPoints});//CheckCoor: {CheckPoints}]}  };
 
-                    console.log('vuelta #',i);
+                    console.log('vuelta #',j);
             }
             //////////fin todo junto/////////
 ///////////////////FIN SACAR PUNTOS////////////////
