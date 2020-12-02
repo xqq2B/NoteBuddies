@@ -743,12 +743,14 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
                     }
                 });
                 var EndPoints = [];
+                console.log('End'+zonesEndPoints.length);
+                console.log(zonesEndPoints[0]);
                 for (i = 0; i < zonesEndPoints.length; i++) {
                     if (zonesEndPoints[i].groups[0] != null) {
                        // if (zonesCheckPoints[i].groups[0].id == zones[0].id) { se quita pq ya filtro con lo nuevo
                             EndPoints.push({  points: zonesEndPoints[i].points });
                         }
-                    }
+                }
                 //fin endpoints
                 //inicio rutaspoints
                 const zonesRoutePoints= await api.call("Get",{
@@ -758,6 +760,7 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
                     }
                 });
                 var RoutePoints=[];
+                console.log('Route'+zonesRoutePoints.length);
                 for ( i = 0; i < zonesRoutePoints.length; i++) {
                     if (zonesRoutePoints[i].groups[0] != null) {
                        // if (zonesCheckPoints[i].groups[0].id == zones[0].id) { se quita pq ya filtro con lo nuevo
