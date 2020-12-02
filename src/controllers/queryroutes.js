@@ -716,6 +716,17 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
         // let values0 = [req.body.id_user];
         // const result0 = await pool.query(text0, values0);
         ////////////////JALANDO PUNTOS/////////////
+
+        if(req.body.queryConfig == true){
+
+        
+    let text=('SELECT * FROM verRutasyCheckpoints WHERE DB = ($1)');
+        let values=[req.body.db];
+        const {rows}=await pool(text,values);
+        res.json({ rows });
+    }
+    else{
+
         var api;
        
         console.log('QALL');
@@ -864,6 +875,7 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
         //     result = [];
         // }
          res.json({ completeRoute });
+        }
     }
     catch (e) {
         console.log('ERROR CONSULTANDO RUTAS' + e);
