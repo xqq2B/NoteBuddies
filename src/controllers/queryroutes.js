@@ -717,15 +717,15 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
         // const result0 = await pool.query(text0, values0);
         ////////////////JALANDO PUNTOS/////////////
 
-        if(req.body.queryConfig == true){
+        if (req.body.queryConfig == true) {
 
-        
-    let text=('SELECT * FROM verRutasyCheckpoints WHERE BD = ($1)');
-        let values=[req.body.db];
-        const {rows}=await pool.query(text,values);
-        res.json({ rows });
-    }
-    else{
+
+            let text = ('SELECT * FROM verRutasyCheckpoints WHERE BD = ($1)');
+            let values = [req.body.db];
+            const { rows } = await pool.query(text, values);
+            res.json({ rows });
+        }
+        else {
 
         var api;
        
@@ -781,7 +781,7 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
                 //fin endpoints
                 //inicio rutaspoints
                 console.log('endpoints');
-                console.log(EndPoints);
+                //console.log(EndPoints);
                 const zonesRoutePoints= await api.call("Get",{
                     typeName: "Zone",
                     search: {//como se cambio se agrega el id para filtrar
@@ -798,7 +798,7 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
                         }
                     }
                     console.log('routepoints');
-                console.log(RoutePoints);
+                //console.log(RoutePoints);
                 //fin rutas points
                 //inicio checkpoints
                 var CheckPoints=[];
@@ -818,7 +818,7 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
                 }
                 //fin checkpoints
                 console.log('checkpoints');
-                console.log(CheckPoints);
+                //console.log(CheckPoints);
                 console.log('ultimo push');
 
                 completeRoute.push({id_ruta:rows[j].id_ruta,id_rutageotab:rows[j].id_rutageotab,nombreruta:rows[j].nombreruta,RouteCoor: RoutePoints[j],
@@ -826,6 +826,8 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
                     trailer:rows[j].trailer,shipment:rows[j].shipment,fecha_salida:rows[j].fecha_salida,hora_salida:rows[j].hora_salida,
                     fecha_llegada:rows[j].fecha_llegada,hora_llegada:rows[j].hora_llegada,estado:rows[j].estado,bd:rows[j].bd,
                     id_endpoint:rows[j].id_endpoint,endpoint:rows[j].endpoint,EndCoor: EndPoints[j], CheckPoints:CheckPoints});//CheckCoor: {CheckPoints}]}  };
+
+                    console.log('vuelta #',i);
             }
             //////////fin todo junto/////////
 ///////////////////FIN SACAR PUNTOS////////////////
@@ -874,6 +876,7 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
         //     resultFinal.push({ruta:routes.rows[i],checkpoints:result});
         //     result = [];
         // }
+        console.log(completeRoute.length);
          res.json({ completeRoute });
         }
     }
