@@ -421,6 +421,16 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
             ruta.id_end,ruta.name_end];
             await pool.query(text, values);
 
+
+            for (var k=0; k<result0.rows[0].json_build_object.grupo.length;k++){
+                let text3= 'SELECT createUsuario_Ruta($1,$2,$3)';//preguntar ultimo valor 
+                let values3= [ruta.id_user,idRuta,result0.rows[0].json_build_object.grupo[k].id_grupo];
+                await pool.query(text3,values3);
+           }
+
+
+
+
             for (let y = 0; y < ruta.checkpoints.length; y++) {
                 let text2 = 'SELECT createRuta_Checkpoint($1,$2,$3,$4)';
                 let values2 = [idRuta, ruta.checkpoints[y].id_punto, ruta.checkpoints[y].name_punto, ruta.id_user];
@@ -539,7 +549,7 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
                 // }
 
 
-            await pool.query(text, values);
+           // await pool.query(text, values);
             console.log('antes',ruta.checkpoints[0].id_punto);
             console.log(ruta.checkpoints.length);
             console.log(ruta.checkpoints[0].id_punto);
