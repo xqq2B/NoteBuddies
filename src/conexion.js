@@ -10,7 +10,7 @@ const database = process.env.database_geo;
 var sessionIde;
 var serverIde;
 
-
+//AL PARECER NODE SCHEDULE CICLABA LA PAGINA ULTIMA REVISION 1 DE DICIEMBRE 5PM
 // schedule.scheduleJob('* * 23 * * *', function () {//'* * 23 * * *'
 //     updateSessionId();
 // });

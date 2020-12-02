@@ -415,10 +415,10 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
             console.log(fllegada);
             //createRoute();
             let idRuta = await makeIdRoute();
-            let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)';
+            let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)';
             let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
                 ruta.name_vehicle, ruta.id_trailer,ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db,
-                ruta.id_end,ruta.name_end];
+            ruta.id_end,ruta.name_end];
             await pool.query(text, values);
 
             for (let y = 0; y < ruta.checkpoints.length; y++) {
@@ -489,7 +489,7 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
             fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
             hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
             hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
-            let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)';
+            let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)';
             let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
                 ruta.name_vehicle, ruta.id_trailer, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db,
             ruta.id_end,ruta.name_end];
