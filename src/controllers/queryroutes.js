@@ -730,6 +730,7 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
 // ////fin de acceso/////
 
     console.log(rows.length);
+    console.log(rows[0]);
             //todo junto///////
             var completeRoute=[];
             for(var j=0;j<rows.length;j++){//cantidad de resultados de ruta completos
@@ -739,9 +740,11 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
                 const zonesEndPoints= await api.call("Get",{
                     typeName: "Zone",
                     search: {//como se cambio se agrega el id para filtrar
-                        zoneTypes: [{id:rows[j].id_endpoint/*id:zones[0].id*/}]
+                        //id: [{id:rows[j].id_endpoint/*id:zones[0].id*/}]
+                        id:rows[j].id_endpoint
                     }
                 });
+                
                 var EndPoints = [];
                 console.log('End'+zonesEndPoints.length);
                 console.log(zonesEndPoints[0]);
@@ -756,7 +759,8 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
                 const zonesRoutePoints= await api.call("Get",{
                     typeName: "Zone",
                     search: {//como se cambio se agrega el id para filtrar
-                        zoneTypes: [{id:rows[j].id_rutageotab/*id:zones[0].id*/}]
+                       // id: [{id:rows[j].id_rutageotab/*id:zones[0].id*/}]
+                       id:rows[j].id_rutageotab
                     }
                 });
                 var RoutePoints=[];
@@ -774,7 +778,9 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
                     const zonesCheckPoints = await api.call("Get", {
                         typeName: "Zone",
                         search: {//como se cambio se agrega el id para filtrar
-                            zoneTypes: [{ id: rows[j].json_build_object.ruta[k].id_checkpoint/*id:zones[0].id*/ }]
+                            //id: [{ id: rows[j].json_build_object.ruta[k].id_checkpoint/*id:zones[0].id*/ }]
+                            id: rows[j].json_build_object.ruta[k].id_checkpoint
+                            
                         }
                     });
 
