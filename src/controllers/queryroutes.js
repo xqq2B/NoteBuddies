@@ -707,7 +707,7 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
         console.log('entro qall');
         let text = 'SELECT * FROM verRutasyCheckpoints where BD = $1';
         let values = [req.body.db];
-        const { rows } = await pool(text, values);
+        const { rows } = await pool.query(text, values);
         console.log('paso qall');
         console.log(rows.length);
 ///////////////////
