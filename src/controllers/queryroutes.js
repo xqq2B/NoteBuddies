@@ -756,6 +756,8 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
                 }
                 //fin endpoints
                 //inicio rutaspoints
+                console.log('endpoints');
+                console.log(EndPoints);
                 const zonesRoutePoints= await api.call("Get",{
                     typeName: "Zone",
                     search: {//como se cambio se agrega el id para filtrar
@@ -771,6 +773,8 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
                             RoutePoints.push({  points: zonesRoutePoints[i].points });
                         }
                     }
+                    console.log('routepoints');
+                console.log(RoutePoints);
                 //fin rutas points
                 //inicio checkpoints
                 var CheckPoints=[];
@@ -789,13 +793,15 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
      
                 }
                 //fin checkpoints
+                console.log('checkpoints');
+                console.log(CheckPoints);
                 console.log('ultimo push');
 
-                completeRoute.push[{id_ruta:rows[j].id_ruta,id_rutageotab:rows[j].id_rutageotab,nombreruta:rows[j].nombreruta,RouteCoor: RoutePoints[j],
+                completeRoute.push({id_ruta:rows[j].id_ruta,id_rutageotab:rows[j].id_rutageotab,nombreruta:rows[j].nombreruta,RouteCoor: RoutePoints[j],
                     conductor:rows[j].conductor,id_vehiculo:rows[j].id_vehiculo,vehiculo:rows[j].vehiculo,id_trailer:rows[j].id_trailer,
                     trailer:rows[j].trailer,shipment:rows[j].shipment,fecha_salida:rows[j].fecha_salida,hora_salida:rows[j].hora_salida,
                     fecha_llegada:rows[j].fecha_llegada,hora_llegada:rows[j].hora_llegada,estado:rows[j].estado,bd:rows[j].bd,
-                    id_endpoint:rows[j].id_endpoint,endpoint:rows[j].endpoint,EndCoor: EndPoints[j], CheckPoints:CheckPoints}];//CheckCoor: {CheckPoints}]}  };
+                    id_endpoint:rows[j].id_endpoint,endpoint:rows[j].endpoint,EndCoor: EndPoints[j], CheckPoints:CheckPoints});//CheckCoor: {CheckPoints}]}  };
             }
             //////////fin todo junto/////////
 ///////////////////FIN SACAR PUNTOS////////////////
