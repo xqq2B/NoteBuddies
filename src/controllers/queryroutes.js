@@ -421,6 +421,14 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
             ruta.id_end,ruta.name_end];
             await pool.query(text, values);
 
+                ///falta consultar los grupos////
+
+
+            let text0 = 'SELECT * FROM vistaObtenerUsuario WHERE id_usuario = $1';
+            let values0 = [ruta.id_user];//cambiado de req.body.id_user
+            const result0 = await pool.query(text0, values0);
+
+
 
             for (var k=0; k<result0.rows[0].json_build_object.grupo.length;k++){
                 let text3= 'SELECT createUsuario_Ruta($1,$2,$3)';//preguntar ultimo valor 
