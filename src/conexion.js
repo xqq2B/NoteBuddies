@@ -11,9 +11,9 @@ var sessionIde;
 var serverIde;
 
 
-schedule.scheduleJob('* * 23 * * *', function () {//'* * 23 * * *'
-    updateSessionId();
-});
+// schedule.scheduleJob('* * 23 * * *', function () {//'* * 23 * * *'
+//     updateSessionId();
+// });
 
 ///////////////////////////////////////////////////
 
