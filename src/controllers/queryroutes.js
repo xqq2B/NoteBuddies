@@ -702,15 +702,95 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
         // let text0 = 'SELECT * FROM vistaObtenerUsuario WHERE id_usuario = $1';
         // let values0 = [req.body.id_user];
         // const result0 = await pool.query(text0, values0);
+        ////////////////JALANDO PUNTOS/////////////
+        var api;
+       
+        console.log('QALL');
+        if (req.body.db == "metrica") {
+            api = await conexion.updateSessionId();
+            //console.log(api);
+        }
+        else {
+            console.log('Otra base de datos');
+            //registros tomados de github documentacion db
+            api = await conexion.sessionOtherDb(result.rows[0].correo, result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
+        }
 
-
+        //////JALAR TODO DE LAS RUTAS///////
         console.log('entro qall');
         let text = 'SELECT * FROM verRutasyCheckpoints where BD = $1';
         let values = [req.body.db];
         const { rows } = await pool.query(text, values);
         console.log('paso qall');
-        console.log(rows.length);
 ///////////////////
+//////acceso a los id de ruta, end point y checkpoint////
+// result.rows[0].id_rutageotab;//id para consulta de puntos de ruta
+// result.rows[0].json_build_object.ruta[0].id_checkpoint;//id para consulta de checkpoints
+// result.rows[0].id_endpoint;//id para consulta de endpoints
+// ////fin de acceso/////
+
+    console.log(rows.length);
+            //todo junto///////
+            var completeRoute=[];
+            for(var j=0;j<rows.length;j++){//cantidad de resultados de ruta completos
+//end pointsvar 
+//                ctrlCP=rows[j].json_build_object.ruta.length;
+                console.log('apicalls');
+                const zonesEndPoints= await api.call("Get",{
+                    typeName: "Zone",
+                    search: {//como se cambio se agrega el id para filtrar
+                        zoneTypes: [{id:rows[j].id_endpoint/*id:zones[0].id*/}]
+                    }
+                });
+                var EndPoints = [];
+                for (i = 0; i < zonesEndPoints.length; i++) {
+                    if (zonesEndPoints[i].groups[0] != null) {
+                       // if (zonesCheckPoints[i].groups[0].id == zones[0].id) { se quita pq ya filtro con lo nuevo
+                            EndPoints.push({  points: zonesEndPoints[i].points });
+                        }
+                    }
+                //fin endpoints
+                //inicio rutaspoints
+                const zonesRoutePoints= await api.call("Get",{
+                    typeName: "Zone",
+                    search: {//como se cambio se agrega el id para filtrar
+                        zoneTypes: [{id:rows[j].id_rutageotab/*id:zones[0].id*/}]
+                    }
+                });
+                var RoutePoints=[];
+                for ( i = 0; i < zonesRoutePoints.length; i++) {
+                    if (zonesRoutePoints[i].groups[0] != null) {
+                       // if (zonesCheckPoints[i].groups[0].id == zones[0].id) { se quita pq ya filtro con lo nuevo
+                            RoutePoints.push({  points: zonesRoutePoints[i].points });
+                        }
+                    }
+                //fin rutas points
+                //inicio checkpoints
+                var CheckPoints=[];
+                for (var k = 0; k < rows[j].json_build_object.ruta.length; k++) {//cantidad de checkpoints en esa ruta que va corriendo
+                    const zonesCheckPoints = await api.call("Get", {
+                        typeName: "Zone",
+                        search: {//como se cambio se agrega el id para filtrar
+                            zoneTypes: [{ id: rows[j].json_build_object.ruta[k].id_checkpoint/*id:zones[0].id*/ }]
+                        }
+                    });
+
+                    CheckPoints.push({id_checkpoint: rows[j].json_build_object.ruta[k].id_checkpoint, nombrecheckpoint: rows[j].json_build_object.ruta[k].nombrecheckpoint,
+                        points: zonesCheckPoints[0].points, fecha: rows[j].json_build_object.ruta[k].fecha, hora:rows[j].json_build_object.ruta[k].hora });
+     
+                }
+                //fin checkpoints
+                console.log('ultimo push');
+
+                completeRoute.push[{id_ruta:rows[j].id_ruta,id_rutageotab:rows[j].id_rutageotab,nombreruta:rows[j].nombreruta,RouteCoor: RoutePoints[j],
+                    conductor:rows[j].conductor,id_vehiculo:rows[j].id_vehiculo,vehiculo:rows[j].vehiculo,id_trailer:rows[j].id_trailer,
+                    trailer:rows[j].trailer,shipment:rows[j].shipment,fecha_salida:rows[j].fecha_salida,hora_salida:rows[j].hora_salida,
+                    fecha_llegada:rows[j].fecha_llegada,hora_llegada:rows[j].hora_llegada,estado:rows[j].estado,bd:rows[j].bd,
+                    id_endpoint:rows[j].id_endpoint,endpoint:rows[j].endpoint,EndCoor: EndPoints[j], CheckPoints:CheckPoints}];//CheckCoor: {CheckPoints}]}  };
+            }
+            //////////fin todo junto/////////
+///////////////////FIN SACAR PUNTOS////////////////
+       
         // let text=('SELECT * FROM verRutasyCheckpoints WHERE id_ruta = (SELECT id_ruta FROM Usuario_Ruta WHERE id_grupo = (SELECT id_grupo FROM Usuario_Grupo WHERE id_usuario = $1))');
         // let values=[req.body.id_user];
         // const {rows}=await pool(text,values);
@@ -755,7 +835,7 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
         //     resultFinal.push({ruta:routes.rows[i],checkpoints:result});
         //     result = [];
         // }
-         res.json({ rows });
+         res.json({ completeRoute });
     }
     catch (e) {
         console.log('ERROR CONSULTANDO RUTAS' + e);
@@ -777,3 +857,48 @@ qryCtrlRoutes.DeleteRoute = async (req, res) => {
 };
 
 module.exports = qryCtrlRoutes;
+
+
+
+
+//         console.log('ENDPOINTS');
+//        // console.log(zones[0]);
+//         const zonesEndPoints= await api.call("Get",{
+//             typeName: "Zone",
+//             search: {//como se cambio se agrega el id para filtrar
+//                 zoneTypes: [{id:rows[0].id_endpoint/*id:zones[0].id*/}]
+//             }
+//         });
+//         var EndPoints = [];
+//         for (var i = 0; i < zonesEndPoints.length; i++) {
+//             if (zonesEndPoints[i].groups[0] != null) {
+//                // if (zonesCheckPoints[i].groups[0].id == zones[0].id) { se quita pq ya filtro con lo nuevo
+//                     EndPoints.push({  points: zonesEndPoints[i].points });
+//                 }
+//             }
+//         const zonesRoutePoints= await api.call("Get",{
+//             typeName: "Zone",
+//             search: {//como se cambio se agrega el id para filtrar
+//                 zoneTypes: [{id:rows[0].id_rutageotab/*id:zones[0].id*/}]
+//             }
+//         });
+//         var RoutePoints=[];
+//         for ( i = 0; i < zonesRoutePoints.length; i++) {
+//             if (zonesRoutePoints[i].groups[0] != null) {
+//                // if (zonesCheckPoints[i].groups[0].id == zones[0].id) { se quita pq ya filtro con lo nuevo
+//                     RoutePoints.push({  points: zonesRoutePoints[i].points });
+//                 }
+//             }
+//             //checkpoints
+//             var CheckPoints=[];
+//             for(var j=0;j<rows.length;j++){//cantidad de resultados de ruta completos
+//                 for (var k = 0; k < result.rows[j].json_build_object.ruta[j].length; k++) {//cantidad de checkpoints en esa ruta que va corriendo
+//                     const zonesCheckPoints = await api.call("Get", {
+//                         typeName: "Zone",
+//                         search: {//como se cambio se agrega el id para filtrar
+//                             zoneTypes: [{ id: rows[j].json_build_object.ruta[k].id_checkpoint/*id:zones[0].id*/ }]
+//                         }
+//                     });
+//                     CheckPoints.push({  points: zonesCheckPoints[0].points });
+//                 }
+//             }
