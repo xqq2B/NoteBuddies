@@ -720,7 +720,7 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
         if(req.body.queryConfig == true){
 
         
-    let text=('SELECT * FROM verRutasyCheckpoints WHERE DB = ($1)');
+    let text=('SELECT * FROM verRutasyCheckpoints WHERE BD = ($1)');
         let values=[req.body.db];
         const {rows}=await pool.query(text,values);
         res.json({ rows });
