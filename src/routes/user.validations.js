@@ -72,9 +72,11 @@ router.post('/config/routes/drivers',qryCtrlRoutes.QueryDriver);
 //Consulta Trailer      
 router.post('/config/routes/trailers',qryCtrlRoutes.QueryTrailer);
 //Crear Ruta
-router.post('/config/routes/create',qryCtrlRoutes.CreateRoute);//falla agregar mes
+router.post('/config/routes/create',qryCtrlRoutes.CreateRoute);//
 //Editar Ruta
 router.post('/config/routes/edit',qryCtrlRoutes.EditRoute);//aun no listo
+//Get Grupos
+router.post('/config/routes/group',qryCtrlRoutes.QueryGroup);//probando
 //GET de las rutas
 router.post('/config/routes/qall',qryCtrlRoutes.QueryAll);//get all
 //Delete Ruta

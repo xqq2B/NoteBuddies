@@ -417,7 +417,8 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
             let idRuta = await makeIdRoute();
             let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)';
             let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
-                ruta.name_vehicle, ruta.id_trailer,ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db];
+                ruta.name_vehicle, ruta.id_trailer,ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db,
+                ruta.id_end,ruta.name_end];
             await pool.query(text, values);
 
             for (let y = 0; y < ruta.checkpoints.length; y++) {
@@ -490,22 +491,40 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
             hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
             let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)';
             let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
-                ruta.name_vehicle, ruta.id_trailer, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db];
-
-
+                ruta.name_vehicle, ruta.id_trailer, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db,
+            ruta.id_end,ruta.name_end];
+            const result = await pool.query(text, values);
+// saber como quedaron parametros de createRuta para meter endpoints
+//CREAR RUTA AL FINAL ID_ENDPOINT, NAME_ENDPOINT AL FINAL
+                //pedir el grupo
+           // select 
+           let text0 = 'SELECT * FROM vistaObtenerUsuario WHERE id_usuario = $1';
+           let values0 = [req.body.id_user];
+           const result0 = await pool.query(text0, values0);
+           
+           for (var k=0; k<result0.rows[0].json_build_object.grupo.length;k++){
+                let text3= 'SELECT createUsuario_Ruta($1,$2,$3)';//preguntar ultimo valor 
+                let values3= [ruta.req.body.id_user,idRuta,result0.rows[0].json_build_object.grupo[k].id_grupo];
+                await pool.query(text3,values3);
+           }
+            //id: result.rows[0].json_build_object.grupo[j]
+                //
 
                 //para crear ruta con end point
 
-                let text3= 'SELECT createUsuario_Ruta(id_usuarioqueloestacreando,idRuta,grupo/sdeusuario)';//preguntar ultimo valor 
-                let values3= [ruta.id_user,idRuta,ruta.group];
-                await pool.query(text3,values3);
+                // for(cantidad de grupos);
+                // let text3= 'SELECT createUsuario_Ruta(id_usuarioqueloestacreando,idRuta,grupo/sdeusuario)';//preguntar ultimo valor 
+                // let values3= [ruta.id_user,idRuta,id.group];
+                // await pool.query(text3,values3);
+                //creara tantos usuarios como grupos
 
-                    for(let i=0; i<ruta.group.length;i++)
-                    {
-                        let text4=('SELECT setGrupo($1,$2');
-                        let values4 = [ruta.email,group[i]];
-                        await pool.query(text4,values4);     
-                    }
+
+                    // for(let i=0; i<ruta.group.length;i++)
+                    // {NO SE USARA
+                    //     let text4=('SELECT setGrupo($1,$2');
+                    //     let values4 = [ruta.email,group[i]];
+                    //     await pool.query(text4,values4);     
+                    // }
               //  }
 
                 // 'SELECT createUsuario_Ruta(id_usuarioqueloestacreando,idRuta,grupo/sdeusuario)';
@@ -614,10 +633,11 @@ qryCtrlRoutes.EditRoute = async (req, res) => {
                 let fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
                 hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
                 hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
-                let text = 'SELECT updateRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)';
+                let text = 'SELECT updateRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)';//ver si Daniel actualizo
                 //se agrego status pedirlo para editar ruta y id de ruta propia
                 let values = [ruta.id_routep, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
-                    ruta.name_vehicle, ruta.id_trailer, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada,ruta.status, ruta.db];
+                    ruta.name_vehicle, ruta.id_trailer, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada,ruta.status, ruta.db,
+                    ruta.id_end,ruta.name_end];
                 await pool.query(text, values);
                 console.log('ruta bn');
                 var nullHora=null;
@@ -643,7 +663,21 @@ qryCtrlRoutes.EditRoute = async (req, res) => {
     }
 };
 
-
+qryCtrlRoutes.QueryGroup = async (req,res)=>{
+    try{
+        let text = 'SELECT * FROM vistaObtenerUsuario WHERE id_usuario = $1';
+        let values = [req.body.id_user];
+        const result = await pool.query(text, values);
+        var groups=[];
+        for (var i=0; i<result.rows[0].json_build_object.grupo.length;i++){
+            groups.push({id:result.rows[0].json_build_object.grupo[i].id_grupo,
+                name:result.rows[0].json_build_object.grupo[i].nombreGrupo});
+        }
+        res.json({groups});
+    }catch(e){
+        console.log('ERROR QUERY GROUP',e);
+    }
+};
 
 //Show All by db
 qryCtrlRoutes.QueryAll = async (req, res) => {
@@ -663,10 +697,21 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
         // console.log(routes.rows.length);
         // var x=-1;
 //HASTA AQUI
+//nueva modificacion
 
-        let text=('SELECT * FROM verRutasyCheckpoints WHERE id_ruta = (SELECT id_ruta FROM Usuario_Ruta WHERE id_grupo = (SELECT id_grupo FROM Usuario_Grupo WHERE id_usuario = $1))');
-        let values=[req.body.id_user];
-        const {rows}=await pool(text,values);
+        let text0 = 'SELECT * FROM vistaObtenerUsuario WHERE id_usuario = $1';
+        let values0 = [req.body.id_user];
+        const result0 = await pool.query(text0, values0);
+
+
+
+        let text = ('select * from verRutasyCheckpoints where BD = $1');
+        let values = [result0.rows[0].bd];
+        const { rows } = await pool(text, values);
+///////////////////
+        // let text=('SELECT * FROM verRutasyCheckpoints WHERE id_ruta = (SELECT id_ruta FROM Usuario_Ruta WHERE id_grupo = (SELECT id_grupo FROM Usuario_Grupo WHERE id_usuario = $1))');
+        // let values=[req.body.id_user];
+        // const {rows}=await pool(text,values);
         //AGREGAR SACAR COORDENADAS DE CHECKPOINTS Y DE ENDPOINTS Y AGREGARLO A LO QUE SE DEVUELVE DE verrutasycheckpoints
 
         //solo entrara id_usuario
