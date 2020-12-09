@@ -818,6 +818,22 @@ qryCtrlRoutes.QueryGroup = async (req,res)=>{
     }
 };
 
+
+//Delete Route catalogo
+qryCtrlRoutes.DeleteRoute = async (req, res) => {
+    try {
+        console.log(req.params);
+         let text=('SELECT deleteRuta_catalogo($1)');
+         let values=[req.params.id_route];
+         await pool.query(text,values);
+        res.json({status:'ok'});
+    }
+    catch (e) {
+        console.log('ERROR BORRANDO RUTAS CATALOGO' + e);
+    }
+};
+
+
 //Show All by db
 qryCtrlRoutes.QueryAll = async (req, res) => {
     try {
@@ -988,21 +1004,21 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
         }
     }
     catch (e) {
-        console.log('ERROR CONSULTANDO RUTAS' + e);
+        console.log('ERROR CONSULTANDO RUTAS CONFIGURADAS' + e);
     }
 };
 
-//Delete Route
-qryCtrlRoutes.DeleteRoute = async (req, res) => {
+//Delete Route toda configurada
+qryCtrlRoutes.DeleteRouteConfig = async (req, res) => {
     try {
         console.log(req.params);
-         let text=('SELECT deleteRuta($1)');
+         let text=('SELECT deleteRuta_configurada($1)');
          let values=[req.params.id_route];
          await pool.query(text,values);
         res.json({status:'ok'});
     }
     catch (e) {
-        console.log('ERROR BORRANDO RUTAS' + e);
+        console.log('ERROR BORRANDO RUTAS CONFIGURADAS' + e);
     }
 };
 

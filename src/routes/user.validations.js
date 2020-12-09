@@ -82,7 +82,8 @@ router.post('/config/routes/create',qryCtrlRoutes.CreateRoute);//
 router.post('/config/routes/edit',qryCtrlRoutes.EditRoute);
 //Query Catalogo Rutas
 router.post('/config/routes/qcatalog',qryCtrlRoutes.QueryCatalogRoute);//
-
+//Delete Ruta
+router.delete('/config/routes/delete/:id_route',qryCtrlRoutes.DeleteRoute);//
 
 
 
@@ -90,8 +91,8 @@ router.post('/config/routes/qcatalog',qryCtrlRoutes.QueryCatalogRoute);//
 router.post('/config/routes/group',qryCtrlRoutes.QueryGroup);//probando
 //GET de las rutas
 router.post('/config/routes/qall',qryCtrlRoutes.QueryAll);//get all
-//Delete Ruta
-router.delete('/config/routes/delete/:id_route',qryCtrlRoutes.DeleteRoute);//get all
+//Delete Ruta Configurada
+router.delete('/config/routes/deleteconfig/:id_route',qryCtrlRoutes.DeleteRouteConfig);//
 
 
 //Crear Ruta del catalogo
