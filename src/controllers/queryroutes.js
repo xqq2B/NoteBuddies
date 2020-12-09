@@ -870,9 +870,15 @@ qryCtrlRoutes.QueryCatalogRouteSpecific = async (req, res) => {
         let text=('SELECT * FROM verRuta_Catalogo WHERE BD = $1');
         let values=[req.body.db];
         const {rows}=await pool.query(text,values);
-        res.json({ id: rows[0].id_ruta_catalogo ,name: rows[0].nombreRuta });
+        console.log(rows);
+        console.log(rows[0]);
+        var rutas_catalogo=[]
+        for(let i=0; i<rows.length;i++){
+            rutas_catalogo.push({id: rows[i].id_ruta_catalogo ,name: rows[i].nombreruta});
+        }
+        res.json(rutas_catalogo);
     }catch(e){
-        console.log('ERROR QUERY CATALOGO',e);
+        console.log('ERROR QUERY CATALOGO ESPECIFICA',e);
     }
 };
 
