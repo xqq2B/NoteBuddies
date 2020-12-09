@@ -746,6 +746,8 @@ qryCtrlRoutes.CreateRoute = async (req,res)=>{
     try{
         var Ruta=req.body;
         let idRuta = await makeIdRoute();
+        console.log(req.body);
+        console.log(Ruta.id_end);
         text="SELECT createRuta_catalogo($1,$2,$3,$4,$5,$6,$7,$8,$9)";
         values=[idRuta,Ruta.id_route,Ruta.name_route,Ruta.name_catalogo,Ruta.id_start,Ruta.name_start,Ruta.id_end,Ruta.name_end,Ruta.tEstimado,Ruta.db];
         await pool.query(text,values);
