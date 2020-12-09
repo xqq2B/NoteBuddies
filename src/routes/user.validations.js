@@ -65,16 +65,27 @@ router.post('/config/routes/query',qryCtrlRoutes.QueryRoute);
 router.post('/config/routes/checkpoints',qryCtrlRoutes.QueryCheckpoints);
 //Endpoints
 router.post('/config/routes/endpoints',qryCtrlRoutes.QueryEndpoints);//
+//Startpoints
+router.post('/config/routes/startpoints',qryCtrlRoutes.QueryStartpoints);//
 //Consulta Vehiculos
 router.post('/config/devices',qryCtrlRoutes.QueryDevice);//vehiculos
 //Consulta drivers      
 router.post('/config/routes/drivers',qryCtrlRoutes.QueryDriver);
 //Consulta Trailer      
 router.post('/config/routes/trailers',qryCtrlRoutes.QueryTrailer);
+
+
+
 //Crear Ruta
 router.post('/config/routes/create',qryCtrlRoutes.CreateRoute);//
 //Editar Ruta
-router.post('/config/routes/edit',qryCtrlRoutes.EditRoute);//aun no listo
+router.post('/config/routes/edit',qryCtrlRoutes.EditRoute);
+//Query Catalogo Rutas
+router.post('/config/routes/qcatalog',qryCtrlRoutes.QueryCatalogRoute);//
+
+
+
+
 //Get Grupos
 router.post('/config/routes/group',qryCtrlRoutes.QueryGroup);//probando
 //GET de las rutas
@@ -83,8 +94,16 @@ router.post('/config/routes/qall',qryCtrlRoutes.QueryAll);//get all
 router.delete('/config/routes/delete/:id_route',qryCtrlRoutes.DeleteRoute);//get all
 
 
+//Crear Ruta del catalogo
+router.post('/config/routes/create',qryCtrlRoutes.CreateSpecificRoute);
+
+
 //MONITOREO
 //Edicion Especial Checkpoints
 router.post('/monitor/edit/checkpoints',qryCtrlMonitor.EditCheckPoint);
+//Consulta Vehiculo PopUp
+router.post('/monitor/device/info',qryCtrlMonitor.QueryDevice);
+//Consultar Casos
+router.post('/monitor/device/exceptions',qryCtrlMonitor.QueryExceptions);
 
 module.exports=router;

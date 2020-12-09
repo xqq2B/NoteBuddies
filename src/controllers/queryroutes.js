@@ -194,6 +194,63 @@ qryCtrlRoutes.QueryEndpoints = async (req, res) => {
 };
 
 
+qryCtrlRoutes.QueryStartpoints = async (req, res) => {
+    try {
+        var api;
+        console.log(req.body.id_user);
+        let text = 'select * from vistaObtenerUsuario WHERE id_usuario = $1';
+        let values = [req.body.id_user];
+        const result = await pool.query(text, values);
+        console.log(result.rows[0].bd);
+        console.log(result.rows);
+        console.log('ENDPOINTS');
+        if (result.rows[0].bd == "metrica") {
+            api = await conexion.updateSessionId();
+            //console.log(api);
+        }
+        else {
+            console.log('Otra base de datos');
+            //registros tomados de github documentacion db
+            api = await conexion.sessionOtherDb(result.rows[0].correo, result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
+        }
+        console.log('STARTPOINTS');
+        //se cambio para buscar por zone type
+        // const zones = await api.call("Get", {
+        //     typeName: "Group",//para sacar id
+        //     search: {
+        //         "name":"checkpoints"
+        //     }
+        // });
+        const zones= await api.call("Get",{
+            typeName:"ZoneType",
+            search:{
+                name:'MM R Startpoint'        //para sacar entidad zonetype  filtrado por el nombre //MM R Checkpoints o MM R routes     
+            },
+            //resultsLimit: 500
+
+        });
+       // console.log(zones[0]);
+        const zonesStartPoints= await api.call("Get",{
+            typeName: "Zone",
+            search: {//como se cambio se agrega el id para filtrar
+                zoneTypes: [{id:zones[0].id}]
+            }
+        });
+        var Startpoints = [];
+        for (var i = 0; i < zonesStartPoints.length; i++) {
+            if (zonesStartPoints[i].groups[0] != null) {
+               // if (zonesCheckPoints[i].groups[0].id == zones[0].id) { se quita pq ya filtro con lo nuevo
+                    Startpoints.push({ id: zonesStartPoints[i].id, name: zonesStartPoints[i].name/*, points: zonesEndPoints[i].points*/ });
+                }
+            }
+        
+       // console.log(zonesCheckPoints[2]);
+        res.json({ Startpoints });
+    }
+    catch (e) {
+        console.log('ERROR QUERY STARTPOINTS RUTAS' + e);
+    }
+};
 
 //Drivers
 qryCtrlRoutes.QueryDriver = async (req, res) => {
@@ -384,7 +441,7 @@ async function makeIdRoute() {
  
 
 //Create Routes
-qryCtrlRoutes.CreateRoute = async (req, res) => {
+qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
     try {
         var ruta = req.body;
         console.log(ruta);
@@ -576,7 +633,7 @@ qryCtrlRoutes.CreateRoute = async (req, res) => {
 };
 
 //Edit Routes
-qryCtrlRoutes.EditRoute = async (req, res) => {
+qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
     try {
         console.log(req.body);
          var ruta=req.body;
@@ -684,6 +741,78 @@ qryCtrlRoutes.EditRoute = async (req, res) => {
     }
 };
 
+
+qryCtrlRoutes.CreateRoute = async (req,res)=>{
+    try{
+        var Ruta=req.body;
+        let idRuta = await makeIdRoute();
+        text="SELECT createRuta_catalogo($1,$2,$3,$4,$5,$6,$7,$8,$9)";
+        values=[idRuta,Ruta.id_route,Ruta.name_route,Ruta.name_catalogo,Ruta.id_start,Ruta.name_start,Ruta.id_end,Ruta.name_end,Ruta.tEstimado,Ruta.db];
+        await pool.query(text,values);
+
+        for (let y = 0; y < Ruta.checkpoints.length; y++) {
+            let text2 = 'SELECT createRuta_Checkpoint($1,$2,$3)';
+            let values2 = [idRuta, Ruta.checkpoints[y].id_punto, Ruta.checkpoints[y].name_punto];
+            await pool.query(text2, values2);
+        }
+
+        // meter a tabla rutacheckpoint
+
+        // function createRuta_catalogo(
+        //     ide_ruta_catalogo varchar(60),**
+        //     ide_rutaGeotab varchar(60),**
+        //     nomRuta varchar(200),***
+        //     nomRutaGeotab varchar(200),***
+        //     ide_startpoint varchar(60),***
+        //     startp varchar(200),***
+        //     ide_endpoint varchar(60),**
+        //     EndP VARCHAR(200),**
+        //     tEstimado float,
+        //     DB VARCHAR(60)
+        res.json('ok!');
+    }catch (e){
+        console.log(e);
+    }
+};
+
+
+qryCtrlRoutes.EditRoute = async (req,res)=>{
+    try{
+        var Ruta=req.body;
+        let idRuta = await makeIdRoute();
+        text="SELECT updateRuta_catalogo($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)";
+        values=[idRuta,Ruta.ruta];
+        await pool.query(text,values);
+
+        // function updateRuta_catalogo(
+        //     ideRuta varchar(60),
+        //     ide_rutaGeotab varchar(60),
+        //     nomRuta varchar(200),
+        //     nomRutaGeotab varchar(200),
+        //     ide_startpoint varchar(60),
+        //     startp varchar(200),
+        //     ide_endpoint varchar(60),
+        //     EndP VARCHAR(200),
+        //     tEstimado float,
+        //     DB VARCHAR(60)
+        // )
+        res.json('ok!');
+    }catch (e){
+        console.log(e);
+    }
+};
+
+qryCtrlRoutes.QueryCatalogRoute = async (req, res) => {
+    try {
+        let text=('SELECT * FROM verRuta_Catalogo WHERE DB = $1');
+        let values=[req.body.db];
+        const {rows}=await pool.query(text,values);
+        res.json(rows);
+    }catch(e){
+        console.log('ERROR QUERY CATALOGO',e);
+    }
+
+
 qryCtrlRoutes.QueryGroup = async (req,res)=>{
     try{
         let text = 'SELECT * FROM vistaObtenerUsuario WHERE id_usuario = $1';
@@ -728,7 +857,9 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
         if (req.body.queryConfig == true) {
 
 
-            let text = ('SELECT * FROM verRutasyCheckpoints WHERE BD = ($1)');
+           // let text = ('SELECT * FROM verRutasyCheckpoints WHERE BD = ($1)');
+            let text = ('SELECT * FROM ruta_configurada WHERE id_ruta_catalogo = (SELECT id_ruta_catalogo FROM ruta_catalogo WHERE DB = $1');
+            //completas
             let values = [req.body.db];
             const { rows } = await pool.query(text, values);
             res.json({ rows });
@@ -750,7 +881,8 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
 
         //////JALAR TODO DE LAS RUTAS///////
         console.log('entro qall');
-        let text = 'SELECT * FROM verRutasyCheckpoints where BD = $1';
+        //let text = 'SELECT * FROM verRutasyCheckpoints where BD = $1';
+        let text = ('SELECT * FROM ruta_configurada WHERE id_ruta_catalogo = (SELECT id_ruta_catalogo FROM ruta_catalogo WHERE DB = $1');
         let values = [req.body.db];
         const { rows } = await pool.query(text, values);
         console.log('paso qall');
@@ -787,8 +919,27 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
                       //  }
                 }
                 //fin endpoints
+                //inicio startpoints
+                const zonesStartPoints= await api.call("Get",{
+                    typeName: "Zone",
+                    search: {//como se cambio se agrega el id para filtrar
+                        //id: [{id:rows[j].id_endpoint/*id:zones[0].id*/}]
+                        id:rows[j].id_startpoint
+                    }
+                });
+                
+                var StartPoints = [];
+                console.log('Start'+zonesStartPoints.length);
+               // console.log(zonesEndPoints[0]);
+                for (i = 0; i < zonesStartPoints.length; i++) {
+                    //if (zonesEndPoints[i].groups[0] != null) {
+                       // if (zonesCheckPoints[i].groups[0].id == zones[0].id) { se quita pq ya filtro con lo nuevo
+                            StartPoints.push({  points: zonesStartPoints[i].points });
+                      //  }
+                }
+                //fin startpoints
                 //inicio rutaspoints
-                console.log('endpoints');
+                console.log('startpoints');
                 //console.log(EndPoints);
                 const zonesRoutePoints= await api.call("Get",{
                     typeName: "Zone",
@@ -833,6 +984,7 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
                     conductor:rows[j].conductor,id_vehiculo:rows[j].id_vehiculo,vehiculo:rows[j].vehiculo,id_trailer:rows[j].id_trailer,
                     trailer:rows[j].trailer,shipment:rows[j].shipment,fecha_salida:rows[j].fecha_salida,hora_salida:rows[j].hora_salida,
                     fecha_llegada:rows[j].fecha_llegada,hora_llegada:rows[j].hora_llegada,estado:rows[j].estado,bd:rows[j].bd,
+                    id_startpoint:rows[j].id_startpoint,startpoint:rows[j].startpoint,StartCoor:StartPoints,
                     id_endpoint:rows[j].id_endpoint,endpoint:rows[j].endpoint,EndCoor: EndPoints/*[j]*/, CheckPoints:CheckPoints});//CheckCoor: {CheckPoints}]}  };
 
                     console.log('vuelta #',j);
@@ -953,3 +1105,309 @@ module.exports = qryCtrlRoutes;
 //                     CheckPoints.push({  points: zonesCheckPoints[0].points });
 //                 }
 //             }
+
+
+
+// //Create Routes
+// qryCtrlRoutes.CreateRoute = async (req, res) => {
+//     try {
+//         var ruta = req.body;
+//         console.log(ruta);
+//         console.log(ruta.fechaFin);
+//         const {rows} = await pool.query('SELECT * FROM ruta');
+//         console.log(rows[0]);
+//         //el mes es el problema disminuir en 1 plz solo para donde se mete diferente/////////////////////////////
+//         var fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia);
+//         console.log(ruta.fechaIni.anio);
+//         var fllegada = new Date(ruta.fechaFin.anio, ruta.fechaFin.mes, ruta.fechaFin.dia);
+//         console.log(fsalida);
+//                     console.log(fllegada);
+//         // var dDate = new Date(ruta.fechaIni.anio,ruta.fechaIni.mes,ruta.fechaIni.dia,ruta.horaIni.hora,ruta.horaIni.minutos);
+//         // var aDate = new Date(ruta.fechaFin.anio,ruta.fechaFin.mes,ruta.fechaFin.dia,ruta.horaFin.hora,ruta.horaFin.minutos);
+
+//         var hsalida = new Date(0, 0, 0, ruta.horaIni.hora, ruta.horaIni.minutos);
+//         var hllegada = new Date(0, 0, 0, ruta.horaFin.hora, ruta.horaFin.minutos);
+//         console.log(rows.length);
+//         var response= null;
+//         if (rows.length == 0) {
+            
+//             fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
+//             fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
+//             hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
+//             hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
+//             console.log('entre a sin registros');
+//             console.log(hllegada);
+//             console.log(fllegada);
+//             //createRoute();
+//             let idRuta = await makeIdRoute();
+//             let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)';
+//             let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
+//                 ruta.name_vehicle, ruta.id_trailer,ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db,
+//             ruta.id_end,ruta.name_end];
+//             await pool.query(text, values);
+
+//                 ///falta consultar los grupos////
+
+
+//             let text0 = 'SELECT * FROM vistaObtenerUsuario WHERE id_usuario = $1';
+//             let values0 = [ruta.id_user];//cambiado de req.body.id_user
+//             const result0 = await pool.query(text0, values0);
+
+
+
+//             for (var k=0; k<result0.rows[0].json_build_object.grupo.length;k++){
+//                 let text3= 'SELECT createUsuario_Ruta($1,$2,$3)';//preguntar ultimo valor 
+//                 let values3= [ruta.id_user,idRuta,result0.rows[0].json_build_object.grupo[k].id_grupo];
+//                 await pool.query(text3,values3);
+//            }
+
+
+
+
+//             for (let y = 0; y < ruta.checkpoints.length; y++) {
+//                 let text2 = 'SELECT createRuta_Checkpoint($1,$2,$3,$4)';
+//                 let values2 = [idRuta, ruta.checkpoints[y].id_punto, ruta.checkpoints[y].name_punto, ruta.id_user];
+//                 await pool.query(text2, values2);
+//             }
+//             res.json({ status: 'ok' });
+//         }
+//         if (rows.length >0) {
+//             for (var i = 0; i < rows.length; i++) {
+//                 console.log('hola');
+//                 response=false;
+//                 if ((ruta.conductor == rows[i].conductor) || (ruta.name_vehicle == rows[i].vehiculo) || (ruta.id_trailer == rows[i].id_trailer)) {
+//                     console.log('conductor/vehiculo repetido');
+//                     var dDate = new Date(rows[i].fecha_salida);
+//                     var aDate = new Date(rows[i].fecha_llegada);
+//                     console.log(dDate);
+//                     console.log(rows[i].fecha_llegada);
+//                     //modificando mes menos 1   
+//                     var mesS=parseInt(ruta.fechaIni.mes) ;
+//                     var mesL=parseInt(ruta.fechaFin.mes) ;
+//                     mesS=mesS-1;mesL=mesL-1;
+//                     console.log('MEEEEEEEEEEESSSSSSSSSSS'+mesS);
+//                     console.log('MEEEEEEEEEEESSSSSSSSSSS'+mesL);
+//                     ///////////////////
+//                     fsalida = new Date(ruta.fechaIni.anio, mesS, ruta.fechaIni.dia);
+//                     fllegada = new Date(ruta.fechaFin.anio, mesL, ruta.fechaFin.dia);
+//                     //fsalida.setMonth(+1);
+//                     //fllegada.setMonth(+1);
+//                     console.log(fsalida);
+//                     console.log(fllegada);
+//                     console.log('fechas');
+//                     console.log(dDate.getTime());//salida bd
+//                     console.log(fsalida.getTime());//
+//                     console.log(aDate.getTime());//llegada db
+//                     console.log(fllegada.getTime());
+//                     if ((dDate.getTime() == fsalida.getTime()) || (aDate.getTime() == fllegada.getTime())) {
+//                         console.log('entre fechas');
+//                         var dates = rows[i].hora_salida.split(':');
+//                         var datel = rows[i].hora_llegada.split(':');
+//                         var dHour = new Date(0,0,0,dates[0],dates[1]);
+//                         var aHour = new Date(0,0,0,datel[0],datel[1]);
+//                         console.log(aHour);//1 y 4 si iguales
+//                         console.log(dHour);//2 y 3 iguales
+//                         console.log(hsalida);
+//                         console.log(hllegada);
+//                     //console.log(rows[i].hora_llegada);
+//                     console.log(hsalida.getTime());//1 y 3
+//                     console.log(hllegada.getTime());//2 y 3
+//                     console.log(dHour.getTime());
+//                     console.log(aHour.getTime());
+//                     console.log(i);
+//                         if (((hsalida.getTime() >= dHour.getTime()) && (hsalida.getTime() <= aHour.getTime())) ||
+//                             ((hllegada.getTime() >= dHour.getTime()) && (hllegada.getTime() <= aHour.getTime()))) {
+//                                 console.log('ultima parte');
+//                             response= true;
+//                             res.json({ status: 'Horarios Incompatibles' });
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//         if(response == false){
+//             let idRuta = await makeIdRoute();
+//             console.log(idRuta);
+//             fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
+//             fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
+//             hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
+//             hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
+//             let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)';
+//             let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
+//                 ruta.name_vehicle, ruta.id_trailer, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db,
+//             ruta.id_end,ruta.name_end];
+//             const result = await pool.query(text, values);
+// // saber como quedaron parametros de createRuta para meter endpoints
+// //CREAR RUTA AL FINAL ID_ENDPOINT, NAME_ENDPOINT AL FINAL
+//                 //pedir el grupo
+//            // select 
+//            console.log(ruta.id_user);
+//            let text0 = 'SELECT * FROM vistaObtenerUsuario WHERE id_usuario = $1';
+//            let values0 = [ruta.id_user];//cambiado de req.body.id_user
+//            const result0 = await pool.query(text0, values0);
+           
+//            console.log('mas de uno');
+
+//            for (var k=0; k<result0.rows[0].json_build_object.grupo.length;k++){
+//                 let text3= 'SELECT createUsuario_Ruta($1,$2,$3)';//preguntar ultimo valor 
+//                 let values3= [ruta.id_user,idRuta,result0.rows[0].json_build_object.grupo[k].id_grupo];
+//                 await pool.query(text3,values3);
+//            }
+//             //id: result.rows[0].json_build_object.grupo[j]
+//                 //
+
+//                 //para crear ruta con end point
+
+//                 // for(cantidad de grupos);
+//                 // let text3= 'SELECT createUsuario_Ruta(id_usuarioqueloestacreando,idRuta,grupo/sdeusuario)';//preguntar ultimo valor 
+//                 // let values3= [ruta.id_user,idRuta,id.group];
+//                 // await pool.query(text3,values3);
+//                 //creara tantos usuarios como grupos
+
+
+//                     // for(let i=0; i<ruta.group.length;i++)
+//                     // {NO SE USARA
+//                     //     let text4=('SELECT setGrupo($1,$2');
+//                     //     let values4 = [ruta.email,group[i]];
+//                     //     await pool.query(text4,values4);     
+//                     // }
+//               //  }
+
+//                 // 'SELECT createUsuario_Ruta(id_usuarioqueloestacreando,idRuta,grupo/sdeusuario)';
+//                 // 'SELECT setGrupo($1,$2')
+//                 // //checar que front si manda el id_user
+//                 // grupos:{
+//                 //     id:123123,
+//                 //     id:123123.
+//                 // }
+
+
+//            // await pool.query(text, values);
+//             console.log('antes',ruta.checkpoints[0].id_punto);
+//             console.log(ruta.checkpoints.length);
+//             console.log(ruta.checkpoints[0].id_punto);
+//             for (let y = 0; y < ruta.checkpoints.length; y++) {
+//                 let text2 = 'SELECT createRuta_Checkpoint($1,$2,$3)';
+//                 let values2 = [idRuta, ruta.checkpoints[y].id_punto, ruta.checkpoints[y].name_punto];
+//                 await pool.query(text2, values2);
+//             }
+//             console.log('despues');
+//             res.json({ status: 'ok' });
+//         }
+//     }
+//     catch (e) {
+//         console.log('ERROR CREANDO RUTAS' + e);
+//     }
+// };
+
+
+
+
+// //Edit Routes
+// qryCtrlRoutes.EditRoute = async (req, res) => {
+//     try {
+//         console.log(req.body);
+//          var ruta=req.body;
+//          console.log('editando ruta');
+//          let text=('SELECT * FROM ruta WHERE id_ruta!=$1');
+//          let values=[ruta.id_routep];
+//          var response= false;//ojo aquiiiiiiiiiiiiii///////////////////////////// y en la parte de arriba
+         
+//          var hsalida = new Date(0, 0, 0, ruta.horaIni.hora, ruta.horaIni.minutos);
+//         var hllegada = new Date(0, 0, 0, ruta.horaFin.hora + ruta.horaFin.minutos);
+
+//          const {rows} = await pool.query(text,values);
+// //         console.log(rows);
+//         //  if(rows.length==0){
+//         //      res.json({status:'Not Found!'});
+//          //}//que no se compare con si misma
+//          if (rows.length >0) {
+//             for (var i = 0; i < rows.length; i++) {
+//                 if ((ruta.conductor == rows[i].conductor) || (ruta.name_vehicle == rows[i].vehiculo) || (ruta.id_trailer == rows[i].id_trailer)) {
+//                     console.log('conductor/vehiculo repetido');
+//                     var dDate = new Date(rows[i].fecha_salida);
+//                     var aDate = new Date(rows[i].fecha_llegada);
+//                     console.log(dDate);
+//                     console.log(rows[i].fecha_llegada);
+//                     var mesS=parseInt(ruta.fechaIni.mes) ;
+//                     var mesL=parseInt(ruta.fechaFin.mes) ;
+//                     mesS=mesS-1;mesL=mesL-1;
+//                     var fsalida = new Date(ruta.fechaIni.anio, mesS, ruta.fechaIni.dia);
+//                     var fllegada = new Date(ruta.fechaFin.anio, mesL, ruta.fechaFin.dia);
+//                     //fsalida.setMonth(+1);
+//                     //fllegada.setMonth(+1);
+//                     console.log(fsalida);
+//                     console.log(fllegada);
+//                     console.log('fechas');
+//                     console.log(dDate.getTime());
+//                     console.log(fsalida.getTime());
+//                     console.log(aDate.getTime());
+//                     console.log(fllegada.getTime());
+//                     if ((dDate.getTime() == fsalida.getTime()) || (aDate.getTime() == fllegada.getTime())) {
+//                         console.log('entre fechas');
+//                         var dates = rows[i].hora_salida.split(':');
+//                         var datel = rows[i].hora_llegada.split(':');
+//                         var dHour = new Date(0,0,0,dates[0],dates[1]);
+//                         var aHour = new Date(0,0,0,datel[0],datel[1]);
+// //                         console.log(aHour);
+// //                         console.log(dHour);
+// //                     console.log(rows[0].hora_llegada);
+// //                     console.log(hsalida);
+// //                     console.log(dHour);
+// //                     console.log(aHour);
+// // //                    console.log(i);
+// //                         if ((hsalida >= dHour && hsalida <= aHour) ||
+// //                             (hllegada >= dHour && hllegada <= aHour)) {
+// //                                 console.log('ultima parte');
+// //                             response= true;
+// //                             res.json({ status: 'Horarios Incompatibles' });
+// //                         }
+//                         console.log(hsalida.getTime());
+//                         console.log(hllegada.getTime());
+//                         console.log(dHour.getTime());
+//                         console.log(aHour.getTime());
+                        
+//                             if (((hsalida.getTime() >= dHour.getTime()) && (hsalida.getTime() <= aHour.getTime())) ||
+//                                 ((hllegada.getTime() >= dHour.getTime()) && (hllegada.getTime() <= aHour.getTime()))) {
+//                                     console.log('ultima parte');
+//                                 response= true;
+//                                 res.json({ status: 'Horarios Incompatibles' });
+//                             }
+//                     }
+//                 }
+//             }
+//             }
+//             if(response == false){
+//                 let fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
+//                 let fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
+//                 hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
+//                 hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
+//                 let text = 'SELECT updateRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)';//ver si Daniel actualizo
+//                 //se agrego status pedirlo para editar ruta y id de ruta propia
+//                 let values = [ruta.id_routep, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
+//                     ruta.name_vehicle, ruta.id_trailer, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada,ruta.status, ruta.db,
+//                     ruta.id_end,ruta.name_end];
+//                 await pool.query(text, values);
+//                 console.log('ruta bn');
+//                 var nullHora=null;
+//                 var nullFecha=null;
+//                 let text2 = "DELETE FROM Ruta_Checkpoint WHERE id_ruta=$1";
+//                 let values2=[ruta.id_routep];
+//                 await pool.query(text2,values2);
+//                 const {rows}=await pool.query('SELECT * FROM Ruta_Checkpoint');
+//                 console.log(rows);
+//                 console.log('borro');
+//                 for (let y = 0; y < ruta.checkpoints.length; y++) {
+//                     //let text2 = 'SELECT edicionRuta_Checkpoint($1,$2,$3,$4,$5)';
+//                     let text2 = 'SELECT createRuta_Checkpoint($1,$2,$3)';
+//                     //pedir hora y fecha ya que lo solicita la db
+//                     let values2 = [ruta.id_routep, ruta.checkpoints[y].id_punto, ruta.checkpoints[y].name_punto];//,nullFecha,nullHora];//,ruta.checkpoints[y].fecha,ruta.checkpoints[y].hora];
+//                     await pool.query(text2, values2);
+//                 }
+//                 res.json({ status: 'ok' });
+//             }
+//         }
+//     catch (e) {
+//         console.log('ERROR EDITANDO RUTAS' + e);
+//     }
+// };
