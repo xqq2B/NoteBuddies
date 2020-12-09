@@ -757,20 +757,6 @@ qryCtrlRoutes.CreateRoute = async (req,res)=>{
             let values2 = [idRuta, Ruta.checkpoints[y].id_punto, Ruta.checkpoints[y].name_punto];
             await pool.query(text2, values2);
         }
-
-        // meter a tabla rutacheckpoint
-
-        // function createRuta_catalogo(
-        //     ide_ruta_catalogo varchar(60),**
-        //     ide_rutaGeotab varchar(60),**
-        //     nomRuta varchar(200),***
-        //     nomRutaGeotab varchar(200),***
-        //     ide_startpoint varchar(60),***
-        //     startp varchar(200),***
-        //     ide_endpoint varchar(60),**
-        //     EndP VARCHAR(200),**
-        //     tEstimado float,
-        //     DB VARCHAR(60)
         res.json('ok!');
     }catch (e){
         console.log(e);
@@ -806,7 +792,7 @@ qryCtrlRoutes.EditRoute = async (req,res)=>{
 
 qryCtrlRoutes.QueryCatalogRoute = async (req, res) => {
     try {
-        let text=('SELECT * FROM verRuta_Catalogo WHERE DB = $1');
+        let text=('SELECT * FROM verRuta_Catalogo WHERE BD = $1');
         let values=[req.body.db];
         const {rows}=await pool.query(text,values);
         res.json(rows);
