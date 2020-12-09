@@ -89,14 +89,17 @@ router.delete('/config/routes/delete/:id_route',qryCtrlRoutes.DeleteRoute);//
 
 //Get Grupos
 router.post('/config/routes/group',qryCtrlRoutes.QueryGroup);//probando
-//GET de las rutas
+
+
+
+//GET de las rutas Configuradas
 router.post('/config/routes/qall',qryCtrlRoutes.QueryAll);//get all
 //Delete Ruta Configurada
-router.delete('/config/routes/deleteconfig/:id_route',qryCtrlRoutes.DeleteRouteConfig);//
-
-
-//Crear Ruta del catalogo
-router.post('/config/routes/create',qryCtrlRoutes.CreateSpecificRoute);
+router.delete('/config/routes/delete/specific/:id_route',qryCtrlRoutes.DeleteSpecificRoute);//
+//Crear Ruta Especifica
+router.post('/config/routes/create/specific',qryCtrlRoutes.CreateSpecificRoute);
+//Editar Ruta Especifica
+router.post('/config/routes/edit/specific',qryCtrlRoutes.EditSpecificRoute);
 
 
 //MONITOREO
