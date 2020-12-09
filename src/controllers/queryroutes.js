@@ -445,29 +445,28 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
     try {
         var ruta = req.body;
         console.log(ruta);
-        console.log(ruta.fechaFin);
         //const {rows} = await pool.query('SELECT * FROM ruta');
         const {rows} = await pool.query('SELECT * FROM ruta_configurada');
+        console.log(rows.length);
         console.log(rows[0]);
         //el mes es el problema disminuir en 1 plz solo para donde se mete diferente/////////////////////////////
         var fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia);
         console.log(ruta.fechaIni.anio);
-        var fllegada = new Date(ruta.fechaFin.anio, ruta.fechaFin.mes, ruta.fechaFin.dia);
         console.log(fsalida);
-                    console.log(fllegada);
         // var dDate = new Date(ruta.fechaIni.anio,ruta.fechaIni.mes,ruta.fechaIni.dia,ruta.horaIni.hora,ruta.horaIni.minutos);
         // var aDate = new Date(ruta.fechaFin.anio,ruta.fechaFin.mes,ruta.fechaFin.dia,ruta.horaFin.hora,ruta.horaFin.minutos);
 
         var hsalida = new Date(0, 0, 0, ruta.horaIni.hora, ruta.horaIni.minutos);
-        var hllegada = new Date(0, 0, 0, ruta.horaFin.hora, ruta.horaFin.minutos);
+       // var hllegada = new Date(0, 0, 0, ruta.horaFin.hora, ruta.horaFin.minutos);
         console.log(rows.length);
         var response= null;
         if (rows.length == 0) {
-            
-            fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
+            //posiblemente no se usen//////////////
+            //fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
             //fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
-            hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
+           // hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
             //hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
+            ////hasta aqui no se usaria////////////////
             console.log('entre a sin registros');
             ///separador de fechas//////////////////
             fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia, ruta.horaIni.hora, ruta.horaIni.minutos);
