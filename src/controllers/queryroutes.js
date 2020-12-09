@@ -814,7 +814,7 @@ qryCtrlRoutes.QueryGroup = async (req,res)=>{
         }
         res.json({groups});
     }catch(e){
-        console.log('ERROR QUERY GROUP',e);
+        console.log('ERROR QUERY GROUPS',e);
     }
 };
 
