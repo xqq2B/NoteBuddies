@@ -100,6 +100,9 @@ router.delete('/config/routes/delete/specific/:id_route',qryCtrlRoutes.DeleteSpe
 router.post('/config/routes/create/specific',qryCtrlRoutes.CreateSpecificRoute);
 //Editar Ruta Especifica
 router.post('/config/routes/edit/specific',qryCtrlRoutes.EditSpecificRoute);
+//Query Catalogo Rutas Especificada
+router.post('/config/routes/qcatalog/specific',qryCtrlRoutes.QueryCatalogRouteSpecific);//
+
 
 
 //MONITOREO

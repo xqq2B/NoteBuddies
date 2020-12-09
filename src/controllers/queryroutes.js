@@ -794,7 +794,7 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
 qryCtrlRoutes.DeleteSpecificRoute = async (req, res) => {
     try {
         console.log(req.params);
-         let text=('SELECT deleteRuta_catalogo($1)');
+         let text=('SELECT deleteRuta_configurada($1)');
          let values=[req.params.id_route];
          await pool.query(text,values);
         res.json({status:'ok'});
@@ -861,6 +861,21 @@ qryCtrlRoutes.QueryCatalogRoute = async (req, res) => {
         console.log('ERROR QUERY CATALOGO',e);
     }
 };
+
+
+
+
+qryCtrlRoutes.QueryCatalogRouteSpecific = async (req, res) => {
+    try {
+        let text=('SELECT * FROM verRuta_Catalogo WHERE BD = $1');
+        let values=[req.body.db];
+        const {rows}=await pool.query(text,values);
+        res.json({ id: rows[0].id_ruta_catalogo ,name: rows[0].nombreRuta });
+    }catch(e){
+        console.log('ERROR QUERY CATALOGO',e);
+    }
+};
+
 
 
 qryCtrlRoutes.QueryGroup = async (req,res)=>{
