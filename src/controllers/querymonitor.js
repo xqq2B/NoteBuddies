@@ -139,7 +139,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
         }
 
         //pedir la lista de datos de la db
-        let text1 = ('SELECT * FROM verRutasyCheckpoints WHERE BD = ($1)');//query de DB = corresponde Y status en progreso o por arrancar
+        let text1 = ('SELECT * FROM verRutasyCheckpoints WHERE BD = ($1)');//query de DB = corresponde Y status en programada en progreso
         let values1 = [req.body.db];
         const { rows } = await pool.query(text1, values1);
         /////
@@ -218,7 +218,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
         //ciclo  para comparar cada device y su ubicacion
         for (var j = 0; j < rows.length; j++) {
 
-            if(rows[j].status == 'por arrancar'){
+            if(rows[j].status == 'programada'){
             //ENTRANDO A ZONA INICIO
             await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
@@ -258,7 +258,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
 
             }
 
-            if(rows[j].status == 'en progreso'){
+            if(rows[j].status == 'en curso'){
             //ENTRANDO A MM ROUTES
             await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
