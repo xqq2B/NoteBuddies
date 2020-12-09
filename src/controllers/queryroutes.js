@@ -465,25 +465,43 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
         if (rows.length == 0) {
             
             fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
-            fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
+            //fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
             hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
-            hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
+            //hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
             console.log('entre a sin registros');
-            console.log(hllegada);
-            console.log(fllegada);
+            ///separador de fechas//////////////////
+            fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia, ruta.horaIni.hora, ruta.horaIni.minutos);
+            var fechaS = fsalida.toISOString();
+            var separar = fechaS.split('T');
+            var fechaa = separar[0].split('-');
+            var horass = separar[1].split(':');
+            var fsalidaa = fechaa[0]+"-"+fechaa[1]+"-"+fechaa[2];
+            var hsalidaa = horass[0]+"-"+horass[1]+":"+"00";
+            ////////////////////
+            ////suma de tiempo estimado////////////
+            fsalida.setMinutes(fsalida.getMinutes() +rows[0].tiempoEstimado);
+            var fechaSS = fsalida.toISOString();
+            var separarr = fechaSS.split('T');
+            var fechaaa = separarr[0].split('-');
+            var horasss = separarr[1].split(':');
+            var fllegadaa = fechaaa[0]+"-"+fechaaa[1]+"-"+fechaaa[2];
+            var hllegadaa = horasss[0]+"-"+horasss[1]+":"+"00";
+
+            //////////////////////////////
+
             //createRoute();
             //sumar estimado a la fecha
             let semaforo='Programada';
             let idRuta = await makeIdRoute();
             let text = 'SELECT createRuta_Configurada($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)';
-            let values = [ruta.id_ruta,idRuta, ruta.conductor, ruta.id_vehicle, ruta.name_vehicle, ruta.id_trailer,ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada,semaforo];
+            let values = [ruta.id_ruta,idRuta, ruta.conductor, ruta.id_vehicle, ruta.name_vehicle, ruta.id_trailer,ruta.name_trailer, ruta.shipment, fsalidaa, hsalidaa, fllegadaa, hllegadaa,semaforo];
              //ruta.db, ruta.id_end,ruta.name_end];ruta.id_route, ruta.name_route, SE VAN
 
             await pool.query(text, values);
 ////////////////////
 
 // function createRuta_Configurada(
-//     ide_ruta_catalogo varchar(60),
+//     ide_ruta_catalogo varchar(60),   id_ruta
 //     ide_ruta_configurada varchar(60),**
 //     _Conductor varchar(200),**
 //     ide_vehiculo varchar(60),**
@@ -586,10 +604,29 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
             hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
             hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
             //////////
+             ///separador de fechas//////////////////
+             fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia, ruta.horaIni.hora, ruta.horaIni.minutos);
+             let fechaS = fsalida.toISOString();
+             let separar = fechaS.split('T');
+             let fechaa = separar[0].split('-');
+             let horass = separar[1].split(':');
+             let fsalidaa = fechaa[0]+"-"+fechaa[1]+"-"+fechaa[2];
+             let hsalidaa = horass[0]+"-"+horass[1]+":"+"00";
+             ////////////////////
+             ////suma de tiempo estimado////////////
+             fsalida.setMinutes(fsalida.getMinutes() +rows[0].tiempoEstimado);
+             let fechaSS = fsalida.toISOString();
+             let separarr = fechaSS.split('T');
+             let fechaaa = separarr[0].split('-');
+             let horasss = separarr[1].split(':');
+             let fllegadaa = fechaaa[0]+"-"+fechaaa[1]+"-"+fechaaa[2];
+             let hllegadaa = horasss[0]+"-"+horasss[1]+":"+"00";
+ 
+             //////////////////////////////
             let semaforo='Programada';
             let text = 'SELECT createRuta_Configurada($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)';
-            let values = [idRuta,  ruta.conductor, ruta.id_vehicle, ruta.name_vehicle, ruta.id_trailer,ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada,semaforo];
-             //ruta.db, ruta.id_end,ruta.name_end];ruta.id_route, ruta.name_route, SE VAN
+            let values = [ruta.id_ruta,idRuta, ruta.conductor, ruta.id_vehicle, ruta.name_vehicle, ruta.id_trailer,ruta.name_trailer, ruta.shipment, fsalidaa, hsalidaa, fllegadaa, hllegadaa,semaforo];
+             //r
 
             await pool.query(text, values);
             // saber como quedaron parametros de createRuta para meter endpoints
@@ -870,13 +907,11 @@ qryCtrlRoutes.QueryCatalogRouteSpecific = async (req, res) => {
         let text=('SELECT * FROM verRuta_Catalogo WHERE BD = $1');
         let values=[req.body.db];
         const {rows}=await pool.query(text,values);
-        console.log(rows);
-        console.log(rows[0]);
         var rutas_catalogo=[]
         for(let i=0; i<rows.length;i++){
             rutas_catalogo.push({id: rows[i].id_ruta_catalogo ,name: rows[i].nombreruta});
         }
-        res.json(rutas_catalogo);
+        res.json(rutas_catalogo);   
     }catch(e){
         console.log('ERROR QUERY CATALOGO ESPECIFICA',e);
     }
