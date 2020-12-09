@@ -472,12 +472,32 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
             console.log(hllegada);
             console.log(fllegada);
             //createRoute();
+            //sumar estimado a la fecha
+            let semaforo='Programada';
             let idRuta = await makeIdRoute();
-            let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)';
-            let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
-                ruta.name_vehicle, ruta.id_trailer,ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db,
-            ruta.id_end,ruta.name_end];
+            let text = 'SELECT createRuta_Configurada($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)';
+            let values = [ruta.id_ruta,idRuta, ruta.conductor, ruta.id_vehicle, ruta.name_vehicle, ruta.id_trailer,ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada,semaforo];
+             //ruta.db, ruta.id_end,ruta.name_end];ruta.id_route, ruta.name_route, SE VAN
+
             await pool.query(text, values);
+////////////////////
+
+// function createRuta_Configurada(
+//     ide_ruta_catalogo varchar(60),
+//     ide_ruta_configurada varchar(60),**
+//     _Conductor varchar(200),**
+//     ide_vehiculo varchar(60),**
+//     _Vehiculo varchar(200),**
+//     ide_trailer varchar(60),**
+//     _Trailer varchar(200),**
+//     _Shipment varchar(60),**
+//     fInicioEstimada DATE,//exactamente metido por el usuario
+//     hInicioEstimada TIME,//exactamente metido por el usuario
+//     fLlegadaEstimada DATE,
+//     hLlegadaEstimada TIME,
+//     semaforo varchar(60)
+//     )
+
 
                 ///falta consultar los grupos////
 
@@ -496,12 +516,12 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
 
 
 
-
-            for (let y = 0; y < ruta.checkpoints.length; y++) {
-                let text2 = 'SELECT createRuta_Checkpoint($1,$2,$3,$4)';
-                let values2 = [idRuta, ruta.checkpoints[y].id_punto, ruta.checkpoints[y].name_punto, ruta.id_user];
-                await pool.query(text2, values2);
-            }
+           /// ya no se realiza
+            // for (let y = 0; y < ruta.checkpoints.length; y++) {
+            //     let text2 = 'SELECT createRuta_Checkpoint($1,$2,$3,$4)';
+            //     let values2 = [idRuta, ruta.checkpoints[y].id_punto, ruta.checkpoints[y].name_punto, ruta.id_user];
+            //     await pool.query(text2, values2);
+            // }
             res.json({ status: 'ok' });
         }
         if (rows.length >0) {
@@ -565,13 +585,15 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
             fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
             hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
             hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
-            let text = 'SELECT createRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)';
-            let values = [idRuta, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
-                ruta.name_vehicle, ruta.id_trailer, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada, ruta.db,
-            ruta.id_end,ruta.name_end];
-            const result = await pool.query(text, values);
-// saber como quedaron parametros de createRuta para meter endpoints
-//CREAR RUTA AL FINAL ID_ENDPOINT, NAME_ENDPOINT AL FINAL
+            //////////
+            let semaforo='Programada';
+            let text = 'SELECT createRuta_Configurada($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)';
+            let values = [idRuta,  ruta.conductor, ruta.id_vehicle, ruta.name_vehicle, ruta.id_trailer,ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada,semaforo];
+             //ruta.db, ruta.id_end,ruta.name_end];ruta.id_route, ruta.name_route, SE VAN
+
+            await pool.query(text, values);
+            // saber como quedaron parametros de createRuta para meter endpoints
+            //CREAR RUTA AL FINAL ID_ENDPOINT, NAME_ENDPOINT AL FINAL
                 //pedir el grupo
            // select 
            console.log(ruta.id_user);
@@ -581,7 +603,7 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
            
            console.log('mas de uno');
 
-           for (var k=0; k<result0.rows[0].json_build_object.grupo.length;k++){
+           for (let k=0; k<result0.rows[0].json_build_object.grupo.length;k++){
                 let text3= 'SELECT createUsuario_Ruta($1,$2,$3)';//preguntar ultimo valor 
                 let values3= [ruta.id_user,idRuta,result0.rows[0].json_build_object.grupo[k].id_grupo];
                 await pool.query(text3,values3);
@@ -616,14 +638,16 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
 
 
            // await pool.query(text, values);
-            console.log('antes',ruta.checkpoints[0].id_punto);
-            console.log(ruta.checkpoints.length);
-            console.log(ruta.checkpoints[0].id_punto);
-            for (let y = 0; y < ruta.checkpoints.length; y++) {
-                let text2 = 'SELECT createRuta_Checkpoint($1,$2,$3)';
-                let values2 = [idRuta, ruta.checkpoints[y].id_punto, ruta.checkpoints[y].name_punto];
-                await pool.query(text2, values2);
-            }
+
+           //NO NECESARIO
+            // console.log('antes',ruta.checkpoints[0].id_punto);
+            // console.log(ruta.checkpoints.length);
+            // console.log(ruta.checkpoints[0].id_punto);
+            // for (let y = 0; y < ruta.checkpoints.length; y++) {
+            //     let text2 = 'SELECT createRuta_Checkpoint($1,$2,$3)';
+            //     let values2 = [idRuta, ruta.checkpoints[y].id_punto, ruta.checkpoints[y].name_punto];
+            //     await pool.query(text2, values2);
+            // }
             console.log('despues');
             res.json({ status: 'ok' });
         }
@@ -639,7 +663,7 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
         console.log(req.body);
          var ruta=req.body;
          console.log('editando ruta');
-         let text=('SELECT * FROM ruta WHERE id_ruta!=$1');
+         let text=('SELECT * FROM ruta_configurada WHERE id_ruta!=$1');
          let values=[ruta.id_routep];
          var response= false;//ojo aquiiiiiiiiiiiiii///////////////////////////// y en la parte de arriba
          
@@ -712,31 +736,54 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
                 let fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
                 hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
                 hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
-                let text = 'SELECT updateRuta($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17)';//ver si Daniel actualizo
+
+                let semaforo='Programada';
+                let text = 'SELECT updateRuta_configurada($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)';//ver si Daniel actualizo
                 //se agrego status pedirlo para editar ruta y id de ruta propia
-                let values = [ruta.id_routep, ruta.id_route, ruta.name_route, ruta.conductor, ruta.id_vehicle,
-                    ruta.name_vehicle, ruta.id_trailer, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada,ruta.status, ruta.db,
-                    ruta.id_end,ruta.name_end];
+                let values = [ruta.id_ruta_configurada, ruta.conductor, ruta.id_vehicle,
+                    ruta.name_vehicle, ruta.id_trailer, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada,ruta.status, semaforo];
+                    //ruta.id_end,ruta.name_end];
                 await pool.query(text, values);
-                console.log('ruta bn');
-                var nullHora=null;
-                var nullFecha=null;
-                let text2 = "DELETE FROM Ruta_Checkpoint WHERE id_ruta=$1";
-                let values2=[ruta.id_routep];
-                await pool.query(text2,values2);
-                const {rows}=await pool.query('SELECT * FROM Ruta_Checkpoint');
-                console.log(rows);
-                console.log('borro');
-                for (let y = 0; y < ruta.checkpoints.length; y++) {
-                    //let text2 = 'SELECT edicionRuta_Checkpoint($1,$2,$3,$4,$5)';
-                    let text2 = 'SELECT createRuta_Checkpoint($1,$2,$3)';
-                    //pedir hora y fecha ya que lo solicita la db
-                    let values2 = [ruta.id_routep, ruta.checkpoints[y].id_punto, ruta.checkpoints[y].name_punto];//,nullFecha,nullHora];//,ruta.checkpoints[y].fecha,ruta.checkpoints[y].hora];
-                    await pool.query(text2, values2);
+
+                // create or replace function updateRuta_configurada(
+                //     ide_ruta_configurada varchar(60),
+                //     _Conductor varchar(200),
+                //     ide_vehiculo varchar(60),
+                //     _Vehiculo varchar(200),
+                //     ide_trailer varchar(60),
+                //     _Trailer varchar(200),
+                //     _Shipment varchar(60),
+                //     fInicio DATE,
+                //     hInicio TIME,
+                //     fEstimada DATE,
+                //     hEstimada TIME,
+                //     stdo varchar(60),
+                //     ide_semaforo varchar(60)
+                //     )
+               
+               // changeState(ide_ruta_configurada varchar(60), stdo varchar(60))
+                
+                
+
+                    //NO NECESARIO CP
+                // console.log('ruta bn');
+                // var nullHora=null;
+                // var nullFecha=null;
+                // let text2 = "DELETE FROM Ruta_Checkpoint WHERE id_ruta=$1";
+                // let values2=[ruta.id_routep];
+                // await pool.query(text2,values2);
+                // const {rows}=await pool.query('SELECT * FROM Ruta_Checkpoint');
+                // console.log(rows);
+                // console.log('borro');
+                // for (let y = 0; y < ruta.checkpoints.length; y++) {
+                //     //let text2 = 'SELECT edicionRuta_Checkpoint($1,$2,$3,$4,$5)';
+                //     let text2 = 'SELECT createRuta_Checkpoint($1,$2,$3)';
+                //     //pedir hora y fecha ya que lo solicita la db
+                //     let values2 = [ruta.id_routep, ruta.checkpoints[y].id_punto, ruta.checkpoints[y].name_punto];//,nullFecha,nullHora];//,ruta.checkpoints[y].fecha,ruta.checkpoints[y].hora];
+                //     await pool.query(text2, values2);
                 }
                 res.json({ status: 'ok' });
             }
-        }
     catch (e) {
         console.log('ERROR EDITANDO RUTAS' + e);
     }
@@ -747,7 +794,7 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
 qryCtrlRoutes.DeleteSpecificRoute = async (req, res) => {
     try {
         console.log(req.params);
-         let text=('SELECT deleteRuta_configurada($1)');
+         let text=('SELECT deleteRuta_catalogo($1)');
          let values=[req.params.id_route];
          await pool.query(text,values);
         res.json({status:'ok'});
@@ -851,26 +898,6 @@ qryCtrlRoutes.DeleteRoute = async (req, res) => {
 //Show All by db
 qryCtrlRoutes.QueryAll = async (req, res) => {
     try {
-        //console.log(req.body);
-        //id de usuario para ver que rutas le corresponden
-        //agregar end points
-        //DESDE AQUI SERVIA HACIA ABAJO
-        // let text = ('SELECT * FROM ruta WHERE bd=$1');
-        // let values = [req.body.db];
-        // const routes = await pool.query(text, values);
-
-        // let cPoints = await pool.query('SELECT * FROM ruta_checkpoint');
-        // var rutaCompleta = [];
-        // var rutaCompletaCP = [];
-        // console.log(cPoints.rows.length);   
-        // console.log(routes.rows.length);
-        // var x=-1;
-//HASTA AQUI
-//nueva modificacion
-
-        // let text0 = 'SELECT * FROM vistaObtenerUsuario WHERE id_usuario = $1';
-        // let values0 = [req.body.id_user];
-        // const result0 = await pool.query(text0, values0);
         ////////////////JALANDO PUNTOS/////////////
 
         if (req.body.queryConfig == true) {
