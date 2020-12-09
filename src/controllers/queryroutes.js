@@ -748,8 +748,8 @@ qryCtrlRoutes.CreateRoute = async (req,res)=>{
         let idRuta = await makeIdRoute();
         console.log(req.body);
         console.log(Ruta.id_end);
-        text="SELECT createRuta_catalogo($1,$2,$3,$4,$5,$6,$7,$8,$9)";
-        values=[idRuta,Ruta.id_route,Ruta.name_route,Ruta.name_catalogo,Ruta.id_start,Ruta.name_start,Ruta.id_end,Ruta.name_end,Ruta.tEstimado,Ruta.db];
+        text="SELECT createRuta_catalogo($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)";
+        values=[idRuta,Ruta.id_route,Ruta.name_catalogo,Ruta.name_route,Ruta.id_start,Ruta.name_start,Ruta.id_end,Ruta.name_end,Ruta.tEstimado,Ruta.db];
         await pool.query(text,values);
 
         for (let y = 0; y < Ruta.checkpoints.length; y++) {
