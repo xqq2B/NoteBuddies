@@ -787,7 +787,8 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
         //var hllegada = new Date(0, 0, 0, ruta.horaFin.hora + ruta.horaFin.minutos);
 
          const {rows} = await pool.query(text,values);
-//         console.log(rows);
+         console.log(rows.length);
+         console.log(rows);
         //  if(rows.length==0){
         //      res.json({status:'Not Found!'});
          //}//que no se compare con si misma
@@ -972,6 +973,7 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
             }
             }
             if(response == false){
+                console.log()
                 let fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
                 let fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
                 hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
