@@ -833,9 +833,9 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
             ////////////////////
             console.log('aqui 2');
             ////suma de tiempo estimado////////////
-            console.log(result.rows[0].tiempoestimado);/////checar
-            console.log(result.rows[0]['tiempoestimado']);
-            let m= result.rows[0].tiempoEstimado;
+            console.log(rows[0].tiempoestimado);/////checar
+            console.log(rows[0]['tiempoestimado']);
+            let m= rows[0].tiempoEstimado;
             fsali.setMinutes(fsali.getMinutes() +result.rows[0].tiempoestimado);
             let fechaSS = fsali.toISOString();
             let separarr = fechaSS.split('T');
@@ -975,7 +975,7 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
             }
             }
             if(response == false){
-                console.log()
+                console.log('okok'+ruta.fechaIni.anio);
                 let fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
                 let fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
                 hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
