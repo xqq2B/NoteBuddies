@@ -4,7 +4,7 @@ const conexion = require('../conexion');
 const { pool } = require('../database');
 
 
-
+const sleep = util.promisify(setTimeout);
 
 
 //Edicion Checkpoints sin Registrar
@@ -83,7 +83,7 @@ qryCtrlMonitor.QueryDevice = async (req, res) => {
         console.log(objFecha.getUTCHours() + ":" + objFecha.getUTCMinutes() + ":" + objFecha.getUTCSeconds());
         var token = null;
         while (a == false) {
-   //aqui estaba el sleep         
+      //aqui estaba el sleep//MAXIMO 60 queries por minuto o da error//estaba enseguida del while   
             await api.call('GetFeed', { typeName: 'LogRecord', fromVersion: token, 
             search: 
             { deviceSearch: { id: req.body.id_device }, fromDate: '2020-01-01T00:01:00'/*startDate*/ } })/*, toDate: '2020-01-01T00:01:00' */
@@ -105,7 +105,7 @@ qryCtrlMonitor.QueryDevice = async (req, res) => {
                     }
                     //revisar el sleep dentro de una funcion
                 }).catch(error => console.log('ERROR NO ENCONTRADO VEHICULO', error));
-                await sleep(1000);//MAXIMO 60 queries por minuto o da error//estaba enseguida del while
+                await sleep(1000);
             }
             res.json({deviceInfo:coordinates});
 
