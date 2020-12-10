@@ -583,7 +583,7 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
 
                     let fff=rows[i].fechallegadaestimada;
                     let ff=fff.toISOString();
-                    let separar = ff.split('-');
+                    let separar = ff.split('/');
 
                     //var mesL=parseInt(ruta.fechaFin.mes) ;
                     var mesL=parseInt(separar[1]);//<--- mes fin estimado
