@@ -485,7 +485,8 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
             ////////////////////
             console.log('aqui 2');
             ////suma de tiempo estimado////////////
-            console.log(result.rows[0]);
+            console.log(result.rows[0].tiempoestimado);/////checar
+            console.log(result.rows[0]['tiempoestimado']);
             let m= result.rows[0].tiempoEstimado;
             fsali.setMinutes(fsali.getMinutes() +300);
             var fechaSS = fsali.toISOString();
@@ -502,8 +503,8 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
             //sumar estimado a la fecha
             let semaforo='Programada';
             let idRuta = await makeIdRoute();
-            let text = 'SELECT createRuta_Configurada($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)';
-            let values = [ruta.id_ruta,idRuta, ruta.conductor, ruta.id_vehicle, ruta.name_vehicle, ruta.id_trailer,ruta.name_trailer, ruta.shipment, fsalidaa, hsalidaa, fllegadaa, hllegadaa,semaforo];
+            let text = 'SELECT createRuta_Configurada($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)';
+            let values = [ruta.id_ruta,idRuta, ruta.conductor, ruta.id_vehicle, ruta.name_vehicle, ruta.id_trailer,ruta.name_trailer, ruta.shipment, fsalidaa, hsalidaa, fllegadaa, hllegadaa,semaforo,ruta.id_user];
              //ruta.db, ruta.id_end,ruta.name_end];ruta.id_route, ruta.name_route, SE VAN
 
             await pool.query(text, values);
@@ -522,7 +523,8 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
 //     hInicioEstimada TIME,//exactamente metido por el usuario
 //     fLlegadaEstimada DATE,
 //     hLlegadaEstimada TIME,
-//     semaforo varchar(60)
+//     semaforo varchar(60),
+//     id_usuario varchar
 //     )
 
 
