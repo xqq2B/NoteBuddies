@@ -1061,6 +1061,7 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
 qryCtrlRoutes.DeleteSpecificRoute = async (req, res) => {
     try {
         console.log(req.body);
+        console.log(req.body.id_user);
          let text=('SELECT deleteRuta_configurada($1,$2)');
          let values=[req.body.id_route,req.body.id_user];
          await pool.query(text,values);
