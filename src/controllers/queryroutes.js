@@ -447,6 +447,11 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
         console.log(ruta);
         //const {rows} = await pool.query('SELECT * FROM ruta');
         const {rows} = await pool.query('SELECT * FROM ruta_configurada');
+
+        let text=('SELECT * FROM ruta_catalogo WHERE id_ruta_catalogo=$1');
+        let values=[ruta.id_ruta];
+        const result = await pool.query(text,values);
+        
         console.log(rows.length);
         console.log(rows[0]);
         //el mes es el problema disminuir en 1 plz solo para donde se mete diferente/////////////////////////////
@@ -478,7 +483,7 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
             var hsalidaa = horass[0]+"-"+horass[1]+":"+"00";
             ////////////////////
             ////suma de tiempo estimado////////////
-            fsalida.setMinutes(fsalida.getMinutes() +rows[0].tiempoEstimado);
+            fsalida.setMinutes(fsalida.getMinutes() +result.rows[0].tiempoEstimado);
             var fechaSS = fsalida.toISOString();
             var separarr = fechaSS.split('T');
             var fechaaa = separarr[0].split('-');
