@@ -583,7 +583,7 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
 
                     let fff=rows[i].fechallegadaestimada;
                     let ff=fff.toISOString();
-                    let separar = ff.split('/');
+                    let separar = ff.split('-');
 
                     //var mesL=parseInt(ruta.fechaFin.mes) ;
                     var mesL=parseInt(separar[1]);//<--- mes fin estimado
@@ -593,6 +593,8 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
                     ///////////////////
                     fsalida = new Date(ruta.fechaIni.anio, mesS, ruta.fechaIni.dia);
                     fllegada = new Date(separar[0], separar[1]/*mesL*/, separar[2]);
+                    console.log(fsalida);
+                    console.log(fllegada);
 
                     let hh=rows[i].horallegadaestimada;
                     //let hh=hhh.toISOString();
@@ -641,10 +643,10 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
         if(response == false){
             let idRuta = await makeIdRoute();
             console.log(idRuta);
-            fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
-            fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
-            hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
-            hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
+            // fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
+            // fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
+            // hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
+            // hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
             //////////
               ///separador de fechas//////////////////
               fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia, ruta.horaIni.hora, ruta.horaIni.minutos);
