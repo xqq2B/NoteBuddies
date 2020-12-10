@@ -511,24 +511,6 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
             await pool.query(text, values);
 ////////////////////
 
-// function createRuta_Configurada(
-//     ide_ruta_catalogo varchar(60),   id_ruta
-//     ide_ruta_configurada varchar(60),**
-//     _Conductor varchar(200),**
-//     ide_vehiculo varchar(60),**
-//     _Vehiculo varchar(200),**
-//     ide_trailer varchar(60),**
-//     _Trailer varchar(200),**
-//     _Shipment varchar(60),**
-//     fInicioEstimada DATE,//exactamente metido por el usuario
-//     hInicioEstimada TIME,//exactamente metido por el usuario
-//     fLlegadaEstimada DATE,
-//     hLlegadaEstimada TIME,
-//     semaforo varchar(60),
-//     id_usuario varchar
-//     )
-
-
         //         ///falta consultar los grupos////
 
 
@@ -580,7 +562,40 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
                     // let fsalidaa = fechaa[0] + "-" + fechaa[1] + "-" + fechaa[2];
                     // let hsalidaa = horass[0] + ":" + horass[1] + ":" + "00";
               ////////////////////
+                     ///separador de fechas////////////////// sacar fecha de llegada y hora de llegada para eso esta el codigo
+            // fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia, ruta.horaIni.hora, ruta.horaIni.minutos);
+            // fsali = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia, ruta.horaIni.hora, ruta.horaIni.minutos);
+            // let fechaS = fsalida.toISOString();
+            // let separar = fechaS.split('T');
+            // let fechaa = separar[0].split('-');
+            // let horass = separar[1].split(':');
+            // let fsalidaa = fechaa[0]+"-"+fechaa[1]+"-"+fechaa[2];
+            // let hsalidaa = horass[0]+":"+horass[1]+":"+"00";
+            // ////////////////////
+            // console.log('aqui 2');
+            // ////suma de tiempo estimado////////////
+            // console.log(result.rows[0].tiempoestimado);/////checar
+            // console.log(result.rows[0]['tiempoestimado']);
+            // let m= result.rows[0].tiempoEstimado;
+            // fsali.setMinutes(fsali.getMinutes() +result.rows[0].tiempoestimado);
+            // let fechaSS = fsali.toISOString();
+            // let separarr = fechaSS.split('T');
+            // let fechaaa = separarr[0].split('-');
+            // let horasss = separarr[1].split(':');
+            // let fllegadaa = fechaaa[0]+"-"+fechaaa[1]+"-"+fechaaa[2];
+            // let hllegadaa = horasss[0]+":"+horasss[1]+":"+"00";
 
+            //////////////////////////////let
+
+
+
+
+
+
+
+
+
+              /////////////////////////////////////////
                     let fff=rows[i].fechallegadaestimada;
                     let ff=fff.toISOString();
                     let sep=ff.split('T');
@@ -593,7 +608,7 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
                     console.log('MEEEEEEEEEEESSSSSSSSSSS'+mesL);
                     ///////////////////
                     fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia);
-                    fllegada = new Date(separar[0], separar[1]/*mesL*/, separar[2]);
+                    fllegada = new Date(separar[0], separar[1]/*mesL*/, separar[2]);/////////se debe de sacar sumando los minutos no de la base de datos
                     console.log(fsalida);
                     console.log(fllegada);
 
@@ -621,10 +636,14 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
                         var aHour = new Date(0,0,0,datel[0],datel[1]);
 
 
-                        console.log(aHour);//1 y 4 si iguales
-                        console.log(dHour);//2 y 3 iguales
-                        console.log(hsalida);
-                        console.log(hllegada);
+                        console.log(aHour);//1 y 4 si iguales de la base de datos a comparar llegar
+                        console.log(dHour);//2 y 3 iguales de la base de datos a comparar salir
+                        console.log(hsalida);// si esta tomada de lo enviado
+                        /////////////suma de minutos a hllegada/////////////
+
+
+                        /////////////////////////////
+                        console.log(hllegada);// se debe sumar los minutos previamente
                     //console.log(rows[i].hora_llegada);
                     console.log(hsalida.getTime());//1 y 3
                     console.log(hllegada.getTime());//2 y 3
@@ -1031,7 +1050,7 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
 
 
            // let text = ('SELECT * FROM verRutasyCheckpoints WHERE BD = ($1)');
-            let text = ('SELECT * FROM ruta_configurada WHERE id_ruta_catalogo = (SELECT id_ruta_catalogo FROM ruta_catalogo WHERE DB = $1');
+            let text = ('SELECT * FROM ruta_configurada WHERE id_ruta_catalogo = (SELECT id_ruta_catalogo FROM ruta_catalogo WHERE DB = $1)');
             //completas
             let values = [req.body.db];
             const { rows } = await pool.query(text, values);
