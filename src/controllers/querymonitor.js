@@ -91,20 +91,22 @@ qryCtrlMonitor.QueryDevice = async (req, res) => {
             { deviceSearch: { id: req.body.id_device }, fromDate: req.body.tiempo/*'2020-01-01T00:01:00'/*startDate*/ } })/*, toDate: '2020-01-01T00:01:00' */
                 .then(result => {
                     //result.forEach(
-                    console.log(result.length);
+                    //console.log(result.length); undefined
                     console.log(result.data.length);
                     console.log(result.toVersion);
                     token = result.toVersion;
 
-                    for (var m = 0; m < result.data.length; m++) {
+                    //for (var m = 0; m < result.data.length; m++) {
+                        if(result.data.length>0){
                         coordinates.push({
                             x: result.data[m].longitude,
                             y: result.data[m].latitude, speed: result.data[m].speed,
                             device: result.data[m].device, date: result.data[m].dateTime
                         });
                         a = true;
-
                     }
+
+                    //}
                     //revisar el sleep dentro de una funcion
                 }).catch(error => console.log('ERROR NO ENCONTRADO VEHICULO', error));
                 await sleep(1000);
