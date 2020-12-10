@@ -789,6 +789,8 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
          const {rows} = await pool.query(text,values);
          console.log(rows.length);
          console.log(rows);
+         console.log(rows[0].conductor);
+         console.log(ruta.conductor);
         //  if(rows.length==0){
         //      res.json({status:'Not Found!'});
          //}//que no se compare con si misma
