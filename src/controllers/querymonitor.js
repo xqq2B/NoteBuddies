@@ -4,6 +4,7 @@ const conexion = require('../conexion');
 const { pool } = require('../database');
 
 
+const util = require('util');//convertir codigo
 const sleep = util.promisify(setTimeout);
 
 
