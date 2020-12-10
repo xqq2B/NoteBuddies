@@ -978,12 +978,11 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
             }
             }
             if(response == false){
-                let fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
+                //let fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
                // let fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
                 hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
                // hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
-
-
+                console.log(fsalida);
                   ///separador de fechas//////////////////
                   fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia, ruta.horaIni.hora, ruta.horaIni.minutos);
                   fsali = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia, ruta.horaIni.hora, ruta.horaIni.minutos);
@@ -994,7 +993,10 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
                   let fsalidaa = fechaa[0]+"-"+fechaa[1]+"-"+fechaa[2];
                   let hsalidaa = horass[0]+":"+horass[1]+":"+"00";
                   ////////////////////
+                  console.log(fsalida);
+                  console.log(fechaS);
                   console.log('aqui 2');
+                  console.log(fsalidaa);
                   ////suma de tiempo estimado////////////
                   console.log(result.rows[0].tiempoestimado);/////checar
                   console.log(result.rows[0]['tiempoestimado']);
