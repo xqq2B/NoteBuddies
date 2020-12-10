@@ -95,7 +95,7 @@ router.post('/config/routes/group',qryCtrlRoutes.QueryGroup);//probando
 //GET de las rutas Configuradas
 router.post('/config/routes/qall',qryCtrlRoutes.QueryAll);//get all
 //Delete Ruta Configurada
-router.delete('/config/routes/delete/specific/:id_route',qryCtrlRoutes.DeleteSpecificRoute);//
+router.post('/config/routes/delete/specific',qryCtrlRoutes.DeleteSpecificRoute);//
 //Crear Ruta Especifica
 router.post('/config/routes/create/specific',qryCtrlRoutes.CreateSpecificRoute);
 //Editar Ruta Especifica
