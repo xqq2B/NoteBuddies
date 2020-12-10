@@ -63,6 +63,7 @@ qryCtrlMonitor.QueryDevice = async (req, res) => {
 
     try {
         var api;
+        console.log(req.body);
         let text = 'SELECT * FROM vistaObtenerUsuario WHERE id_usuario = $1';
         let values = [req.body.id_user];
         const result = await pool.query(text, values);
@@ -87,7 +88,7 @@ qryCtrlMonitor.QueryDevice = async (req, res) => {
       //aqui estaba el sleep//MAXIMO 60 queries por minuto o da error//estaba enseguida del while   
             await api.call('GetFeed', { typeName: 'LogRecord', fromVersion: token, 
             search: 
-            { deviceSearch: { id: req.body.id_device }, fromDate: '2020-01-01T00:01:00'/*startDate*/ } })/*, toDate: '2020-01-01T00:01:00' */
+            { deviceSearch: { id: req.body.id_device }, fromDate: req.body.tiempo/*'2020-01-01T00:01:00'/*startDate*/ } })/*, toDate: '2020-01-01T00:01:00' */
                 .then(result => {
                     //result.forEach(
                     console.log(result.length);
