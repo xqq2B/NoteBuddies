@@ -563,27 +563,29 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
                     // let hsalidaa = horass[0] + ":" + horass[1] + ":" + "00";
               ////////////////////
                      ///separador de fechas////////////////// sacar fecha de llegada y hora de llegada para eso esta el codigo
-            // fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia, ruta.horaIni.hora, ruta.horaIni.minutos);
-            // fsali = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia, ruta.horaIni.hora, ruta.horaIni.minutos);
+            //fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia, ruta.horaIni.hora, ruta.horaIni.minutos);
+            fsali = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia, ruta.horaIni.hora, ruta.horaIni.minutos);
             // let fechaS = fsalida.toISOString();
             // let separar = fechaS.split('T');
             // let fechaa = separar[0].split('-');
             // let horass = separar[1].split(':');
             // let fsalidaa = fechaa[0]+"-"+fechaa[1]+"-"+fechaa[2];
             // let hsalidaa = horass[0]+":"+horass[1]+":"+"00";
-            // ////////////////////
-            // console.log('aqui 2');
-            // ////suma de tiempo estimado////////////
-            // console.log(result.rows[0].tiempoestimado);/////checar
-            // console.log(result.rows[0]['tiempoestimado']);
-            // let m= result.rows[0].tiempoEstimado;
-            // fsali.setMinutes(fsali.getMinutes() +result.rows[0].tiempoestimado);
-            // let fechaSS = fsali.toISOString();
-            // let separarr = fechaSS.split('T');
-            // let fechaaa = separarr[0].split('-');
-            // let horasss = separarr[1].split(':');
-            // let fllegadaa = fechaaa[0]+"-"+fechaaa[1]+"-"+fechaaa[2];
-            // let hllegadaa = horasss[0]+":"+horasss[1]+":"+"00";
+            ////////////////////
+            console.log('aqui 2');
+            ////suma de tiempo estimado////////////
+            console.log(result.rows[0].tiempoestimado);/////checar
+            console.log(result.rows[0]['tiempoestimado']);
+            let m= result.rows[0].tiempoEstimado;
+            fsali.setMinutes(fsali.getMinutes() +result.rows[0].tiempoestimado);
+            let fechaSS = fsali.toISOString();
+            let separarr = fechaSS.split('T');
+            let fechaaa = separarr[0].split('-');
+            let horasss = separarr[1].split(':');
+            let fllegadaa = fechaaa[0]+"-"+fechaaa[1]+"-"+fechaaa[2];
+            let hllegadaa = horasss[0]+":"+horasss[1]+":"+"00";
+            let hllegada= new Date (0,0,0,horasss[0],horasss[1]);
+            let fllegada= new Date(fechaaa[0],fechaaa[1],fechaaa[2]);
 
             //////////////////////////////let
 
@@ -595,28 +597,30 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
 
 
 
-              /////////////////////////////////////////
-                    let fff=rows[i].fechallegadaestimada;
-                    let ff=fff.toISOString();
-                    let sep=ff.split('T');
-                    let separar = sep[0].split('-');
+              /////////////////////////////////////////DESDE AQUI FUNCIONABA (mal horas)
+                    // let fff=rows[i].fechallegadaestimada;
+                    // let ff=fff.toISOString();
+                    // let sep=ff.split('T');
+                    // let separar = sep[0].split('-');
 
-                    //var mesL=parseInt(ruta.fechaFin.mes) ;
-                    var mesL=parseInt(separar[1]);//<--- mes fin estimado
-                    mesS=mesS-1;mesL=mesL-1;
-                    console.log('MEEEEEEEEEEESSSSSSSSSSS'+mesS);
-                    console.log('MEEEEEEEEEEESSSSSSSSSSS'+mesL);
-                    ///////////////////
+                    // //var mesL=parseInt(ruta.fechaFin.mes) ;
+                    // var mesL=parseInt(separar[1]);//<--- mes fin estimado
+                    // mesS=mesS-1;mesL=mesL-1;
+                    // console.log('MEEEEEEEEEEESSSSSSSSSSS'+mesS);
+                    // console.log('MEEEEEEEEEEESSSSSSSSSSS'+mesL);
+                    // ///////////////////
                     fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia);
-                    fllegada = new Date(separar[0], separar[1]/*mesL*/, separar[2]);/////////se debe de sacar sumando los minutos no de la base de datos
-                    console.log(fsalida);
-                    console.log(fllegada);
+                    // fllegada = new Date(separar[0], separar[1]/*mesL*/, separar[2]);/////////se debe de sacar sumando los minutos no de la base de datos
+                    // console.log(fsalida);
+                    // console.log(fllegada);
 
-                    let hh=rows[i].horallegadaestimada;
-                    //let hh=hhh.toISOString();
-                    let separa= hh.split(':');
+                    // let hh=rows[i].horallegadaestimada;
+                    // //let hh=hhh.toISOString();
+                    // let separa= hh.split(':');
 
-                    let hllegada=new Date(0,0,0,separa[0],separa[1]);
+                    // let hllegada=new Date(0,0,0,separa[0],separa[1]);
+
+                    //////////////////////HASTA AQUI
                    // fllegada = new Date(ruta.fechaFin.anio, mesL, ruta.fechaFin.dia);//debe ser la estimada
                    
                     //fsalida.setMonth(+1);
@@ -780,7 +784,7 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
          var response= false;//ojo aquiiiiiiiiiiiiii///////////////////////////// y en la parte de arriba
          
          var hsalida = new Date(0, 0, 0, ruta.horaIni.hora, ruta.horaIni.minutos);
-        var hllegada = new Date(0, 0, 0, ruta.horaFin.hora + ruta.horaFin.minutos);
+        //var hllegada = new Date(0, 0, 0, ruta.horaFin.hora + ruta.horaFin.minutos);
 
          const {rows} = await pool.query(text,values);
 //         console.log(rows);
@@ -790,54 +794,178 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
          if (rows.length >0) {
             for (var i = 0; i < rows.length; i++) {
                 if ((ruta.conductor == rows[i].conductor) || (ruta.name_vehicle == rows[i].vehiculo) || (ruta.id_trailer == rows[i].id_trailer)) {
+
+
+
                     console.log('conductor/vehiculo repetido');
-                    var dDate = new Date(rows[i].fecha_salida);
-                    var aDate = new Date(rows[i].fecha_llegada);
-                    console.log(dDate);
-                    console.log(rows[i].fecha_llegada);
+                    //var dDate = new Date(rows[i].fecha_salida);
+                    var dDate = new Date(rows[i].fechainicioestimada);//fecha inicio
+                    //var aDate = new Date(rows[i].fecha_llegada);
+                    var aDate = new Date(rows[i].fechallegadaestimada)//fecha inicio estimada;//fecha llegada
+                    console.log(dDate);//fecha de salida en la base de datos
+                    console.log(rows[i].fechallegadaestimada);
+                    //modificando mes menos 1   
                     var mesS=parseInt(ruta.fechaIni.mes) ;
-                    var mesL=parseInt(ruta.fechaFin.mes) ;
-                    mesS=mesS-1;mesL=mesL-1;
-                    var fsalida = new Date(ruta.fechaIni.anio, mesS, ruta.fechaIni.dia);
-                    var fllegada = new Date(ruta.fechaFin.anio, mesL, ruta.fechaFin.dia);
+
+
+                    ///separador de fechas//////////////////
+                    // fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia, ruta.horaIni.hora, ruta.horaIni.minutos);
+                    // fsali = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia, ruta.horaIni.hora, ruta.horaIni.minutos);
+                    // let fechaS = fsalida.toISOString();
+                    // let separar = fechaS.split('T');
+                    // let fechaa = separar[0].split('-');
+                    // let horass = separar[1].split(':');
+                    // let fsalidaa = fechaa[0] + "-" + fechaa[1] + "-" + fechaa[2];
+                    // let hsalidaa = horass[0] + ":" + horass[1] + ":" + "00";
+              ////////////////////
+                     ///separador de fechas////////////////// sacar fecha de llegada y hora de llegada para eso esta el codigo
+            //fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia, ruta.horaIni.hora, ruta.horaIni.minutos);
+            fsali = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia, ruta.horaIni.hora, ruta.horaIni.minutos);
+            // let fechaS = fsalida.toISOString();
+            // let separar = fechaS.split('T');
+            // let fechaa = separar[0].split('-');
+            // let horass = separar[1].split(':');
+            // let fsalidaa = fechaa[0]+"-"+fechaa[1]+"-"+fechaa[2];
+            // let hsalidaa = horass[0]+":"+horass[1]+":"+"00";
+            ////////////////////
+            console.log('aqui 2');
+            ////suma de tiempo estimado////////////
+            console.log(result.rows[0].tiempoestimado);/////checar
+            console.log(result.rows[0]['tiempoestimado']);
+            let m= result.rows[0].tiempoEstimado;
+            fsali.setMinutes(fsali.getMinutes() +result.rows[0].tiempoestimado);
+            let fechaSS = fsali.toISOString();
+            let separarr = fechaSS.split('T');
+            let fechaaa = separarr[0].split('-');
+            let horasss = separarr[1].split(':');
+            let fllegadaa = fechaaa[0]+"-"+fechaaa[1]+"-"+fechaaa[2];
+            let hllegadaa = horasss[0]+":"+horasss[1]+":"+"00";
+            let hllegada= new Date (0,0,0,horasss[0],horasss[1]);
+            let fllegada= new Date(fechaaa[0],fechaaa[1],fechaaa[2]);
+
+            //////////////////////////////let
+
+
+
+
+
+
+
+
+
+              /////////////////////////////////////////DESDE AQUI FUNCIONABA (mal horas)
+                    // let fff=rows[i].fechallegadaestimada;
+                    // let ff=fff.toISOString();
+                    // let sep=ff.split('T');
+                    // let separar = sep[0].split('-');
+
+                    // //var mesL=parseInt(ruta.fechaFin.mes) ;
+                    // var mesL=parseInt(separar[1]);//<--- mes fin estimado
+                    // mesS=mesS-1;mesL=mesL-1;
+                    // console.log('MEEEEEEEEEEESSSSSSSSSSS'+mesS);
+                    // console.log('MEEEEEEEEEEESSSSSSSSSSS'+mesL);
+                    // ///////////////////
+                    fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia);
+                    // fllegada = new Date(separar[0], separar[1]/*mesL*/, separar[2]);/////////se debe de sacar sumando los minutos no de la base de datos
+                    // console.log(fsalida);
+                    // console.log(fllegada);
+
+                    // let hh=rows[i].horallegadaestimada;
+                    // //let hh=hhh.toISOString();
+                    // let separa= hh.split(':');
+
+                    // let hllegada=new Date(0,0,0,separa[0],separa[1]);
+
+                    //////////////////////HASTA AQUI
+                   // fllegada = new Date(ruta.fechaFin.anio, mesL, ruta.fechaFin.dia);//debe ser la estimada
+                   
                     //fsalida.setMonth(+1);
                     //fllegada.setMonth(+1);
                     console.log(fsalida);
                     console.log(fllegada);
                     console.log('fechas');
-                    console.log(dDate.getTime());
-                    console.log(fsalida.getTime());
-                    console.log(aDate.getTime());
+                    console.log(dDate.getTime());//salida bd
+                    console.log(fsalida.getTime());//
+                    console.log(aDate.getTime());//llegada db
                     console.log(fllegada.getTime());
                     if ((dDate.getTime() == fsalida.getTime()) || (aDate.getTime() == fllegada.getTime())) {
                         console.log('entre fechas');
-                        var dates = rows[i].hora_salida.split(':');
-                        var datel = rows[i].hora_llegada.split(':');
+                        var dates = rows[i].horainicioestimada.split(':');//hora inicio
+                        var datel = rows[i].horallegadaestimada.split(':');//hora llegada o estimada
                         var dHour = new Date(0,0,0,dates[0],dates[1]);
                         var aHour = new Date(0,0,0,datel[0],datel[1]);
-//                         console.log(aHour);
-//                         console.log(dHour);
-//                     console.log(rows[0].hora_llegada);
-//                     console.log(hsalida);
-//                     console.log(dHour);
-//                     console.log(aHour);
-// //                    console.log(i);
-//                         if ((hsalida >= dHour && hsalida <= aHour) ||
-//                             (hllegada >= dHour && hllegada <= aHour)) {
-//                                 console.log('ultima parte');
-//                             response= true;
-//                             res.json({ status: 'Horarios Incompatibles' });
-//                         }
-                        console.log(hsalida.getTime());
-                        console.log(hllegada.getTime());
-                        console.log(dHour.getTime());
-                        console.log(aHour.getTime());
+
+
+                        console.log(aHour);//1 y 4 si iguales de la base de datos a comparar llegar
+                        console.log(dHour);//2 y 3 iguales de la base de datos a comparar salir
+                        console.log(hsalida);// si esta tomada de lo enviado
+                        /////////////suma de minutos a hllegada/////////////
+
+
+                        /////////////////////////////
+                        console.log(hllegada);// se debe sumar los minutos previamente
+                    //console.log(rows[i].hora_llegada);
+                    console.log(hsalida.getTime());//1 y 3
+                    console.log(hllegada.getTime());//2 y 3
+                    console.log(dHour.getTime());
+                    console.log(aHour.getTime());
+                    console.log(i);
+                        if (((hsalida.getTime() >= dHour.getTime()) && (hsalida.getTime() <= aHour.getTime())) ||
+                            ((hllegada.getTime() >= dHour.getTime()) && (hllegada.getTime() <= aHour.getTime()))) {
+                                console.log('ultima parte');
+                            response= true;
+                            res.json({ status: 'Horarios Incompatibles' });
+
+
+
+//                     console.log('conductor/vehiculo repetido');
+//                     var dDate = new Date(rows[i].fecha_salida);
+//                     var aDate = new Date(rows[i].fecha_llegada);
+//                     console.log(dDate);
+//                     console.log(rows[i].fecha_llegada);
+//                     var mesS=parseInt(ruta.fechaIni.mes) ;
+//                     var mesL=parseInt(ruta.fechaFin.mes) ;
+//                     mesS=mesS-1;mesL=mesL-1;
+//                     var fsalida = new Date(ruta.fechaIni.anio, mesS, ruta.fechaIni.dia);
+//                     var fllegada = new Date(ruta.fechaFin.anio, mesL, ruta.fechaFin.dia);
+//                     //fsalida.setMonth(+1);
+//                     //fllegada.setMonth(+1);
+//                     console.log(fsalida);
+//                     console.log(fllegada);
+//                     console.log('fechas');
+//                     console.log(dDate.getTime());
+//                     console.log(fsalida.getTime());
+//                     console.log(aDate.getTime());
+//                     console.log(fllegada.getTime());
+//                     if ((dDate.getTime() == fsalida.getTime()) || (aDate.getTime() == fllegada.getTime())) {
+//                         console.log('entre fechas');
+//                         var dates = rows[i].hora_salida.split(':');
+//                         var datel = rows[i].hora_llegada.split(':');
+//                         var dHour = new Date(0,0,0,dates[0],dates[1]);
+//                         var aHour = new Date(0,0,0,datel[0],datel[1]);
+// //                         console.log(aHour);
+// //                         console.log(dHour);
+// //                     console.log(rows[0].hora_llegada);
+// //                     console.log(hsalida);
+// //                     console.log(dHour);
+// //                     console.log(aHour);
+// // //                    console.log(i);
+// //                         if ((hsalida >= dHour && hsalida <= aHour) ||
+// //                             (hllegada >= dHour && hllegada <= aHour)) {
+// //                                 console.log('ultima parte');
+// //                             response= true;
+// //                             res.json({ status: 'Horarios Incompatibles' });
+// //                         }
+//                         console.log(hsalida.getTime());
+//                         console.log(hllegada.getTime());
+//                         console.log(dHour.getTime());
+//                         console.log(aHour.getTime());
                         
-                            if (((hsalida.getTime() >= dHour.getTime()) && (hsalida.getTime() <= aHour.getTime())) ||
-                                ((hllegada.getTime() >= dHour.getTime()) && (hllegada.getTime() <= aHour.getTime()))) {
-                                    console.log('ultima parte');
-                                response= true;
-                                res.json({ status: 'Horarios Incompatibles' });
+//                             if (((hsalida.getTime() >= dHour.getTime()) && (hsalida.getTime() <= aHour.getTime())) ||
+//                                 ((hllegada.getTime() >= dHour.getTime()) && (hllegada.getTime() <= aHour.getTime()))) {
+//                                     console.log('ultima parte');
+//                                 response= true;
+//                                 res.json({ status: 'Horarios Incompatibles' });
                             }
                     }
                 }
@@ -849,11 +977,36 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
                 hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
                 hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
 
+
+                  ///separador de fechas//////////////////
+                  fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia, ruta.horaIni.hora, ruta.horaIni.minutos);
+                  fsali = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia, ruta.horaIni.hora, ruta.horaIni.minutos);
+                  let fechaS = fsalida.toISOString();
+                  let separar = fechaS.split('T');
+                  let fechaa = separar[0].split('-');
+                  let horass = separar[1].split(':');
+                  let fsalidaa = fechaa[0]+"-"+fechaa[1]+"-"+fechaa[2];
+                  let hsalidaa = horass[0]+":"+horass[1]+":"+"00";
+                  ////////////////////
+                  console.log('aqui 2');
+                  ////suma de tiempo estimado////////////
+                  console.log(result.rows[0].tiempoestimado);/////checar
+                  console.log(result.rows[0]['tiempoestimado']);
+                  let m= result.rows[0].tiempoEstimado;
+                  fsali.setMinutes(fsali.getMinutes() +result.rows[0].tiempoestimado);
+                  let fechaSS = fsali.toISOString();
+                  let separarr = fechaSS.split('T');
+                  let fechaaa = separarr[0].split('-');
+                  let horasss = separarr[1].split(':');
+                  let fllegadaa = fechaaa[0]+"-"+fechaaa[1]+"-"+fechaaa[2];
+                  let hllegadaa = horasss[0]+":"+horasss[1]+":"+"00";
+      
+                  //////////////////////////////    
                 let semaforo='Programada';
                 let text = 'SELECT updateRuta_configurada($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)';//ver si Daniel actualizo
                 //se agrego status pedirlo para editar ruta y id de ruta propia
                 let values = [ruta.id_ruta_configurada, ruta.conductor, ruta.id_vehicle,
-                    ruta.name_vehicle, ruta.id_trailer, ruta.name_trailer, ruta.shipment, fsalida, hsalida, fllegada, hllegada,ruta.status, semaforo];
+                    ruta.name_vehicle, ruta.id_trailer, ruta.name_trailer, ruta.shipment, fsalidaa, hsalidaa, fllegadaa, hllegadaa,ruta.status, semaforo];
                     //ruta.id_end,ruta.name_end];
                 await pool.query(text, values);
 
@@ -872,6 +1025,8 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
                 //     stdo varchar(60),
                 //     ide_semaforo varchar(60)
                 //     )
+
+
                
                // changeState(ide_ruta_configurada varchar(60), stdo varchar(60))
                 
@@ -1050,7 +1205,7 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
 
 
            // let text = ('SELECT * FROM verRutasyCheckpoints WHERE BD = ($1)');
-            let text = ('SELECT * FROM ruta_configurada WHERE id_ruta_catalogo = (SELECT id_ruta_catalogo FROM ruta_catalogo WHERE BD = $1)');
+            let text = ('SELECT * FROM verruta_completa WHERE BD=$1');
             //completas
             let values = [req.body.db];
             const { rows } = await pool.query(text, values);
@@ -1074,7 +1229,7 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
         //////JALAR TODO DE LAS RUTAS///////
         console.log('entro qall');
         //let text = 'SELECT * FROM verRutasyCheckpoints where BD = $1';
-        let text = ('SELECT * FROM ruta_configurada WHERE id_ruta_catalogo = (SELECT id_ruta_catalogo FROM ruta_catalogo WHERE DB = $1');
+        let text = ('SELECT * FROM ruta_configurada WHERE id_ruta_catalogo = (SELECT id_ruta_catalogo FROM ruta_catalogo WHERE DB = $1)');
         let values = [req.body.db];
         const { rows } = await pool.query(text, values);
         console.log('paso qall');
