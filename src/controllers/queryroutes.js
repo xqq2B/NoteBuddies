@@ -475,6 +475,7 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
             console.log('entre a sin registros');
             ///separador de fechas//////////////////
             fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia, ruta.horaIni.hora, ruta.horaIni.minutos);
+            fsali = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia, ruta.horaIni.hora, ruta.horaIni.minutos);
             var fechaS = fsalida.toISOString();
             var separar = fechaS.split('T');
             var fechaa = separar[0].split('-');
@@ -484,8 +485,9 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
             ////////////////////
             console.log('aqui 2');
             ////suma de tiempo estimado////////////
-            fsalida.setMinutes(fsalida.getMinutes() +result.rows[0].tiempoEstimado);
-            var fechaSS = fsalida.toISOString();
+            console.log(result.rows[0]);
+            fsali.setMinutes(fsali.getMinutes() +result.rows[0].tiempoEstimado);
+            var fechaSS = fsali.toISOString();
             var separarr = fechaSS.split('T');
             var fechaaa = separarr[0].split('-');
             var horasss = separarr[1].split(':');
