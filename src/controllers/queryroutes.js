@@ -914,7 +914,7 @@ qryCtrlRoutes.CreateRoute = async (req,res)=>{
             await pool.query(text2, values2);
         }
 /////agregado////////////////////////
-        console.log(ruta.id_user);
+        console.log(Ruta.id_user);
         let text0 = 'SELECT * FROM vistaObtenerUsuario WHERE id_usuario = $1';
         let values0 = [Ruta.id_user];//cambiado de req.body.id_user
         const result0 = await pool.query(text0, values0);
