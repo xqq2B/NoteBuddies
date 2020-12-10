@@ -1050,7 +1050,7 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
 
 
            // let text = ('SELECT * FROM verRutasyCheckpoints WHERE BD = ($1)');
-            let text = ('SELECT * FROM ruta_configurada WHERE id_ruta_catalogo = (SELECT id_ruta_catalogo FROM ruta_catalogo WHERE DB = $1)');
+            let text = ('SELECT * FROM ruta_configurada WHERE id_ruta_catalogo = (SELECT id_ruta_catalogo FROM ruta_catalogo WHERE BD = $1)');
             //completas
             let values = [req.body.db];
             const { rows } = await pool.query(text, values);
