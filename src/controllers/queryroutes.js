@@ -780,7 +780,7 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
          var ruta=req.body;
          console.log('editando ruta');
          let text=('SELECT * FROM ruta_configurada WHERE id_ruta!=$1');
-         let values=[ruta.id_routep];
+         let values=[ruta.id_ruta_configurada];
          var response= false;//ojo aquiiiiiiiiiiiiii///////////////////////////// y en la parte de arriba
          
          var hsalida = new Date(0, 0, 0, ruta.horaIni.hora, ruta.horaIni.minutos);
