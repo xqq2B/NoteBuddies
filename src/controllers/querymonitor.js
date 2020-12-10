@@ -1,5 +1,5 @@
 const qryCtrlMonitor = {};
-const { query } = require('express');
+//const { query } = require('express');
 const conexion = require('../conexion');
 const { pool } = require('../database');
 
@@ -13,8 +13,8 @@ qryCtrlMonitor.EditCheckPoint = async (req, res) => {
     try {
         console.log(req.body);
          var checkpoints=req.body;
-         let text=('SELECT * FROM ruta_checkpoint WHERE id_ruta=$1');
-         let values=[checkpoints.id_routep];
+         let text=('SELECT * FROM ruta_checkpoint WHERE id_ruta=$1');//id_ruta_catalogo???
+         let values=[checkpoints.id_routep];//cambio
          const {rows} = await pool.query(text,values);
          console.log(rows.length);
          console.log(rows[0]);
@@ -84,7 +84,8 @@ qryCtrlMonitor.QueryDevice = async (req, res) => {
         var token = null;
         while (a == false) {
    //aqui estaba el sleep         
-            await api.call('GetFeed', { typeName: 'LogRecord', fromVersion: token, search: 
+            await api.call('GetFeed', { typeName: 'LogRecord', fromVersion: token, 
+            search: 
             { deviceSearch: { id: req.body.id_device }, fromDate: startDate } })/*, toDate: '2020-01-01T00:01:00' */
                 .then(result => {
                     //result.forEach(
@@ -140,6 +141,8 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
 
         //pedir la lista de datos de la db
         let text1 = ('SELECT * FROM verRutasyCheckpoints WHERE BD = ($1)');//query de DB = corresponde Y status en programada en progreso
+        //quiza se use esta
+        //let text = ('SELECT * FROM verruta_completa WHERE BD=$1');
         let values1 = [req.body.db];
         const { rows } = await pool.query(text1, values1);
         /////
@@ -150,7 +153,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                 name: 'Entrando a MM-Startpoint'
             },
         })
-        console.log(idRuleEntrandoStart);
+        //console.log(idRuleEntrandoStart);
         console.log(idRuleEntrandoStart[0].id);
 
         const idRuleEntrando = await api.call("Get", {
@@ -159,7 +162,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                 name: 'Dentro de MM-Routes'
             },
         })
-        console.log(idRuleEntrando);
+        //console.log(idRuleEntrando);
         console.log(idRuleEntrando[0].id);
 
         const idRuleSaliendo = await api.call("Get", {
@@ -168,7 +171,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                 name: 'Saliendo de MM-Routes'
             },
         })
-        console.log(idRuleSaliendo);
+       // console.log(idRuleSaliendo);
         console.log(idRuleSaliendo[0].id);
 
 
@@ -178,7 +181,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                 name: 'Dentro de MM-Routes'
             },
         })
-        console.log(idRuleDentro);
+       // console.log(idRuleDentro);
         console.log(idRuleDentro[0].id);
 
 
@@ -188,7 +191,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                 name: 'Fuera de MM-Routes'
             },
         })
-        console.log(idRuleFuera);
+       // console.log(idRuleFuera);
         console.log(idRuleFuera[0].id);
 
 
@@ -198,7 +201,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                 name: 'Entrando a MM-Endpoint'
             },
         })
-        console.log(idRuleEntrandoEP);
+        //console.log(idRuleEntrandoEP);
         console.log(idRuleEntrandoEP[0].id);
 
 
@@ -209,27 +212,54 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                 name: 'Entrando a MM-Checkpoint'
             },
         })
-        console.log(idRuleEntrandoCP);
+       // console.log(idRuleEntrandoCP);
         console.log(idRuleEntrandoCP[0].id);
         
         
         var Alerts=[];
         //horaActual sacarla en UTC 0, ver otro archivo para referencia
         //ciclo  para comparar cada device y su ubicacion
+        var horaActual = new Date();
         for (var j = 0; j < rows.length; j++) {
 
-            if(rows[j].status == 'programada'){
+
+            //por guardar separado ahora conversiones a cada rato
+
+            //hora estimada esta en formato DATE y debe convertirse lo de la db a DATE nuevamente...
+            var fechaS = rows[j].fechallegadaestimada.toISOString();
+            var separar = fechaS.split('T');
+            var fechaa = separar[0].split('-');
+            
+            var horaS = rows[j].horallegadaestimada.split(':');
+
+            var festimadallegarDB= new Date(fechaa[0],fechaa[1],fechaa[2],horaS[0],horaS[1]);//DATE fecha y hora estimada LLEGAR base de datos
+
+
+            var fechaSS = rows[j].fechainicioestimada.toISOString();
+            var separarr = fechaSS.split('T');
+            var fechaaa = separarr[0].split('-');
+            
+            var horaSS = rows[j].horainicioestimada.split(':');
+
+            var festimadasalirDB= new Date(fechaaa[0],fechaaa[1],fechaaa[2],horaSS[0],horaSS[1]);//DATE fecha y hora estimada INICIO/SALIR base de datos
+
+
+
+            if(rows[j].status == 'Programada'){
+
+
+
             //ENTRANDO A ZONA INICIO
             await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
                     deviceSearch: { id: rows[j].id_vehiculo },
-                    ruleSearch: { id: idRuleEntrandoStart[0].id }, fromDate: rows[j].fechaInicioRuta//poner fecha de cuando va a arrancar
+                    ruleSearch: { id: idRuleEntrandoStart[0].id }, fromDate: festimadasalirDB//rows[j].horainicioestimada//fechaInicioRuta//poner fecha de cuando va a arrancar
                 }, 
             })
                 .then(result => {
                     //result.forEach(
-                    console.log(result);
-                    console.log(result.data.length);
+                    // console.log(result);
+                    // console.log(result.data.length);
                     console.log(result.data[0].rule);
                     console.log(result.data[0].device);
                     if(result.data.length>0){
@@ -239,16 +269,27 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                         console.log(horaEstimadaActual);//valor original
                         horaEstimadaActual.setMinutes(horaEstimadaActual.getMinutes() + rows[j].tiempoEstimado);//se suman los minutos
 
-                        if(rows[j].horaFinal.getTime()<horaEstimadaActual.getTime()){
+
+                        
+                        
+
+                        if(festimadallegarDB.getTime()<horaEstimadaActual.getTime()){
                             //hacer un push para meter datos de quien entro a la ruta
-                        Alerts.push({ info:'A', id_route:rows[j].id_route, data:result.data[0] });
+                        Alerts.push({ info:'A', id_route:rows[j].id_ruta_configurada, vehiculo:rows[j].device, hora:result.data[0].activeFrom, distancia:result.data[0].distance });
                             //hacer un update a la ruta para decir que esta en progreso
+                            let dat=horaEstimadaActual.toISOString();
+                            let sep1=dat.split('T');
+                            fri= sep1[0].split('-');
+                            hri=sep1[1].split(':');
+                            frealinicio= fri[0]+'-'+fri[1]+'-'+fri[2];//<--------- para guardar en db
+                            hrealinicio= hri[0]+':'+hri[1]+':'+'00';//<------- para guardar en db
+
                             pool.query("UPDATE FROM WHERE id_ruta=rows[j].id SET status='en progreso', semaforo='Amarillo',horaRealinicio='result.data.activeFROM'");
                             //poner ademas las alertas con la hora en la base de datos porque queda un historico
                             //consultar db y se muestran las alertas
                         }
                         else{
-                            Alerts.push({ info:'V', id_route:rows[j].id_route, data:result.data[0] });
+                            Alerts.push({ info:'V', id_route:rows[j].id_ruta_configurada, vehiculo:rows[j].device, hora:result.data[0].activeFrom, distancia:result.data[0].distance });
                             pool.query("UPDATE FROM WHERE id_ruta=rows[j].id SET status='en progreso', semaforo='Verde',horaRealinicio='result.data.activeFROM'");
                         }
                         
@@ -258,20 +299,42 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
 
             }
 
-            if(rows[j].status == 'en curso'){
+            if(rows[j].status == 'En_curso'){
+
+
+                //por guardar hora y fecha se tienen que sacar las variables para inicio real y llegada real
+                //hora estimada esta en formato DATE y debe convertirse lo de la db a DATE nuevamente...
+                let fechaS = rows[j].fechainicioreal.toISOString();
+                let separar = fechaS.split('T');
+                let fechaa = separar[0].split('-');
+
+                let horaS = rows[j].horainicioreal.split(':');
+
+                var finiciorealDB = new Date(fechaa[0], fechaa[1], fechaa[2], horaS[0], horaS[1]);//DATE fecha y hora estimada LLEGAR base de datos
+
+
+            // let fechaSS = rows[j].fechainicioestimada.toISOString();
+            // let separarr = fechaSS.split('T');
+            // let fechaaa = separarr[0].split('-');
+
+            // let horaSS = rows[j].horainicioestimada.split(':');
+
+            // var festimadasalirDB= new Date(fechaaa[0],fechaaa[1],fechaaa[2],horaSS[0],horaSS[1]);//DATE fecha y hora estimada INICIO/SALIR base de datos
+
+
             //ENTRANDO A MM ROUTES
             await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
                     deviceSearch: { id: rows[j].id_vehiculo },
-                    ruleSearch: { id: idRuleEntrando[0].id }, fromDate: '2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
+                    ruleSearch: { id: idRuleEntrando[0].id }, fromDate: finiciorealDB//festimadasalirDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
             })
                 .then(result => {
                     //result.forEach(
-                    console.log(result);
-                    console.log(result.data.length);
-                    console.log(result.data[0].rule);
-                    console.log(result.data[0].device);
+                    // console.log(result);
+                    // console.log(result.data.length);
+                    // console.log(result.data[0].rule);
+                    // console.log(result.data[0].device);
                     if(result.data.length>0){
                         console.log(result.data[0]);
                         ///////////////////////
@@ -279,7 +342,8 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                         //LA LOGICA AQUI CREO NO IRIA TODO EL PARRAFO PUESTO ESTA EL PUNTO DE INICIO
                         //hacer un push para meter datos de quien entro a la ruta quiza esto no para jalar de la db directamente
                         
-                        Alerts.push({ info:'En Curso', id_route:rows[j].id_route, data:result.data[0] });
+                        //Alerts.push({ info:'En Curso', id_route:rows[j].id_route, data:result.data[0] });
+                        Alerts.push({ info:'En Curso', id_route:rows[j].id_ruta_configurada, vehiculo:rows[j].device, hora:result.data[0].activeFrom, distancia:result.data[0].distance });
                             //hacer un update a la ruta para decir que esta en progreso
                             pool.query("UPDATE FROM WHERE id_ruta=rows[j].id SET status='en progreso'");
                             //poner ademas las alertas con la hora en la base de datos porque queda un historico
@@ -292,26 +356,28 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
                     deviceSearch: { id: rows[j].id_vehiculo },
-                    ruleSearch: { id: idRuleSaliendo[0].id }, fromDate: rows[j],horaRealInicio//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
+                    ruleSearch: { id: idRuleSaliendo[0].id }, fromDate: finiciorealDB//rows[j],horaRealInicio//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
             })
                 .then(result => {
                     //result.forEach(
-                    console.log(result);
-                    console.log(result.data.length);
-                    console.log(result.data[0].rule);
-                    console.log(result.data[0].device);
+                    // console.log(result);
+                    // console.log(result.data.length);
+                    // console.log(result.data[0].rule);
+                    // console.log(result.data[0].device);
                     if(result.data.length>0){
                         console.log(result.data[0]);
-                        if(rows[j].status=='Amarillo'){
+                        if(rows[j].status=='Amarillo'){//????????????????????????????????????????? preguntar donde consultar status
                             //hacer un update a la ruta para decir que la ruta se salio
-                            Alerts.push({semaforo:'R/A',data:result.data});
+                            //Alerts.push({semaforo:'R/A',data:result.data});
+                            Alerts.push({ info:'R/A', id_route:rows[j].id_ruta_configurada, vehiculo:rows[j].device, hora:result.data[0].activeFrom, distancia:result.data[0].distance });
                             pool.query("UPDATE FROM WHERE id_ruta=rows[j].id SET status='en progreso', semaforo='Rojo/Amarillo',horaenquesucedio='result.data.activeFROM'");
                             //poner ademas las alertas con la hora en la base de datos porque queda un historico
                             //consultar db y se muestran las alertas
                        }
                        if(rows[j].status=='Verde'){
-                            Alerts.push({semaforo:'V/R',data:result.data});
+                            //Alerts.push({semaforo:'V/R',data:result.data});
+                            Alerts.push({ info:'V/R', id_route:rows[j].id_ruta_configurada, vehiculo:rows[j].device, hora:result.data[0].activeFrom, distancia:result.data[0].distance });
                             pool.query("UPDATE FROM WHERE id_ruta=rows[j].id SET status='en progreso', semaforo='Verde/Rojo',horaenquesucedio='result.data.activeFROM'");
                             //tiempo pero con salidas, se registra la salida con su hora, fecha y el vehiculo que lo hizo en esa ruta
                           //  pool.query("UPDATE FROM WHERE id_ruta=rows[j].id SET status='en progreso', semaforo='Verde/Rojo',horaRealinicio='result.data.activeFROM'");
@@ -325,39 +391,43 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
                     deviceSearch: { id: rows[j].id_vehiculo },
-                    ruleSearch: { id: idRuleDentro[0].id }, fromDate: '2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
+                    ruleSearch: { id: idRuleDentro[0].id }, fromDate: finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
             })
                 .then(result => {
                     //result.forEach(
                     console.log(result);
-                    console.log(result.data.length);
-                    console.log(result.data[0].rule);
-                    console.log(result.data[0].device);
+                    // console.log(result.data.length);
+                    // console.log(result.data[0].rule);
+                    // console.log(result.data[0].device);
                     if (result.data.length > 0) {
                         console.log(result.data[0]);
-                        Alerts.push({info:'En Ruta',data:result.data});
+                        //Alerts.push({info:'En Ruta',data:result.data});
+                        Alerts.push({ info:'En Ruta', id_route:rows[j].id_ruta_configurada, vehiculo:rows[j].device, hora:result.data[0].activeFrom, distancia:result.data[0].distance });
                         //hacer un push para meter datos de quien salio a la ruta
                     }
                 }).catch(error => console.log('DENTRO ERROR ', error));
 
 
             //FUERA MM ROUTES
+            ///PENSAR SI AQUI ES MEJOR EL RESULTADO AL MOMENTO PARA SABER CUANTO TIEMPO HA ESTADO FUERA
             await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
                     deviceSearch: { id: rows[j].id_vehiculo },
-                    ruleSearch: { id: idRuleFuera[0].id }, fromDate: '2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
+                    ruleSearch: { id: idRuleFuera[0].id }, fromDate: finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
             })
                 .then(result => {
                     //result.forEach(
                     console.log(result);
-                    console.log(result.data.length);
-                    console.log(result.data[0].rule);
-                    console.log(result.data[0].device);
+                    // console.log(result.data.length);
+                    // console.log(result.data[0].rule);
+                    // console.log(result.data[0].device);
                     if (result.data.length > 0) {
                         console.log(result.data[0]);
-                            Alerts.push({info:'Fuera de Ruta',data:result.data});
+                           // Alerts.push({info:'Fuera de Ruta',data:result.data});
+                            Alerts.push({ info:'Fuera de Ruta', id_route:rows[j].id_ruta_configurada, vehiculo:rows[j].device, hora:result.data[0].activeFrom, distancia:result.data[0].distance,
+                            duration:result.data[0].duration  });
                             pool.query("UPDATE FROM WHERE id_ruta=rows[j].id SET status='en progreso',info='fuera de ruta',horadelsuceso='result.data.activeFROM'");
                             //poner ademas las alertas con la hora en la base de datos porque queda un historico
                             //consultar db y se muestran las alertas
@@ -369,18 +439,19 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
                     deviceSearch: { id: rows[j].id_vehiculo },
-                    ruleSearch: { id: idRuleEntrandoCP[0].id }, fromDate: '2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
+                    ruleSearch: { id: idRuleEntrandoCP[0].id }, fromDate: finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
             })
                 .then(result => {
                     //result.forEach(
                     console.log(result);
-                    console.log(result.data.length);
-                    console.log(result.data[0].rule);
-                    console.log(result.data[0].device);
+                    // console.log(result.data.length);
+                    // console.log(result.data[0].rule);
+                    // console.log(result.data[0].device);
                     if (result.data.length > 0) {
                         console.log(result.data[0]);
-                            Alerts.push({info:'Entrando a CP',data:result.data});//fecha vehiculo si se puediera zona, hora
+                            //Alerts.push({info:'Entrando a CP',data:result.data});//fecha vehiculo si se puediera zona, hora
+                            Alerts.push({ info:'Fuera de Ruta', id_route:rows[j].id_ruta_configurada, vehiculo:rows[j].device, hora:result.data[0].activeFrom, distancia:result.data[0].distance});
                             pool.query("UPDATE FROM WHERE id_ruta=rows[j].id SET status='en progreso', semaforo='ROjo/Amarillo',horaRealinicio='result.data.activeFROM'");
                     }
                 }).catch(error => console.log('ENTRANDO CHECKPOINT ERROR ', error));
@@ -390,28 +461,28 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
                     deviceSearch: { id: rows[j].id_vehiculo },
-                    ruleSearch: { id: idRuleEntrandoEP[0].id }, fromDate: '2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
+                    ruleSearch: { id: idRuleEntrandoEP[0].id }, fromDate: finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
             })
                 .then(result => {
                     //result.forEach(
-                    console.log(result);
-                    console.log(result.data.length);
-                    console.log(result.data[0].rule);
+                    // console.log(result);
+                    // console.log(result.data.length);
+                    // console.log(result.data[0].rule);
                     console.log(result.data[0].device);
                     if (result.data.length > 0) {
                         console.log(result.data[0]);
-                        Alerts.push({ info: 'Llegando a Destino', data: result.data });
-                        if ((rows[j].horaFinal.getTime() <= horaActual.getTime()) && rows[j].semaforo != 'A') {
+                        Alerts.push({ info:'Fuera de Ruta', id_route:rows[j].id_ruta_configurada, vehiculo:rows[j].device, hora:result.data[0].activeFrom, distancia:result.data[0].distance});
+                        if ((festimadallegarDB.getTime() <= horaActual.getTime()) && rows[j].semaforo != 'A') {//averiguar donde sacar el estatus del color
                             pool.query("UPDATE FROM WHERE id_ruta=rows[j].id SET status='finalizada',semaforo='verde',horaRealLlegada='result.data.activeFROM'");
                         }
-                        if ((rows[j].horaFinal.getTime() <= horaActual.getTime()) && rows[j].semaforo == 'A') {
+                        if ((festimadallegarDB.getTime() <= horaActual.getTime()) && rows[j].semaforo == 'A') {
                             pool.query("UPDATE FROM WHERE id_ruta=rows[j].id SET status='finalizada',semaforo='rojo/verde',horaRealLlegada='result.data.activeFROM'");
                         }
-                        if ((rows[j].horaFinal.getTime() > horaActual.getTime()) && rows[j].semaforo == 'A') {
+                        if ((festimadallegarDBl.getTime() > horaActual.getTime()) && rows[j].semaforo == 'A') {
                             pool.query("UPDATE FROM WHERE id_ruta=rows[j].id SET status='finalizada',semaforo='rojo/amarillo',horaRealLlegada='result.data.activeFROM'");
                         }
-                        if ((rows[j].horaFinal.getTime() > horaActual.getTime()) && rows[j].semaforo != 'A') {
+                        if ((festimadallegarDB.getTime() > horaActual.getTime()) && rows[j].semaforo != 'A') {
                             pool.query("UPDATE FROM WHERE id_ruta=rows[j].id SET status='finalizada',semaforo='rojo',horaRealLlegada='result.data.activeFROM'");
                         }
                 }

@@ -1002,10 +1002,11 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
                   let hllegadaa = horasss[0]+":"+horasss[1]+":"+"00";
       
                   //////////////////////////////    
+                  //mandar id ruta catalogo despues de id ruta configurada
                 let semaforo='Programada';
-                let text = 'SELECT updateRuta_configurada($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)';//ver si Daniel actualizo
+                let text = 'SELECT updateRuta_configurada($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)';//ver si Daniel actualizo
                 //se agrego status pedirlo para editar ruta y id de ruta propia
-                let values = [ruta.id_ruta_configurada, ruta.conductor, ruta.id_vehicle,
+                let values = [ruta.id_ruta_configurada, ruta.id_ruta_catalogo, ruta.conductor, ruta.id_vehicle,
                     ruta.name_vehicle, ruta.id_trailer, ruta.name_trailer, ruta.shipment, fsalidaa, hsalidaa, fllegadaa, hllegadaa,ruta.status, semaforo];
                     //ruta.id_end,ruta.name_end];
                 await pool.query(text, values);
