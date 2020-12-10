@@ -1229,7 +1229,8 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
         //////JALAR TODO DE LAS RUTAS///////
         console.log('entro qall');
         //let text = 'SELECT * FROM verRutasyCheckpoints where BD = $1';
-        let text = ('SELECT * FROM ruta_configurada WHERE id_ruta_catalogo = (SELECT id_ruta_catalogo FROM ruta_catalogo WHERE DB = $1)');
+        //let text = ('SELECT * FROM ruta_configurada WHERE id_ruta_catalogo = (SELECT id_ruta_catalogo FROM ruta_catalogo WHERE DB = $1)');
+        let text = ('SELECT * FROM verruta_completa WHERE BD=$1');
         let values = [req.body.db];
         const { rows } = await pool.query(text, values);
         console.log('paso qall');
@@ -1327,10 +1328,10 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
                 //console.log(CheckPoints);
                 console.log('ultimo push');
 
-                completeRoute.push({id_ruta:rows[j].id_ruta,id_rutageotab:rows[j].id_rutageotab,nombreruta:rows[j].nombreruta,RouteCoor: RoutePoints,//[j] se quito
+                completeRoute.push({id_ruta:rows[j].id_ruta_configurada,id_rutageotab:rows[j].id_rutageotab,nombreruta:rows[j].nombreruta,nombrerutageotab:rows[j].nombrerutageotab,RouteCoor: RoutePoints,//[j] se quito
                     conductor:rows[j].conductor,id_vehiculo:rows[j].id_vehiculo,vehiculo:rows[j].vehiculo,id_trailer:rows[j].id_trailer,
-                    trailer:rows[j].trailer,shipment:rows[j].shipment,fecha_salida:rows[j].fecha_salida,hora_salida:rows[j].hora_salida,
-                    fecha_llegada:rows[j].fecha_llegada,hora_llegada:rows[j].hora_llegada,estado:rows[j].estado,bd:rows[j].bd,
+                    trailer:rows[j].trailer,shipment:rows[j].shipment,fecha_salida:rows[j].fechainicioestimada,hora_salida:rows[j].horainicioestimada,
+                    fecha_llegada:rows[j].fechallegadaestimada,hora_llegada:rows[j].horallegadaestimada,estado:rows[j].estado,bd:rows[j].bd,
                     id_startpoint:rows[j].id_startpoint,startpoint:rows[j].startpoint,StartCoor:StartPoints,
                     id_endpoint:rows[j].id_endpoint,endpoint:rows[j].endpoint,EndCoor: EndPoints/*[j]*/, CheckPoints:CheckPoints});//CheckCoor: {CheckPoints}]}  };
 
