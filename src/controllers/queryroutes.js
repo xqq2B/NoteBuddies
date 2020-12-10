@@ -485,8 +485,9 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
             ////////////////////
             console.log('aqui 2');
             ////suma de tiempo estimado////////////
-            console.log(result.rows[0]);
-            fsali.setMinutes(fsali.getMinutes() +result.rows[0].tiempoEstimado);
+            console.log(result.rows[0].tiempoEstimado);
+            let m= result.rows[0].tiempoEstimado;
+            fsali.setMinutes(fsali.getMinutes() +300);
             var fechaSS = fsali.toISOString();
             var separarr = fechaSS.split('T');
             var fechaaa = separarr[0].split('-');
