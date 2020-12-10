@@ -84,7 +84,7 @@ qryCtrlMonitor.QueryDevice = async (req, res) => {
         console.log(objFecha.getUTCDate() + "/" + objFecha.getUTCMonth() + "/" + objFecha.getUTCFullYear());
         console.log(objFecha.getUTCHours() + ":" + objFecha.getUTCMinutes() + ":" + objFecha.getUTCSeconds());
         var token = null;
-       while (a < 3) { //se quito el while porque es peligroso quedarse corriendo
+       while (a < 4) { //se quito el while porque es peligroso quedarse corriendo
       //aqui estaba el sleep//MAXIMO 60 queries por minuto o da error//estaba enseguida del while   
             await api.call('GetFeed', { typeName: 'LogRecord', fromVersion: token, 
             search: 
@@ -103,14 +103,14 @@ qryCtrlMonitor.QueryDevice = async (req, res) => {
                             y: result.data[0].latitude, speed: result.data[0].speed,
                             device: result.data[0].device, date: result.data[0].dateTime
                         });
-                        a = 3;
+                        a = 5;
                     }
                     a++;
 
                     //}
                     //revisar el sleep dentro de una funcion
                 }).catch(error => console.log('ERROR NO ENCONTRADO VEHICULO', error));
-                //await sleep(1000);
+                await sleep(1000);
             }
             res.json({deviceInfo:coordinates});
 
