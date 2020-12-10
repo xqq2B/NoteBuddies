@@ -982,9 +982,9 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
                // let fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
                 hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
                // hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
-                console.log(fsalida);
+                
                   ///separador de fechas//////////////////
-                  fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia, ruta.horaIni.hora, ruta.horaIni.minutos);
+                  let fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia, ruta.horaIni.hora, ruta.horaIni.minutos);
                   fsali = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia, ruta.horaIni.hora, ruta.horaIni.minutos);
                   let fechaS = fsalida.toISOString();
                   let separar = fechaS.split('T');
