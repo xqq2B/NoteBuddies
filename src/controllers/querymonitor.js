@@ -99,9 +99,9 @@ qryCtrlMonitor.QueryDevice = async (req, res) => {
                     //for (var m = 0; m < result.data.length; m++) {
                         if(result.data.length>0){
                         coordinates.push({
-                            x: result.data[m].longitude,
-                            y: result.data[m].latitude, speed: result.data[m].speed,
-                            device: result.data[m].device, date: result.data[m].dateTime
+                            x: result.data[0].longitude,
+                            y: result.data[0].latitude, speed: result.data[0].speed,
+                            device: result.data[0].device, date: result.data[0].dateTime
                         });
                         a = true;
                     }
