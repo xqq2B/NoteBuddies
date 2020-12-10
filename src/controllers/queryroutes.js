@@ -779,7 +779,7 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
         console.log(req.body);
          var ruta=req.body;
          console.log('editando ruta');
-         let text=('SELECT * FROM ruta_configurada WHERE ide_ruta_configurada!=$1');
+         let text=('SELECT * FROM ruta_configurada WHERE id_ruta_configurada!=$1');
          let values=[ruta.id_ruta_configurada];
          var response= false;//ojo aquiiiiiiiiiiiiii///////////////////////////// y en la parte de arriba
          
