@@ -986,7 +986,7 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
                   ///separador de fechas//////////////////
                   let fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia, ruta.horaIni.hora, ruta.horaIni.minutos);
                   fsali = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia, ruta.horaIni.hora, ruta.horaIni.minutos);
-                  let fechaS = fsalida.toISOString();
+                  let fechaS = fsalida.toISOString(); 
                   let separar = fechaS.split('T');
                   let fechaa = separar[0].split('-');
                   let horass = separar[1].split(':');

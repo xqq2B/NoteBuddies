@@ -86,7 +86,7 @@ qryCtrlMonitor.QueryDevice = async (req, res) => {
    //aqui estaba el sleep         
             await api.call('GetFeed', { typeName: 'LogRecord', fromVersion: token, 
             search: 
-            { deviceSearch: { id: req.body.id_device }, fromDate: startDate } })/*, toDate: '2020-01-01T00:01:00' */
+            { deviceSearch: { id: req.body.id_device }, fromDate: '2020-01-01T00:01:00'/*startDate*/ } })/*, toDate: '2020-01-01T00:01:00' */
                 .then(result => {
                     //result.forEach(
                     console.log(result.length);
