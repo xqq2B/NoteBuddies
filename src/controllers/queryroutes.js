@@ -594,7 +594,7 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
                     fsalida = new Date(ruta.fechaIni.anio, mesS, ruta.fechaIni.dia);
                     fllegada = new Date(separar[0], separar[1]/*mesL*/, separar[2]);
 
-                    let hhh=rows[i].horallegadaestimada;
+                    let hh=rows[i].horallegadaestimada;
                     //let hh=hhh.toISOString();
                     let separa= hh.split(':');
 
