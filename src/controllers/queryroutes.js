@@ -979,9 +979,9 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
             }
             if(response == false){
                 let fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
-                let fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
+               // let fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
                 hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
-                hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
+               // hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
 
 
                   ///separador de fechas//////////////////
