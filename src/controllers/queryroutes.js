@@ -481,7 +481,7 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
             var fechaa = separar[0].split('-');
             var horass = separar[1].split(':');
             var fsalidaa = fechaa[0]+"-"+fechaa[1]+"-"+fechaa[2];
-            var hsalidaa = horass[0]+"-"+horass[1]+":"+"00";
+            var hsalidaa = horass[0]+":"+horass[1]+":"+"00";
             ////////////////////
             console.log('aqui 2');
             ////suma de tiempo estimado////////////
@@ -494,7 +494,7 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
             var fechaaa = separarr[0].split('-');
             var horasss = separarr[1].split(':');
             var fllegadaa = fechaaa[0]+"-"+fechaaa[1]+"-"+fechaaa[2];
-            var hllegadaa = horasss[0]+"-"+horasss[1]+":"+"00";
+            var hllegadaa = horasss[0]+":"+horasss[1]+":"+"00";
 
             //////////////////////////////
             console.log('aqui 3');
@@ -615,29 +615,40 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
             hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
             hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
             //////////
-             ///separador de fechas//////////////////
-             fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia, ruta.horaIni.hora, ruta.horaIni.minutos);
-             let fechaS = fsalida.toISOString();
-             let separar = fechaS.split('T');
-             let fechaa = separar[0].split('-');
-             let horass = separar[1].split(':');
-             let fsalidaa = fechaa[0]+"-"+fechaa[1]+"-"+fechaa[2];
-             let hsalidaa = horass[0]+"-"+horass[1]+":"+"00";
-             ////////////////////
-             ////suma de tiempo estimado////////////
-             fsalida.setMinutes(fsalida.getMinutes() +rows[0].tiempoEstimado);
-             let fechaSS = fsalida.toISOString();
-             let separarr = fechaSS.split('T');
-             let fechaaa = separarr[0].split('-');
-             let horasss = separarr[1].split(':');
-             let fllegadaa = fechaaa[0]+"-"+fechaaa[1]+"-"+fechaaa[2];
-             let hllegadaa = horasss[0]+"-"+horasss[1]+":"+"00";
- 
-             //////////////////////////////
+              ///separador de fechas//////////////////
+              fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia, ruta.horaIni.hora, ruta.horaIni.minutos);
+              fsali = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia, ruta.horaIni.hora, ruta.horaIni.minutos);
+              let fechaS = fsalida.toISOString();
+              let separar = fechaS.split('T');
+              let fechaa = separar[0].split('-');
+              let horass = separar[1].split(':');
+              let fsalidaa = fechaa[0]+"-"+fechaa[1]+"-"+fechaa[2];
+              let hsalidaa = horass[0]+":"+horass[1]+":"+"00";
+              ////////////////////
+              console.log('aqui 2');
+              ////suma de tiempo estimado////////////
+              console.log(result.rows[0].tiempoestimado);/////checar
+              console.log(result.rows[0]['tiempoestimado']);
+              let m= result.rows[0].tiempoEstimado;
+              fsali.setMinutes(fsali.getMinutes() +result.rows[0].tiempoestimado);
+              let fechaSS = fsali.toISOString();
+              let separarr = fechaSS.split('T');
+              let fechaaa = separarr[0].split('-');
+              let horasss = separarr[1].split(':');
+              let fllegadaa = fechaaa[0]+"-"+fechaaa[1]+"-"+fechaaa[2];
+              let hllegadaa = horasss[0]+":"+horasss[1]+":"+"00";
+  
+              //////////////////////////////
+            
+
+
+
+
             let semaforo='Programada';
-            let text = 'SELECT createRuta_Configurada($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)';
-            let values = [ruta.id_ruta,idRuta, ruta.conductor, ruta.id_vehicle, ruta.name_vehicle, ruta.id_trailer,ruta.name_trailer, ruta.shipment, fsalidaa, hsalidaa, fllegadaa, hllegadaa,semaforo];
+           
              //r
+             let text = 'SELECT createRuta_Configurada($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)';
+             let values = [ruta.id_ruta,idRuta, ruta.conductor, ruta.id_vehicle, ruta.name_vehicle, ruta.id_trailer,ruta.name_trailer, ruta.shipment, fsalidaa, hsalidaa, fllegadaa, hllegadaa,semaforo,ruta.id_user];
 
             await pool.query(text, values);
             // saber como quedaron parametros de createRuta para meter endpoints
