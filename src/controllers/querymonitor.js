@@ -13,12 +13,12 @@ qryCtrlMonitor.EditCheckPoint = async (req, res) => {
     try {
         console.log(req.body);
          var checkpoints=req.body;
-         let text=('SELECT * FROM ruta_checkpoint WHERE id_ruta=$1');//id_ruta_catalogo???
+         let text=('SELECT * FROM ruta_checkpoint WHERE id_ruta_catalogo=$1');//id_ruta_catalogo???
          let values=[checkpoints.id_routep];//cambio
          const {rows} = await pool.query(text,values);
          console.log(rows.length);
          console.log(rows[0]);
-         let text2 = "DELETE FROM Ruta_Checkpoint WHERE id_ruta=$1";
+         let text2 = "DELETE FROM Ruta_Checkpoint WHERE id_ruta_catalogo=$1";
         let values2=[checkpoints.id_routep];
         await pool.query(text2,values2);
         console.log('borro');
