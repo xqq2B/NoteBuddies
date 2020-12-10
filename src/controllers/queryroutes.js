@@ -460,6 +460,7 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
         console.log(fsalida);
         // var dDate = new Date(ruta.fechaIni.anio,ruta.fechaIni.mes,ruta.fechaIni.dia,ruta.horaIni.hora,ruta.horaIni.minutos);
         // var aDate = new Date(ruta.fechaFin.anio,ruta.fechaFin.mes,ruta.fechaFin.dia,ruta.horaFin.hora,ruta.horaFin.minutos);
+        
 
         var hsalida = new Date(0, 0, 0, ruta.horaIni.hora, ruta.horaIni.minutos);
        // var hllegada = new Date(0, 0, 0, ruta.horaFin.hora, ruta.horaFin.minutos);
@@ -559,19 +560,47 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
                 response=false;
                 if ((ruta.conductor == rows[i].conductor) || (ruta.name_vehicle == rows[i].vehiculo) || (ruta.id_trailer == rows[i].id_trailer)) {
                     console.log('conductor/vehiculo repetido');
-                    var dDate = new Date(rows[i].fecha_salida);
-                    var aDate = new Date(rows[i].fecha_llegada);
-                    console.log(dDate);
-                    console.log(rows[i].fecha_llegada);
+                    //var dDate = new Date(rows[i].fecha_salida);
+                    var dDate = new Date(rows[i].fecha_inicio);
+                    //var aDate = new Date(rows[i].fecha_llegada);
+                    var aDate = new Date(rows[i].fecha_estimada);
+                    console.log(dDate);//fecha de salida en la base de datos
+                    console.log(rows[i].fecha_estimada);
                     //modificando mes menos 1   
                     var mesS=parseInt(ruta.fechaIni.mes) ;
-                    var mesL=parseInt(ruta.fechaFin.mes) ;
+
+
+                    ///separador de fechas//////////////////
+                    // fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia, ruta.horaIni.hora, ruta.horaIni.minutos);
+                    // fsali = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia, ruta.horaIni.hora, ruta.horaIni.minutos);
+                    // let fechaS = fsalida.toISOString();
+                    // let separar = fechaS.split('T');
+                    // let fechaa = separar[0].split('-');
+                    // let horass = separar[1].split(':');
+                    // let fsalidaa = fechaa[0] + "-" + fechaa[1] + "-" + fechaa[2];
+                    // let hsalidaa = horass[0] + ":" + horass[1] + ":" + "00";
+              ////////////////////
+
+                    let fff=rows[i].fechaestimada;
+                    let ff=fff.toISOString();
+                    let separar = ff.split('-');
+
+                    //var mesL=parseInt(ruta.fechaFin.mes) ;
+                    var mesL=parseInt(separar[1]);//<--- mes fin estimado
                     mesS=mesS-1;mesL=mesL-1;
                     console.log('MEEEEEEEEEEESSSSSSSSSSS'+mesS);
                     console.log('MEEEEEEEEEEESSSSSSSSSSS'+mesL);
                     ///////////////////
                     fsalida = new Date(ruta.fechaIni.anio, mesS, ruta.fechaIni.dia);
-                    fllegada = new Date(ruta.fechaFin.anio, mesL, ruta.fechaFin.dia);
+                    fllegada = new Date(separar[0], separar[1]/*mesL*/, separar[2]);
+
+                    let hhh=rows[i].horaestimada;
+                    let hh=hhh.toISOString();
+                    let separa= hh.split(':');
+
+                    let hllegada=new Date(0,0,0,separa[0],separa[1]);
+                   // fllegada = new Date(ruta.fechaFin.anio, mesL, ruta.fechaFin.dia);//debe ser la estimada
+                   
                     //fsalida.setMonth(+1);
                     //fllegada.setMonth(+1);
                     console.log(fsalida);
@@ -583,10 +612,12 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
                     console.log(fllegada.getTime());
                     if ((dDate.getTime() == fsalida.getTime()) || (aDate.getTime() == fllegada.getTime())) {
                         console.log('entre fechas');
-                        var dates = rows[i].hora_salida.split(':');
-                        var datel = rows[i].hora_llegada.split(':');
+                        var dates = rows[i].hora_inicio.split(':');
+                        var datel = rows[i].hora_estimada.split(':');
                         var dHour = new Date(0,0,0,dates[0],dates[1]);
                         var aHour = new Date(0,0,0,datel[0],datel[1]);
+
+
                         console.log(aHour);//1 y 4 si iguales
                         console.log(dHour);//2 y 3 iguales
                         console.log(hsalida);
