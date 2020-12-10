@@ -451,6 +451,7 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
         let text=('SELECT * FROM ruta_catalogo WHERE id_ruta_catalogo=$1');
         let values=[ruta.id_ruta];
         const result = await pool.query(text,values);
+        
         console.log(result.rows.length);
         console.log(rows.length);
         console.log(rows[0]);
@@ -787,10 +788,12 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
         //var hllegada = new Date(0, 0, 0, ruta.horaFin.hora + ruta.horaFin.minutos);
 
          const {rows} = await pool.query(text,values);
-         console.log(rows.length);
-         console.log(rows);
-         console.log(rows[0].conductor);
-         console.log(ruta.conductor);
+
+
+        let textt=('SELECT * FROM ruta_catalogo WHERE id_ruta_catalogo=$1');
+        let valuess=[ruta.id_ruta_catalogo];
+        const result = await pool.query(textt,valuess);
+//         console.log(rows);
         //  if(rows.length==0){
         //      res.json({status:'Not Found!'});
          //}//que no se compare con si misma
@@ -833,10 +836,10 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
             ////////////////////
             console.log('aqui 2');
             ////suma de tiempo estimado////////////
-            console.log(rows[0].tiempoestimado);/////checar
-            console.log(rows[0]['tiempoestimado']);
-            let m= rows[0].tiempoEstimado;
-            fsali.setMinutes(fsali.getMinutes() +rows[0].tiempoestimado);
+            console.log(result.rows[0].tiempoestimado);/////checar
+            console.log(result.rows[0]['tiempoestimado']);
+            let m= result.rows[0].tiempoEstimado;
+            fsali.setMinutes(fsali.getMinutes() +result.rows[0].tiempoestimado);
             let fechaSS = fsali.toISOString();
             let separarr = fechaSS.split('T');
             let fechaaa = separarr[0].split('-');
@@ -975,11 +978,10 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
             }
             }
             if(response == false){
-                console.log('okok'+ruta.fechaIni.anio);
                 let fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
-                //let fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
+                let fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
                 hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
-                //hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
+                hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
 
 
                   ///separador de fechas//////////////////
@@ -994,10 +996,10 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
                   ////////////////////
                   console.log('aqui 2');
                   ////suma de tiempo estimado////////////
-                  console.log(rows[0].tiempoestimado);/////checar
-                  console.log(rows[0]['tiempoestimado']);
-                  let m= rows[0].tiempoEstimado;
-                  fsali.setMinutes(fsali.getMinutes() +rows[0].tiempoestimado);
+                  console.log(result.rows[0].tiempoestimado);/////checar
+                  console.log(result.rows[0]['tiempoestimado']);
+                  let m= result.rows[0].tiempoEstimado;
+                  fsali.setMinutes(fsali.getMinutes() +result.rows[0].tiempoestimado);
                   let fechaSS = fsali.toISOString();
                   let separarr = fechaSS.split('T');
                   let fechaaa = separarr[0].split('-');
