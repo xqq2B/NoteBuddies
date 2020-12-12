@@ -67,12 +67,12 @@ qryCtrlMonitor.QueryDevice = async (req, res) => {
         let text = 'SELECT * FROM vistaObtenerUsuario WHERE id_usuario = $1';
         let values = [req.body.id_user];
         const result = await pool.query(text, values);
-        if (result.rows[0].bd == "metrica") {
-            api = await conexion.updateSessionId();
-        }
-        else {
+        // if (result.rows[0].bd == "metrica") {
+        //     api = await conexion.updateSessionId();
+        // }
+        // else {
             api = await conexion.sessionOtherDb(result.rows[0].correo, result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
-        }
+        //}
         var coordinates = [];
         var ff = new Date();
         console.log(ff);
@@ -137,12 +137,12 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
         let text = 'SELECT * FROM vistaObtenerUsuario WHERE id_usuario = $1';
         let values = [req.body.id_user];
         const result = await pool.query(text, values);
-        if (result.rows[0].bd == "metrica") {
-            api = await conexion.updateSessionId();
-        }
-        else {
+        // if (result.rows[0].bd == "metrica") {
+        //     api = await conexion.updateSessionId();
+        // }
+        // else {
             api = await conexion.sessionOtherDb(result.rows[0].correo, result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
-        }
+        //}
 
         //pedir la lista de datos de la db
         let text1 = ('SELECT * FROM verRutasyCheckpoints WHERE BD = ($1)');//query de DB = corresponde Y status en programada en progreso

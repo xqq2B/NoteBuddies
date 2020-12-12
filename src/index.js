@@ -1,7 +1,8 @@
 require('./database');
-//require('./conexion');
-const conexion = require('./conexion');
-conexion.updateSessionId();
+
+
+// const conexion = require('./conexion');
+// conexion.updateSessionId();
 
 const app = require ('./app');
 

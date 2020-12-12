@@ -13,16 +13,16 @@ qryCtrlRoutes.QueryRoute = async (req, res) => {
         let values = [req.body.id_user];
         const result = await pool.query(text, values);
         //console.log('bbbbbbbbbbbbbbbddddddddddddd' + result.rows[0].bd);
-        console.log(result.rows);
-        if (result.rows[0].bd == "metrica") {
-            api = await conexion.updateSessionId();
-           // console.log(api);
-        }
-        else {
+        // console.log(result.rows);
+        // if (result.rows[0].bd == "metrica") {
+        //     api = await conexion.updateSessionId();
+        //    // console.log(api);
+        // }
+        // else {
             console.log('Otra base de datos');
             //registros tomados de github documentacion db
             api = await conexion.sessionOtherDb(result.rows[0].correo, result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
-        }
+        //}
         console.log(api);
         //cambiado para usar tipo de zona
         // const zones = await api.call("Get", {
@@ -86,15 +86,15 @@ qryCtrlRoutes.QueryCheckpoints = async (req, res) => {
         console.log(result.rows[0].bd);
         console.log(result.rows);
         console.log('CheckPOINTS');
-        if (result.rows[0].bd == "metrica") {
-            api = await conexion.updateSessionId();
-            //console.log(api);
-        }
-        else {
+        // if (result.rows[0].bd == "metrica") {
+        //     api = await conexion.updateSessionId();
+        //     //console.log(api);
+        // }
+        // else {
             console.log('Otra base de datos');
             //registros tomados de github documentacion db
             api = await conexion.sessionOtherDb(result.rows[0].correo, result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
-        }
+        //}
         console.log('CheckPOINTS');
         //se cambio para buscar por zone type
         // const zones = await api.call("Get", {
@@ -145,15 +145,15 @@ qryCtrlRoutes.QueryEndpoints = async (req, res) => {
         console.log(result.rows[0].bd);
         console.log(result.rows);
         console.log('ENDPOINTS');
-        if (result.rows[0].bd == "metrica") {
-            api = await conexion.updateSessionId();
-            //console.log(api);
-        }
-        else {
+        // if (result.rows[0].bd == "metrica") {
+        //     api = await conexion.updateSessionId();
+        //     //console.log(api);
+        // }
+        // else {
             console.log('Otra base de datos');
             //registros tomados de github documentacion db
             api = await conexion.sessionOtherDb(result.rows[0].correo, result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
-        }
+        //}
         console.log('ENDPOINTS');
         //se cambio para buscar por zone type
         // const zones = await api.call("Get", {
@@ -204,15 +204,15 @@ qryCtrlRoutes.QueryStartpoints = async (req, res) => {
         console.log(result.rows[0].bd);
         console.log(result.rows);
         console.log('ENDPOINTS');
-        if (result.rows[0].bd == "metrica") {
-            api = await conexion.updateSessionId();
-            //console.log(api);
-        }
-        else {
+        // if (result.rows[0].bd == "metrica") {
+        //     api = await conexion.updateSessionId();
+        //     //console.log(api);
+        // }
+        // else {
             console.log('Otra base de datos');
             //registros tomados de github documentacion db
             api = await conexion.sessionOtherDb(result.rows[0].correo, result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
-        }
+        //}
         console.log('STARTPOINTS');
         //se cambio para buscar por zone type
         // const zones = await api.call("Get", {
@@ -259,14 +259,14 @@ qryCtrlRoutes.QueryDriver = async (req, res) => {
         let text = 'SELECT * FROM vistaObtenerUsuario WHERE id_usuario = $1';
         let values = [req.body.id_user];
         const result = await pool.query(text, values);
-        if (result.rows[0].bd == "metrica") {
-            api = await conexion.updateSessionId();
-            //console.log(api);
-        }
-        else {
+        // if (result.rows[0].bd == "metrica") {
+        //     api = await conexion.updateSessionId();
+        //     //console.log(api);
+        // }
+        // else {
             console.log('hi');
             api = await conexion.sessionOtherDb(result.rows[0].correo, result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
-        }
+        //}
         console.log('Drivers');
         
 
@@ -310,14 +310,14 @@ qryCtrlRoutes.QueryTrailer = async (req, res) => {
         let text = 'SELECT * FROM vistaObtenerUsuario WHERE id_usuario = $1';
         let values = [req.body.id_user];
         const result = await pool.query(text, values);
-        if (result.rows[0].bd == "metrica") {
-            api = await conexion.updateSessionId();
-            console.log(api);
-        }
-        else {
+        // if (result.rows[0].bd == "metrica") {
+        //     api = await conexion.updateSessionId();
+        //     console.log(api);
+        // }
+        // else {
             console.log('hi');
             api = await conexion.sessionOtherDb(result.rows[0].correo, result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
-        }
+        //}
         //console.log('Trailer');
         //se cancela por nueva politicca
         // const trailers = await api.call("Get", {
@@ -371,15 +371,15 @@ qryCtrlRoutes.QueryDevice = async (req, res) => {
         let text = 'SELECT * FROM vistaObtenerUsuario WHERE id_usuario = $1';
         let values = [req.body.id_user];
         const result = await pool.query(text, values);
-        if (result.rows[0].bd == "metrica") {
-            api = await conexion.updateSessionId();
-           // console.log(api);
-        }
-        else {
+        // if (result.rows[0].bd == "metrica") {
+        //     api = await conexion.updateSessionId();
+        //    // console.log(api);
+        // }
+        // else {
             console.log('hi');
             //api = await conexion.sessionOtherDb(req.body.username,req.body.db, req.body.session, req.body.servo);
             api = await conexion.sessionOtherDb(result.rows[0].correo, result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
-        }
+        //}
         //cambiado por politica a grupos
         // const results = await api.call("Get", {
         //     typeName: "Device",//search por name, id, externalReference
