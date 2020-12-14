@@ -1286,13 +1286,14 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
 
         //////JALAR TODO DE LAS RUTAS///////
         console.log('entro qall');
-        console.log(api);
+        
         //let text = 'SELECT * FROM verRutasyCheckpoints where BD = $1';
         //let text = ('SELECT * FROM ruta_configurada WHERE id_ruta_catalogo = (SELECT id_ruta_catalogo FROM ruta_catalogo WHERE DB = $1)');
         text = ('SELECT * FROM verruta_completa WHERE BD=$1');
          values = [req.body.db];
         const { rows } = await pool.query(text, values);
         console.log('paso qall');
+        console.log(rows[j].id_endpoint);
 ///////////////////
 //////acceso a los id de ruta, end point y checkpoint////
 // result.rows[0].id_rutageotab;//id para consulta de puntos de ruta
@@ -1308,6 +1309,7 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
 //end pointsvar 
 //                ctrlCP=rows[j].json_build_object.ruta.length;
                 console.log('apicalls');
+                console.log(api);
                 const zonesEndPoints= await api.call("Get",{
                     typeName: "Zone",
                     search: {//como se cambio se agrega el id para filtrar
