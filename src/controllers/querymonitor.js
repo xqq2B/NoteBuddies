@@ -164,7 +164,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
         const idRuleEntrando = await api.call("Get", {
             typeName: "Rule",
             search: {
-                name: 'Dentro de MM-Routes'
+                name: 'Entrando a MM-Routes'
             },
         })
         //console.log(idRuleEntrando);

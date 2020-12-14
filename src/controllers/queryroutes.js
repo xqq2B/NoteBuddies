@@ -505,11 +505,17 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
             //sumar estimado a la fecha
             let semaforo='Programada';
             let idRuta = await makeIdRoute();
-            let text = 'SELECT createRuta_Configurada($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)';
-            let values = [ruta.id_ruta,idRuta, ruta.conductor, ruta.id_vehicle, ruta.name_vehicle, ruta.id_trailer,ruta.name_trailer, ruta.shipment, fsalidaa, hsalidaa, fllegadaa, hllegadaa,semaforo,ruta.id_user];
+            let text = 'SELECT createRuta_Configurada($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)';//,$13,$14
+            let values = [ruta.id_ruta,idRuta, ruta.conductor, ruta.id_vehicle, ruta.name_vehicle,/* ruta.id_trailer,ruta.name_trailer,*/ ruta.shipment, fsalidaa, hsalidaa, fllegadaa, hllegadaa,semaforo,ruta.id_user];
              //ruta.db, ruta.id_end,ruta.name_end];ruta.id_route, ruta.name_route, SE VAN
-
             await pool.query(text, values);
+
+            for(let n=0; n<ruta.trailers.length;n++){
+                text ='SELECT setTrailer($1,$2,$3)';
+                values= [idRuta,ruta.trailers[n].id_trailer,ruta.trailers[n].name_trailer];    
+                await pool.query(text,values);
+            }
+            
 ////////////////////
 
         //         ///falta consultar los grupos////
@@ -541,8 +547,16 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
             for (var i = 0; i < rows.length; i++) {
                 console.log('hola');
                 response=false;
-                if ((ruta.conductor == rows[i].conductor) || (ruta.name_vehicle == rows[i].vehiculo) || (ruta.id_trailer == rows[i].id_trailer)) {
-                    console.log('conductor/vehiculo repetido');
+                repeatTrailer=false;
+
+                for(let n=0; n<ruta.trailers.length;n++){
+                    if(ruta.trailers[n].id_trailer==rows.json_build_array[i].id_trailer[n])
+                    repeatTrailer=true;
+                }
+                
+
+                if ((ruta.conductor == rows[i].conductor) || (ruta.name_vehicle == rows[i].vehiculo) || (repeatTrailer==true)/*ruta.id_trailer == rows[i].id_trailer*/) {
+                    console.log('conductor/vehiculo/trailer repetido');
                     //var dDate = new Date(rows[i].fecha_salida);
                     var dDate = new Date(rows[i].fechainicioestimada);//fecha inicio
                     //var aDate = new Date(rows[i].fecha_llegada);
@@ -705,10 +719,17 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
             let semaforo='Programada';
            
              //r
-             let text = 'SELECT createRuta_Configurada($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)';
-             let values = [ruta.id_ruta,idRuta, ruta.conductor, ruta.id_vehicle, ruta.name_vehicle, ruta.id_trailer,ruta.name_trailer, ruta.shipment, fsalidaa, hsalidaa, fllegadaa, hllegadaa,semaforo,ruta.id_user];
+             let text = 'SELECT createRuta_Configurada($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)';//$13,$14
+             let values = [ruta.id_ruta,idRuta, ruta.conductor, ruta.id_vehicle, ruta.name_vehicle, /*ruta.id_trailer,ruta.name_trailer,*/ ruta.shipment, fsalidaa, hsalidaa, fllegadaa, hllegadaa,semaforo,ruta.id_user];
 
             await pool.query(text, values);
+
+
+            for(let n=0; n<ruta.trailers.length;n++){
+                text ='SELECT setTrailer($1,$2,$3)';
+                values= [idRuta,ruta.trailers[n].id_trailer,ruta.trailers[n].name_trailer];    
+                await pool.query(text,values);
+            }
             // saber como quedaron parametros de createRuta para meter endpoints
             //CREAR RUTA AL FINAL ID_ENDPOINT, NAME_ENDPOINT AL FINAL
                 //pedir el grupo
@@ -793,17 +814,23 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
         let textt=('SELECT * FROM ruta_catalogo WHERE id_ruta_catalogo=$1');
         let valuess=[ruta.id_ruta_catalogo];
         const result = await pool.query(textt,valuess);
+
+        repeatTrailer=false;
 //         console.log(rows);
         //  if(rows.length==0){
         //      res.json({status:'Not Found!'});
          //}//que no se compare con si misma
          if (rows.length >0) {
             for (var i = 0; i < rows.length; i++) {
-                if ((ruta.conductor == rows[i].conductor) || (ruta.name_vehicle == rows[i].vehiculo) || (ruta.id_trailer == rows[i].id_trailer)) {
-
-
-
-                    console.log('conductor/vehiculo repetido');
+                for(let n=0; n<ruta.trailers.length;n++){
+                    if(ruta.trailers[n].id_trailer==rows.json_build_array[i].id_trailer[n])
+                    repeatTrailer=true;
+                }
+                
+                if ((ruta.conductor == rows[i].conductor) || (ruta.name_vehicle == rows[i].vehiculo) || (repeatTrailer==true)/*ruta.id_trailer == rows[i].id_trailer*/) {//(ruta.id_trailer == rows[i].id_trailer)) {
+                    ///poner solo dos condiciones porque pone maximo dos trailers osea se agrega otro || para el otro trailer
+                        
+                    console.log('conductor/vehiculo/trailer repetido');
                     //var dDate = new Date(rows[i].fecha_salida);
                     var dDate = new Date(rows[i].fechainicioestimada);//fecha inicio
                     //var aDate = new Date(rows[i].fecha_llegada);
@@ -1012,12 +1039,27 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
                   //////////////////////////////    
                   //mandar id ruta catalogo despues de id ruta configurada
                 let semaforo='Programada';
-                let text = 'SELECT updateRuta_configurada($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)';//ver si Daniel actualizo
+                let text = 'SELECT updateRuta_configurada($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)';//$13,$14
                 //se agrego status pedirlo para editar ruta y id de ruta propia
                 let values = [ruta.id_ruta_configurada, ruta.id_ruta_catalogo, ruta.conductor, ruta.id_vehicle,
-                    ruta.name_vehicle, ruta.id_trailer, ruta.name_trailer, ruta.shipment, fsalidaa, hsalidaa, fllegadaa, hllegadaa,ruta.status, semaforo];
+                    ruta.name_vehicle,/* ruta.id_trailer, ruta.name_trailer,*/ ruta.shipment, fsalidaa, hsalidaa, fllegadaa, hllegadaa,ruta.status, semaforo];
                     //ruta.id_end,ruta.name_end];
                 await pool.query(text, values);
+
+
+                text ='DELETE FROM ruta_trailer where id_ruta_configurada = $1';
+                values =[ruta.id_ruta_configurada];
+                await pool.query(text,values);
+
+                    console.log('borrado trailers');
+
+                for(let n=0; n<ruta.trailers.length;n++){
+                    text ='SELECT setTrailer($1,$2,$3)';
+                    values= [idRuta,ruta.trailers[n].id_trailer,ruta.trailers[n].name_trailer];    
+                    await pool.query(text,values);
+                }
+
+                console.log('insertado trailers');
 
                 // create or replace function updateRuta_configurada(
                 //     ide_ruta_configurada varchar(60),
