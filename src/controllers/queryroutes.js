@@ -1278,6 +1278,8 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
         let values = [req.body.id_user];
         const result = await pool.query(text, values);
             console.log('Otra base de datos');
+            console.log(result.rows[0].correo);
+            console.log(result.rows.length);
             //registros tomados de github documentacion db
             api = await conexion.sessionOtherDb(result.rows[0].correo, result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
         //}
