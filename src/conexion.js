@@ -125,7 +125,7 @@ const GeotabApi = require('mg-api-js');
 async function sessionOtherDb(user, db, session, servo) {
     try {
         console.log(user + db + session + servo);
-        const api = await new GeotabApi({ credentials: { userName: user, database: db, sessionId: 'hDAQRbL_gXBDXOZ5a2bKwg'/*session*/ }, path: servo });
+        const api = await new GeotabApi({ credentials: { userName: user, database: db, sessionId: 'hDAQRbL_gXBDXOZ5a2bKwg'/*session*/ }, path: 'my167.geotab.com'/*servo*/ });
         console.log(api);
         await api.call('Get', { typeName: 'Device'  ,resultLimits:1})
         .then(result => {
