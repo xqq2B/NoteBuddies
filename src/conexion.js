@@ -130,7 +130,7 @@ async function sessionOtherDb(user, db, session, servo) {
         await api.call('Get', { typeName: 'Device'  ,resultLimits:1})
         .then(result => {
             console.log('hola');
-            console.log(result.lenght);
+            console.log(result.length);
             
            
         })

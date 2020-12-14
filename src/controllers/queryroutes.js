@@ -1293,7 +1293,7 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
          values = [req.body.db];
         const { rows } = await pool.query(text, values);
         console.log('paso qall');
-        console.log(rows[0].id_endpoint);
+        //console.log(rows[0].id_endpoint);
 ///////////////////
 //////acceso a los id de ruta, end point y checkpoint////
 // result.rows[0].id_rutageotab;//id para consulta de puntos de ruta
