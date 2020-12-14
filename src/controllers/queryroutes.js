@@ -1267,16 +1267,16 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
 
         var api;
        
-        console.log('QALL');
-        if (req.body.db == "metrica") {
-            api = await conexion.updateSessionId();
-            //console.log(api);
-        }
-        else {
+        // console.log('QALL');
+        // if (req.body.db == "metrica") {
+        //     api = await conexion.updateSessionId();
+        //     //console.log(api);
+        // }
+        // else {
             console.log('Otra base de datos');
             //registros tomados de github documentacion db
             api = await conexion.sessionOtherDb(result.rows[0].correo, result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
-        }
+      //  }
 
         //////JALAR TODO DE LAS RUTAS///////
         console.log('entro qall');
