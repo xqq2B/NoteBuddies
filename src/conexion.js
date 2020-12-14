@@ -127,6 +127,16 @@ async function sessionOtherDb(user, db, session, servo) {
         console.log(user + db + session + servo);
         const api = await new GeotabApi({ credentials: { userName: user, database: db, sessionId: session }, path: servo });
         console.log(api);
+        await api.call('Get', { typeName: 'Device'  ,resultLimits:1})
+        .then(result => {
+            console.log('hola');
+            console.log(result.lenght);
+            
+           
+        })
+        .catch(error => {
+            console.log('errorororororor', error);
+        });
         return api;
     } catch (err) {
         //const api = new GeotabApi(username, password, null, database, server);
