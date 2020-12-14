@@ -1294,6 +1294,7 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
         const { rows } = await pool.query(text, values);
         console.log('paso qall');
         //console.log(rows[0].id_endpoint);
+        console.log(api);
 ///////////////////
 //////acceso a los id de ruta, end point y checkpoint////
 // result.rows[0].id_rutageotab;//id para consulta de puntos de ruta
@@ -1309,7 +1310,7 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
 //end pointsvar 
 //                ctrlCP=rows[j].json_build_object.ruta.length;
                 console.log('apicalls');
-                console.log(api);
+                
                 const zonesEndPoints= await api.call("Get",{
                     typeName: "Zone",
                     search: {//como se cambio se agrega el id para filtrar
