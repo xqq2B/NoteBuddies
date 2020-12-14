@@ -505,8 +505,8 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
             //sumar estimado a la fecha
             let semaforo='Programada';
             let idRuta = await makeIdRoute();
-            let text = 'SELECT createRuta_Configurada($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)';//,$13,$14
-            let values = [ruta.id_ruta,idRuta, ruta.conductor, ruta.id_vehicle, ruta.name_vehicle,/* ruta.id_trailer,ruta.name_trailer,*/ ruta.shipment, fsalidaa, hsalidaa, fllegadaa, hllegadaa,semaforo,ruta.id_user];
+            let text = 'SELECT createRuta_Configurada($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)';
+            let values = [ruta.id_ruta,idRuta, ruta.conductor, ruta.id_vehicle, ruta.name_vehicle, ruta.shipment, fsalidaa, hsalidaa, fllegadaa, hllegadaa,semaforo,ruta.id_user];
              //ruta.db, ruta.id_end,ruta.name_end];ruta.id_route, ruta.name_route, SE VAN
             await pool.query(text, values);
 
