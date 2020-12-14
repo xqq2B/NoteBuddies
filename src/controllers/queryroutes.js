@@ -1273,17 +1273,21 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
         //     //console.log(api);
         // }
         // else {
+        console.log(req.body.id_user);
+        let text = 'select * from vistaObtenerUsuario WHERE id_usuario = $1';
+        let values = [req.body.id_user];
+        const result = await pool.query(text, values);
             console.log('Otra base de datos');
             //registros tomados de github documentacion db
             api = await conexion.sessionOtherDb(result.rows[0].correo, result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
-      //  }
+        //}
 
         //////JALAR TODO DE LAS RUTAS///////
         console.log('entro qall');
         //let text = 'SELECT * FROM verRutasyCheckpoints where BD = $1';
         //let text = ('SELECT * FROM ruta_configurada WHERE id_ruta_catalogo = (SELECT id_ruta_catalogo FROM ruta_catalogo WHERE DB = $1)');
-        let text = ('SELECT * FROM verruta_completa WHERE BD=$1');
-        let values = [req.body.db];
+        text = ('SELECT * FROM verruta_completa WHERE BD=$1');
+         values = [req.body.db];
         const { rows } = await pool.query(text, values);
         console.log('paso qall');
 ///////////////////
