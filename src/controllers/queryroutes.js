@@ -1271,7 +1271,7 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
         // if (req.body.db == "metrica") {
         //     api = await conexion.updateSessionId();
         //     //console.log(api);
-        // }
+        // }as
         // else {
         console.log(req.body.id_user);
         let text = 'select * from vistaObtenerUsuario WHERE id_usuario = $1';
