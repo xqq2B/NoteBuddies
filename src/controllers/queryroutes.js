@@ -1265,7 +1265,7 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
         }
         else {
 
-        var api;
+        //var api;
        
         // console.log('QALL');
         // if (req.body.db == "metrica") {
@@ -1281,11 +1281,12 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
             console.log(result.rows[0]);
             console.log(result.rows.length);
             //registros tomados de github documentacion db
-            api = await conexion.sessionOtherDb(result.rows[0].correo, result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
+           var api = await conexion.sessionOtherDb(result.rows[0].correo, result.rows[0].bd, result.rows[0].sessionid, result.rows[0].path);
         //}
 
         //////JALAR TODO DE LAS RUTAS///////
         console.log('entro qall');
+        console.log(api);
         //let text = 'SELECT * FROM verRutasyCheckpoints where BD = $1';
         //let text = ('SELECT * FROM ruta_configurada WHERE id_ruta_catalogo = (SELECT id_ruta_catalogo FROM ruta_catalogo WHERE DB = $1)');
         text = ('SELECT * FROM verruta_completa WHERE BD=$1');
@@ -1314,7 +1315,7 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
                         id:rows[j].id_endpoint
                     }
                 });
-                
+                console.log('paso primer call');
                 var EndPoints = [];
                 console.log('End'+zonesEndPoints.length);
                // console.log(zonesEndPoints[0]);
