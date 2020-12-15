@@ -560,6 +560,7 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
                
                 
                 for(let n=0; n<ruta.trailers.length;n++){
+                    console.log(rows[i].json_build_array[0][n].id_trailer);
                     if(ruta.trailers[n].id_trailer==rows[i].json_build_array[0][n].id_trailer)//primero controla 
                     repeatTrailer=true;
                 }
