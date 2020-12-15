@@ -551,6 +551,7 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
                 repeatTrailer=false;
                 console.log(ruta.trailers[0].id_trailer);
                 console.log(rows[i].json_build_array);
+                console.log(rows[i].json_build_array.length);
                 //console.log(rows[i]);
                 /////////////
                 console.log(i);
@@ -560,9 +561,17 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
                
                 
                 for(let n=0; n<ruta.trailers.length;n++){
-                    console.log(rows[i].json_build_array[0][n].id_trailer);
-                    if(ruta.trailers[n].id_trailer==rows[i].json_build_array[0][n].id_trailer)//primero controla 
-                    repeatTrailer=true;
+                    
+                    ////
+                    for(let x=0;x<rows[i].json_build_array[0].length;x++){
+                        console.log(rows[i].json_build_array[0][n].id_trailer);
+
+                        if(ruta.trailers[n].id_trailer==rows[i].json_build_array[0][x].id_trailer)//primero controla 
+                        repeatTrailer=true;
+                    }
+                    ////
+                    // if(ruta.trailers[n].id_trailer==rows[i].json_build_array[0][n].id_trailer)//primero controla 
+                    // repeatTrailer=true;
                 }
                 
 
