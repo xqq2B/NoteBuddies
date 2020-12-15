@@ -555,9 +555,8 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
                 /////////////
                 console.log(i);
                 console.log('ok');
-                console.log(rows[i].json_build_array[0][i].id_trailer);
                 ///////////
-                console.log('aqui',rows[i].json_build_array[0][i]);
+//                console.log('aqui',rows[i].json_build_array[0][i]);
                
                 
                 for(let n=0; n<ruta.trailers.length;n++){
