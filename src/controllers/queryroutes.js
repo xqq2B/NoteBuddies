@@ -563,7 +563,7 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
                 for(let n=0; n<ruta.trailers.length;n++){
                     
                     ////
-                    for(let x=0;x<rows[i].json_build_array[0].length;x++){
+                    for(let x=0;x<rows[i].json_build_array.length;x++){
                         console.log(rows[i].json_build_array[0][n].id_trailer);
 
                         if(ruta.trailers[n].id_trailer==rows[i].json_build_array[0][x].id_trailer)//primero controla 
