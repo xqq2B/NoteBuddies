@@ -179,7 +179,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
        // console.log(idRuleSaliendo);
         console.log(idRuleSaliendo[0].id);
 
-
+        //no esta estipulada
         const idRuleDentro = await api.call("Get", {
             typeName: "Rule",
             search: {
@@ -268,7 +268,23 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                     console.log(result.data[0].rule);
                     console.log(result.data[0].device);
                     if(result.data.length>0){
+                        
+                        //usando watchdog
+                        // let text =('SELECT watchdogalerta($1,$2)');
+                        // let values=[id de lal ruta, id alerta]//con el id de alerta ya saca la db las horas y fechas
+                        // await pool.query(text,values);
+
+
+                        //////////////////////
+                        ///////////ver rutacompleta se actualiza....
+                        //////
+                        //////////////////////
+                        
                         console.log(result.data[0]);
+
+
+
+
 
                         var horaEstimadaActual = new Date(result.data.activeFROM);//formato'2019-09-13T06:45:00Z'
                         console.log(horaEstimadaActual);//valor original

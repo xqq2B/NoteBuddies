@@ -551,6 +551,10 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
                 repeatTrailer=false;
                 console.log(ruta.trailers[0].id_trailer);
                 console.log(rows[i].json_build_array);
+                /////////////
+                console.log(rows[i].json_build_array[0]);
+                console.log(rows[i].json_build_array[0][0]);
+                ///////////
                 console.log('aqui',rows[i].json_build_array[0][i]);
                
                 
@@ -808,6 +812,7 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
          console.log('editando ruta');
          //let text=('SELECT * FROM ruta_configurada WHERE id_ruta_configurada!=$1');
          let text=('SELECT * FROM ruta_configurada WHERE id_ruta_configurada!=$1');
+         //const {rows} = await pool.query('SELECT * FROM verruta_completa');
          let values=[ruta.id_ruta_configurada];
          var response= false;//ojo aquiiiiiiiiiiiiii///////////////////////////// y en la parte de arriba
          
@@ -827,11 +832,13 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
         //      res.json({status:'Not Found!'});
          //}//que no se compare con si misma
          if (rows.length >0) {
-            for (var i = 0; i < rows.length; i++) {
+            for (var i = 0; i < rows.length; i++) {                
                 for(let n=0; n<ruta.trailers.length;n++){
-                    if(ruta.trailers[n].id_trailer==rows.json_build_array[i].id_trailer[n])
+                    if(ruta.trailers[n].id_trailer==rows[i].json_build_array[0][n].id_trailer)//primero controla 
                     repeatTrailer=true;
                 }
+                
+
                 
                 if ((ruta.conductor == rows[i].conductor) || (ruta.name_vehicle == rows[i].vehiculo) || (repeatTrailer==true)/*ruta.id_trailer == rows[i].id_trailer*/) {//(ruta.id_trailer == rows[i].id_trailer)) {
                     ///poner solo dos condiciones porque pone maximo dos trailers osea se agrega otro || para el otro trailer
