@@ -446,15 +446,16 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
         var ruta = req.body;
         console.log(ruta);
         //const {rows} = await pool.query('SELECT * FROM ruta');
-        const {rows} = await pool.query('SELECT * FROM ruta_configurada');
-
+        //const {rows} = await pool.query('SELECT * FROM ruta_configurada');
+        const {rows} = await pool.query('SELECT * FROM verruta_completa');
         let text=('SELECT * FROM ruta_catalogo WHERE id_ruta_catalogo=$1');
         let values=[ruta.id_ruta];
         const result = await pool.query(text,values);
         
         console.log(result.rows.length);
         console.log(rows.length);
-        console.log(rows[0]);
+        console.log(rows[0]);/////////////////////////////PREGUNTAR PORQUE NO VIENEN LOS TRAILERS???????///////////
+        //////////////QUIZA PORQUE NO HA SIDO BORRADA LA DB Y SE CREARON SIN TRAILERS///////////
         //el mes es el problema disminuir en 1 plz solo para donde se mete diferente/////////////////////////////
         var fsalida = new Date(ruta.fechaIni.anio, ruta.fechaIni.mes, ruta.fechaIni.dia);
         console.log(ruta.fechaIni.anio);
@@ -548,9 +549,10 @@ qryCtrlRoutes.CreateSpecificRoute = async (req, res) => {
                 console.log('hola');
                 response=false;
                 repeatTrailer=false;
-
+                console.log(ruta.trailers[0].id_trailer);
+                console.log(rows.json_build_array[i].id_trailer[n]);
                 for(let n=0; n<ruta.trailers.length;n++){
-                    if(ruta.trailers[n].id_trailer==rows.json_build_array[i].id_trailer[n])
+                    if(ruta.trailers[n].id_trailer==rows[i].json_build_array[n].id_trailer)
                     repeatTrailer=true;
                 }
                 
@@ -801,6 +803,7 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
         console.log(req.body);
          var ruta=req.body;
          console.log('editando ruta');
+         //let text=('SELECT * FROM ruta_configurada WHERE id_ruta_configurada!=$1');
          let text=('SELECT * FROM ruta_configurada WHERE id_ruta_configurada!=$1');
          let values=[ruta.id_ruta_configurada];
          var response= false;//ojo aquiiiiiiiiiiiiii///////////////////////////// y en la parte de arriba
