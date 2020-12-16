@@ -832,7 +832,7 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
         //var hllegada = new Date(0, 0, 0, ruta.horaFin.hora + ruta.horaFin.minutos);
 
          const {rows} = await pool.query(text,values);
-
+        console.log(rows);
 
         let textt=('SELECT * FROM ruta_catalogo WHERE id_ruta_catalogo=$1');
         let valuess=[ruta.id_ruta_catalogo];
@@ -844,13 +844,24 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
         //      res.json({status:'Not Found!'});
          //}//que no se compare con si misma
          if (rows.length >0) {
-            for (var i = 0; i < rows.length; i++) {                
-                for(let n=0; n<ruta.trailers.length;n++){
-                    if(ruta.trailers[n].id_trailer==rows[i].json_build_array[0][n].id_trailer)//primero controla 
-                    repeatTrailer=true;
-                }
+            for (var i = 0; i < rows.length; i++) {     
+                console.log('entro mayor a 1');           
+                // for(let n=0; n<ruta.trailers.length;n++){
+                //     if(ruta.trailers[n].id_trailer==rows[i].json_build_array[0][n].id_trailer)//primero controla 
+                //     repeatTrailer=true;
+                // }
                 
+                for(let n=0; n<ruta.trailers.length;n++){
+                    
+                    ////
+                    for(let x=0;x<rows[i].json_build_array.length;x++){
+                        console.log(rows[i].json_build_array[0][x].id_trailer);
+                        console.log(x);
 
+                        if(ruta.trailers[n].id_trailer==rows[i].json_build_array[0][x].id_trailer)//primero controla 
+                        repeatTrailer=true;
+                    }
+                }
                 
                 if ((ruta.conductor == rows[i].conductor) || (ruta.name_vehicle == rows[i].vehiculo) || (repeatTrailer==true)/*ruta.id_trailer == rows[i].id_trailer*/) {//(ruta.id_trailer == rows[i].id_trailer)) {
                     ///poner solo dos condiciones porque pone maximo dos trailers osea se agrega otro || para el otro trailer
@@ -1032,6 +1043,7 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
             if(response == false){
                 //let fsalida=ruta.fechaIni.anio+"-"+ ruta.fechaIni.mes+"-"+ruta.fechaIni.dia;
                // let fllegada=ruta.fechaFin.anio+"-"+ ruta.fechaFin.mes+"-"+ruta.fechaFin.dia;
+               console.log('entro al final');         
                 hsalida=ruta.horaIni.hora+":"+ruta.horaIni.minutos+":"+"00";
                // hllegada=ruta.horaFin.hora+":"+ruta.horaFin.minutos+":"+"00";
                 

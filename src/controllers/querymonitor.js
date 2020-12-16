@@ -120,6 +120,16 @@ qryCtrlMonitor.QueryDevice = async (req, res) => {
     };
 
 
+
+
+
+
+
+
+    //////////////////////////////////
+    //metodo de queries a la db suena bien en un metodo diferente y un metodo para actualizarla como la de abajo
+    /////////////////////////////////
+
 //Consulta Rules & Exceptions
 //cada minuto respuestas
 qryCtrlMonitor.QueryExceptions = async (req, res) => {
