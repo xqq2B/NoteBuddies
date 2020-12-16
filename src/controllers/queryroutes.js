@@ -824,8 +824,8 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
          console.log('editando ruta');
          console.log('ed ruta');
          //let text=('SELECT * FROM ruta_configurada WHERE id_ruta_configurada!=$1');
-         let text=('SELECT * FROM ruta_configurada WHERE id_ruta_configurada!=$1');
-         //const {rows} = await pool.query('SELECT * FROM verruta_completa');
+        // let text=('SELECT * FROM ruta_configurada WHERE id_ruta_configurada!=$1'); cambiado
+         let text =('SELECT * FROM verruta_completa WHERE id_ruta_configurada!=$1');
          let values=[ruta.id_ruta_configurada];
          var response= false;//ojo aquiiiiiiiiiiiiii///////////////////////////// y en la parte de arriba
          console.log('paso query');
@@ -851,6 +851,8 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
                 //     if(ruta.trailers[n].id_trailer==rows[i].json_build_array[0][n].id_trailer)//primero controla 
                 //     repeatTrailer=true;
                 // }
+                console.log(ruta.trailers.length);     
+                console.log(rows[i].json_build_array.length);  
                 
                 for(let n=0; n<ruta.trailers.length;n++){
                     
@@ -863,6 +865,8 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
                         repeatTrailer=true;
                     }
                 }
+
+                console.log('paso length');
                 
                 if ((ruta.conductor == rows[i].conductor) || (ruta.name_vehicle == rows[i].vehiculo) || (repeatTrailer==true)/*ruta.id_trailer == rows[i].id_trailer*/) {//(ruta.id_trailer == rows[i].id_trailer)) {
                     ///poner solo dos condiciones porque pone maximo dos trailers osea se agrega otro || para el otro trailer
