@@ -1097,7 +1097,7 @@ qryCtrlRoutes.EditSpecificRoute = async (req, res) => {
 
                 for(let n=0; n<ruta.trailers.length;n++){
                     text ='SELECT setTrailer($1,$2,$3)';
-                    values= [idRuta,ruta.trailers[n].id_trailer,ruta.trailers[n].name_trailer];    
+                    values= [ruta.id_ruta_configurada/*idRuta*/,ruta.trailers[n].id_trailer,ruta.trailers[n].name_trailer];    
                     await pool.query(text,values);
                 }
 
