@@ -281,7 +281,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                     ruleSearch: { id: idRuleEntrandoStart[0].id }, fromDate: '2020-01-01T00:01:00'/*festimadasalirDB*///rows[j].horainicioestimada//fechaInicioRuta//poner fecha de cuando va a arrancar
                 }, 
             })
-                .then(result => {
+               // .then(result => {
                     //result.forEach(
                     // console.log(result);
                     // console.log(result.data.length);
@@ -302,7 +302,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                         var idAlert="001";
                         let text =('watchDogAlertaLite($1,$2,$3,$4)');
                         let values=[rows[j].id_ruta_configurada, idAlert,hrealinicio,frealinicio];//con el id de alerta ya saca la db las horas y fechas
-                        pool.query(text,values);
+                        await pool.query(text,values);
                         console.log('paso watchdog entrando startpoint');
 
                         
@@ -363,7 +363,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                         
 
                     }
-                }).catch(error => console.log('ENTRANDO ERROR ', error));
+             //   }).catch(error => console.log('ENTRANDO ERROR ', error));
 
             }
 
