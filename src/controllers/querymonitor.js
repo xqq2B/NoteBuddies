@@ -376,7 +376,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
 
             }
 
-            if(rows[j].status == 'En curso'){
+            if(rows[j].estado == 'En_curso'){
 
 
                 //por guardar hora y fecha se tienen que sacar las variables para inicio real y llegada real
