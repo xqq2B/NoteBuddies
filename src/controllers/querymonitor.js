@@ -298,6 +298,8 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                             let hri=sep11[1].split(':');
                             let frealinicio= fri[0]+'-'+fri[1]+'-'+fri[2];//<--------- para guardar en db
                             let hrealinicio= hri[0]+':'+hri[1]+':'+'00';//<------- para guardar en db
+                            console.log(frealinicio);
+                            console.log(hrealinicio);
                         //usando watchdog
                         var idAlert="001";
                         // let text =('watchDogAlertaLite($1,$2,$3,$4)');
@@ -305,7 +307,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                         // await pool.query(text,values);
                         await pool.query('SELECT * FROM verruta_completa');
                         console.log('paso watchdog entrando startpoint');
-
+//                        watchDogAlertaLite(ide_ruta_configurada VARCHAR,ide_alerta VARCHAR, hora_alerta TIME,fechaAlerta DATE);
                         
                         //////////////////////
                         ///////////ver rutacompleta se actualiza....
