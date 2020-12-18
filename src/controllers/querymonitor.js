@@ -701,9 +701,10 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                 }
                 }).catch(error => console.log('ENTRANDO ENDPOINT ERROR ', error));
             }
-
-                res.json(Alerts);
+                console.log(j);
+                
         }
+        res.json(Alerts);
     }
     catch (e) {
         console.log('ERROR QUERY EXCEPTIONS', e);
