@@ -130,6 +130,11 @@ qryCtrlMonitor.QueryDevice = async (req, res) => {
     //metodo de queries a la db suena bien en un metodo diferente y un metodo para actualizarla como la de abajo
     /////////////////////////////////
 
+    //preguntar sobre varias alertas si se puso en amarillo y luego llega otra alerta de que se salio osea rojo...
+    //se sobreescribe o quedan guardadas las dos con sus horas??? para hacer el amarillo/rojo???
+
+    //que haremos con el FUERA y el DENTRO????
+
 //Consulta Rules & Exceptions
 //cada minuto respuestas
 qryCtrlMonitor.QueryExceptions = async (req, res) => {
@@ -275,13 +280,13 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                 console.log('dentro del primer if');
 
             //ENTRANDO A ZONA INICIO
-            /*const result=*/ await api.call('GetFeed', {
+            const result= await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
                     //deviceSearch: { id: rows[j].id_vehiculo }, QUITADO PARA VER RESULTADOS
                     ruleSearch: { id: idRuleEntrandoStart[0].id }, fromDate: '2020-01-01T00:01:00'/*festimadasalirDB*///rows[j].horainicioestimada//fechaInicioRuta//poner fecha de cuando va a arrancar
                 }, 
-            })
-                .then(result => {
+            });
+               // .then(result => {
                     //result.forEach(
                     // console.log(result);
                     // console.log(result.data.length);
@@ -304,7 +309,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                         var idAlert="001";
                         let text =('SELECT watchDogAlertaLite($1,$2,$3,$4)');
                         let values=[rows[j].id_ruta_configurada,idAlert,hrealinicio,frealinicio];//con el id de alerta ya saca la db las horas y fechas
-                        pool.query(text,values);
+                        await pool.query(text,values);
                         //await pool.query('SELECT * FROM verruta_completa');
                         console.log('paso watchdog entrando startpoint');
 //                        watchDogAlertaLite(ide_ruta_configurada VARCHAR,ide_alerta VARCHAR, hora_alerta TIME,fechaAlerta DATE);
@@ -344,7 +349,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                         //         //FALTA SEPARAR LA HORA REAL INICIO pq la recibe separada la db, solo esta la final
                         // //ver si puede salirse del if, se actualizan las dos para los reportes en tiempo real tener lo estimado tmb
                         
-                        //     let datt=result.data.activeFROM.toISOString();
+                        //     let datt=result.data[0].activeFrom.toISOString();
                         //     let sep11=datt.split('T');
                         //     let fri= sep11[0].split('-');
                         //     let hri=sep11[1].split(':');
@@ -366,7 +371,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                         
 
                     }
-                }).catch(error => console.log('ENTRANDO ERROR ', error));
+             //   }).catch(error => console.log('ENTRANDO ERROR ', error));
 
             }
 
@@ -401,7 +406,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
 //                     ruleSearch: { id: idRuleEntrando[0].id }, fromDate: finiciorealDB//festimadasalirDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
 //                 }, resultsLimit: 10
 //             })
-//                 .then(result => {
+//                 //.then(result => {
                    
 //                      if(result.data.length>0){
 //                         console.log(result.data[0].rule);
@@ -409,7 +414,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
 //                         //if(result.data.length>0){
                             
     
-//                             let datt=result.data.activeFROM.toISOString();
+    //              let datt=result.data[0].activeFrom.toISOString();
 //                                 let sep11=datt.split('T');
 //                                 let fri= sep11[0].split('-');
 //                                 let hri=sep11[1].split(':');
@@ -443,7 +448,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
 //                     //         //consultar db y se muestran las alertas
 // ///////////////////////////////////////////////////////////////////////
 //                     }
-//                 }).catch(error => console.log('ENTRANDO ERROR ', error));
+//               //  }).catch(error => console.log('ENTRANDO ERROR ', error));
 //////////////////////////////////////////////////////////////////////////////////////////////
 
                  //SALIENDO DE MM ROUTES
@@ -452,8 +457,8 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                     deviceSearch: { id: rows[j].id_vehiculo },
                     ruleSearch: { id: idRuleSaliendo[0].id }, fromDate: finiciorealDB//rows[j],horaRealInicio//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
-            })
-                .then(result => {
+            });
+               // .then(result => {
                     //result.forEach(
                     // console.log(result);
                     // console.log(result.data.length);
@@ -472,7 +477,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                                 let frealinicio= fri[0]+'-'+fri[1]+'-'+fri[2];//<--------- para guardar en db
                                 let hrealinicio= hri[0]+':'+hri[1]+':'+'00';//<------- para guardar en db
                             //usando watchdog
-                            let text =('watchDogAlertaLite($1,$2,$3,$4)');
+                            let text =('SELECT watchDogAlertaLite($1,$2,$3,$4)');
                             let values=[rows[j].id_ruta_configurada, '005',hrealinicio,frealinicio];//con el id de alerta ya saca la db las horas y fechas
                             pool.query(text,values);
                             console.log('paso watchdog saliendo mmroutes');
@@ -503,7 +508,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                     //     }
                     }
 ////////////////////////////////////////////////////////////////////////////////////
-                }).catch(error => console.log('SALIENDO ERROR ', error));
+               // }).catch(error => console.log('SALIENDO ERROR ', error));
 
 ////////////////////////////////AUN NO HAY ALERTA SOBRE ESTANDO DENTRO DE MM ROUTES////////////////////////////////////
             //DENTRO MM ROUTES
@@ -513,7 +518,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             //         ruleSearch: { id: idRuleDentro[0].id }, fromDate: finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
             //     }, resultsLimit: 10
             // })
-            //     .then(result => {
+            //    // .then(result => {
             //         //result.forEach(
             //         console.log(result);
             //         // console.log(result.data.length);
@@ -525,7 +530,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             //             Alerts.push({ info:'En Ruta', id_route:rows[j].id_ruta_configurada, vehiculo:rows[j].device, hora:result.data[0].activeFrom, distancia:result.data[0].distance });
             //             //hacer un push para meter datos de quien salio a la ruta
             //         }
-            //     }).catch(error => console.log('DENTRO ERROR ', error));
+            //    // }).catch(error => console.log('DENTRO ERROR ', error));
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////comentado aun no hay alerta para fuera de mm routes//////////////////////////////
             //FUERA MM ROUTES
@@ -548,7 +553,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
 //                         if(result.data.length>0){
                             
     
-//                             let datt=result.data.activeFROM.toISOString();
+//                             let datt=result.data[0].activeFrom.toISOString();
 //                                 let sep11=datt.split('T');
 //                                 let fri= sep11[0].split('-');
 //                                 let hri=sep11[1].split(':');
@@ -611,8 +616,8 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                     deviceSearch: { id: rows[j].id_vehiculo },
                     ruleSearch: { id: idRuleEntrandoCP[0].id }, fromDate: finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
-            })
-                .then(result => {
+            });
+               // .then(result => {
                     //result.forEach(
                     //console.log(result);
                     // console.log(result.data.length);
@@ -631,7 +636,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                                 let frealinicio= fri[0]+'-'+fri[1]+'-'+fri[2];//<--------- para guardar en db
                                 let hrealinicio= hri[0]+':'+hri[1]+':'+'00';//<------- para guardar en db
                             //usando watchdog
-                            let text =('watchDogAlertaLite($1,$2,$3,$4)');
+                            let text =('SELECT watchDogAlertaLite($1,$2,$3,$4)');
                             let values=[rows[j].id_ruta_configurada, '007',hrealinicio,frealinicio];//con el id de alerta ya saca la db las horas y fechas
                             pool.query(text,values);
                             console.log('paso watchdog pasando checkpoint');
@@ -646,7 +651,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
 //////////////////////////comentado para uso de watchdog////////////////////////////                        
                     //     
                     }
-                }).catch(error => console.log('ENTRANDO CHECKPOINT ERROR ', error));
+               // }).catch(error => console.log('ENTRANDO CHECKPOINT ERROR ', error));
 
 
             //ENTRANDO ENDPOINT
@@ -655,8 +660,8 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                     deviceSearch: { id: rows[j].id_vehiculo },
                     ruleSearch: { id: idRuleEntrandoEP[0].id }, fromDate: finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
-            })
-                .then(result => {
+            });
+               // .then(result => {
                     //result.forEach(
                     // console.log(result);
                     // console.log(result.data.length);
@@ -675,7 +680,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                             let frealinicio= fri[0]+'-'+fri[1]+'-'+fri[2];//<--------- para guardar en db
                             let hrealinicio= hri[0]+':'+hri[1]+':'+'00';//<------- para guardar en db
                         //usando watchdog
-                        let text =('watchDogAlertaLite($1,$2,$3,$4)');
+                        let text =('SELECT watchDogAlertaLite($1,$2,$3,$4)');
                         let values=[rows[j].id_ruta_configurada, '001',hrealinicio,frealinicio];//con el id de alerta ya saca la db las horas y fechas
                         pool.query(text,values);
                         console.log('paso watchdog entrando startpoint');
@@ -704,7 +709,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                     //         pool.query("UPDATE FROM WHERE id_ruta=rows[j].id SET status='finalizada',semaforo='rojo',horaRealLlegada='result.data.activeFROM'");
                     //     }
                 }
-                }).catch(error => console.log('ENTRANDO ENDPOINT ERROR ', error));
+              //  }).catch(error => console.log('ENTRANDO ENDPOINT ERROR ', error));
             }
                 console.log(j);
                 
