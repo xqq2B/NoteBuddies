@@ -378,7 +378,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             console.log(rows[j].estado);
             if(rows[j].estado == 'En_curso'){
 
-                console.log('En_curso',+rows[j].estado);
+                console.log('dentro de En_curso');
                 //por guardar hora y fecha se tienen que sacar las variables para inicio real y llegada real
                 //hora estimada esta en formato DATE y debe convertirse lo de la db a DATE nuevamente...
 /////////////////////se comentarion 5 lineas para usar watchdog////////////////////////
@@ -403,14 +403,19 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
 // await api.call('GetFeed', { typeName: 'ExceptionEvent', /*fromVersion: token, */search:{ deviceSearch:{id:'b1EA'},
 // ruleSearch:{id:idRuleEntrando[0].id},fromDate:'2020-12-12T00:01:00'},resultsLimit:10})
            // ENTRANDO A MM ROUTES
+
+                console.log(rows[j].id_vehiculo);
+                console.log(idRuleEntrando[0].id);
+                console.log(req.body.testeofecha);
+
             const result = await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
-                    deviceSearch: { id: rows[j].id_vehiculo },
+                    deviceSearch: { id:'b1EA' /*rows[j].id_vehiculo*/ },//AGREGADO id vehiculo para dar resultados
                     ruleSearch: { id: idRuleEntrando[0].id }, fromDate: req.body.testeofecha//'2020-01-01T00:01:00'/*finiciorealDB*///festimadasalirDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
             })
                 //.then(result => {
-                   
+                    console.log('dentro de 1er apicall');
                      if(result.data.length>0){
                         console.log(result.data[0].rule);
                         console.log(result.data[0].device);
@@ -461,7 +466,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                  //SALIENDO DE MM ROUTES
            const result1= await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
-                    deviceSearch: { id: rows[j].id_vehiculo },
+                    deviceSearch: { id:'b1EA'}, //rows[j].id_vehiculo }, agregado vehiculo fake para resultados
                     ruleSearch: { id: idRuleSaliendo[0].id }, fromDate: req.body.testeofecha//'2020-01-01T00:01:00' //finiciorealDB//rows[j],horaRealInicio//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
             });
@@ -522,7 +527,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
            // DENTRO MM ROUTES
             const resIn = await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
-                    deviceSearch: { id: rows[j].id_vehiculo },
+                    deviceSearch: { id:'b1EA'}, //rows[j].id_vehiculo }, agregado vehiculo fake para resultados
                     ruleSearch: { id: idRuleDentro[0].id }, fromDate: req.body.testeofecha//'2020-01-01T00:01:00'//finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
             })
@@ -548,7 +553,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             // FUERA MM ROUTES
            const resOut = await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
-                    deviceSearch: { id: rows[j].id_vehiculo },
+                    deviceSearch: {id:'b1EA'}, //rows[j].id_vehiculo }, agregado vehiculo fake para resultados
                     ruleSearch: { id: idRuleFuera[0].id }, fromDate: req.body.testeofecha//'2020-01-01T00:01:00'//finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
             })
@@ -622,7 +627,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             //ENTRANDO CHECKPOINT
             const resultCP = await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
-                    deviceSearch: { id: rows[j].id_vehiculo },
+                    deviceSearch: { id:'b1EA'}, //rows[j].id_vehiculo }, agregado vehiculo fake para resultados
                     ruleSearch: { id: idRuleEntrandoCP[0].id }, fromDate: req.body.testeofecha//'2020-01-01T00:01:00'//finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
             });
@@ -667,7 +672,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             //ENTRANDO ENDPOINT
             const resultEP = await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
-                    deviceSearch: { id: rows[j].id_vehiculo },
+                    deviceSearch: { id:'b1EA'}, //rows[j].id_vehiculo }, agregado vehiculo fake para resultados
                     ruleSearch: { id: idRuleEntrandoEP[0].id }, fromDate: req.body.testeofecha//'2020-01-01T00:01:00'//finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
             });
