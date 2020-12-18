@@ -275,13 +275,13 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                 console.log('dentro del primer if');
 
             //ENTRANDO A ZONA INICIO
-            const result= await api.call('GetFeed', {
+            /*const result=*/ await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
                     //deviceSearch: { id: rows[j].id_vehiculo }, QUITADO PARA VER RESULTADOS
                     ruleSearch: { id: idRuleEntrandoStart[0].id }, fromDate: '2020-01-01T00:01:00'/*festimadasalirDB*///rows[j].horainicioestimada//fechaInicioRuta//poner fecha de cuando va a arrancar
                 }, 
             })
-               // .then(result => {
+                .then(result => {
                     //result.forEach(
                     // console.log(result);
                     // console.log(result.data.length);
@@ -303,8 +303,8 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                         //usando watchdog
                         var idAlert="001";
                         let text =('SELECT watchDogAlertaLite($1,$2,$3,$4)');
-                        let values=[rows[j].id_ruta_configurada, idAlert,hrealinicio,frealinicio];//con el id de alerta ya saca la db las horas y fechas
-                        await pool.query(text,values);
+                        let values=[rows[j].id_ruta_configurada,idAlert,hrealinicio,frealinicio];//con el id de alerta ya saca la db las horas y fechas
+                        pool.query(text,values);
                         //await pool.query('SELECT * FROM verruta_completa');
                         console.log('paso watchdog entrando startpoint');
 //                        watchDogAlertaLite(ide_ruta_configurada VARCHAR,ide_alerta VARCHAR, hora_alerta TIME,fechaAlerta DATE);
@@ -366,7 +366,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                         
 
                     }
-             //   }).catch(error => console.log('ENTRANDO ERROR ', error));
+                }).catch(error => console.log('ENTRANDO ERROR ', error));
 
             }
 
