@@ -404,7 +404,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             const result = await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
                     deviceSearch: { id: rows[j].id_vehiculo },
-                    ruleSearch: { id: idRuleEntrando[0].id }, fromDate: '2020-01-01T00:01:00'/*finiciorealDB*///festimadasalirDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
+                    ruleSearch: { id: idRuleEntrando[0].id }, fromDate: req.body.testeofecha//'2020-01-01T00:01:00'/*finiciorealDB*///festimadasalirDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
             })
                 //.then(result => {
@@ -460,7 +460,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
            const result1= await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
                     deviceSearch: { id: rows[j].id_vehiculo },
-                    ruleSearch: { id: idRuleSaliendo[0].id }, fromDate: '2020-01-01T00:01:00' //finiciorealDB//rows[j],horaRealInicio//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
+                    ruleSearch: { id: idRuleSaliendo[0].id }, fromDate: req.body.testeofecha//'2020-01-01T00:01:00' //finiciorealDB//rows[j],horaRealInicio//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
             });
                // .then(result => {
@@ -521,7 +521,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             const resIn = await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
                     deviceSearch: { id: rows[j].id_vehiculo },
-                    ruleSearch: { id: idRuleDentro[0].id }, fromDate: '2020-01-01T00:01:00'//finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
+                    ruleSearch: { id: idRuleDentro[0].id }, fromDate: req.body.testeofecha//'2020-01-01T00:01:00'//finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
             })
                // .then(result => {
@@ -547,7 +547,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
            const resOut = await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
                     deviceSearch: { id: rows[j].id_vehiculo },
-                    ruleSearch: { id: idRuleFuera[0].id }, fromDate: '2020-01-01T00:01:00'//finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
+                    ruleSearch: { id: idRuleFuera[0].id }, fromDate: req.body.testeofecha//'2020-01-01T00:01:00'//finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
             })
                 //.then(result => {
@@ -621,7 +621,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             const resultCP = await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
                     deviceSearch: { id: rows[j].id_vehiculo },
-                    ruleSearch: { id: idRuleEntrandoCP[0].id }, fromDate: '2020-01-01T00:01:00'//finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
+                    ruleSearch: { id: idRuleEntrandoCP[0].id }, fromDate: req.body.testeofecha//'2020-01-01T00:01:00'//finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
             });
                // .then(result => {
@@ -666,7 +666,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             const resultEP = await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
                     deviceSearch: { id: rows[j].id_vehiculo },
-                    ruleSearch: { id: idRuleEntrandoEP[0].id }, fromDate: '2020-01-01T00:01:00'//finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
+                    ruleSearch: { id: idRuleEntrandoEP[0].id }, fromDate: req.body.testeofecha//'2020-01-01T00:01:00'//finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
             });
                // .then(result => {
