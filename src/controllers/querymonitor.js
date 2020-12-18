@@ -299,8 +299,9 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                             let frealinicio= fri[0]+'-'+fri[1]+'-'+fri[2];//<--------- para guardar en db
                             let hrealinicio= hri[0]+':'+hri[1]+':'+'00';//<------- para guardar en db
                         //usando watchdog
+                        var idAlert="001";
                         let text =('watchDogAlertaLite($1,$2,$3,$4)');
-                        let values=[rows[j].id_ruta_configurada, '001',hrealinicio,frealinicio];//con el id de alerta ya saca la db las horas y fechas
+                        let values=[rows[j].id_ruta_configurada, idAlert,hrealinicio,frealinicio];//con el id de alerta ya saca la db las horas y fechas
                         pool.query(text,values);
                         console.log('paso watchdog entrando startpoint');
 
