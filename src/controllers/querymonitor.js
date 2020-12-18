@@ -302,7 +302,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                             console.log(hrealinicio);
                         //usando watchdog
                         var idAlert="001";
-                        let text =('SELECT * FROM watchDogAlertaLite($1,$2,$3,$4)');
+                        let text =('SELECT watchDogAlertaLite($1,$2,$3,$4)');
                         let values=[rows[j].id_ruta_configurada, idAlert,hrealinicio,frealinicio];//con el id de alerta ya saca la db las horas y fechas
                         await pool.query(text,values);
                         //await pool.query('SELECT * FROM verruta_completa');
