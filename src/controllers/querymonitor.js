@@ -292,7 +292,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                         console.log(result.data[0].rule);
                         console.log(result.data[0].device);
                         console.log(result.data[0].activeFrom);
-                        let datt=result.data[0].activeFrom.toISOString();
+                        let datt=result.data[0].activeFrom;//.toISOString();
                             let sep11=datt.split('T');
                             let fri= sep11[0].split('-');
                             let hri=sep11[1].split(':');
