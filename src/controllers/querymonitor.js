@@ -399,7 +399,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
 /////ATENCION VARIABLE REPETIDA///////
             festimadasalirDB= new Date(fechaaa[0],fechaaa[1],fechaaa[2],horaSS[0],horaSS[1]);//DATE fecha y hora estimada INICIO/SALIR base de datos
 
-/////////////////// SE COMENTO PORQUE NO HAY AUN UNA ALERTA PARA ESTO////////////////////////////////////////
+
            // ENTRANDO A MM ROUTES
             const result = await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
@@ -414,19 +414,23 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                         console.log(result.data[0].device);
                         //if(result.data.length>0){
                             
-    
-                 let datt=result.data[0].activeFrom.toISOString();
+                            for(let k=0;k<result.data.length;k++){
+                                let datt=result.data[k].activeFrom;//.toISOString();
                                 let sep11=datt.split('T');
                                 let fri= sep11[0].split('-');
                                 let hri=sep11[1].split(':');
                                 let frealinicio= fri[0]+'-'+fri[1]+'-'+fri[2];//<--------- para guardar en db
                                 let hrealinicio= hri[0]+':'+hri[1]+':'+'00';//<------- para guardar en db
                             //usando watchdog
-                            let text =('watchDogAlertaLite($1,$2,$3,$4)');
+                            //dentro de un for
+
+                                let text =('SELECT watchDogAlertaLite($1,$2,$3,$4)');
                             let values=[rows[j].id_ruta_configurada, '006',hrealinicio,frealinicio];//con el id de alerta ya saca la db las horas y fechas
-                            pool.query(text,values);
+                            await pool.query(text,values);
+                            }
+                            
                             console.log('paso watchdog entrando mm routes');
-    
+                        ////
                             
                             //////////////////////
                             ///////////ver rutacompleta se actualiza....
@@ -470,8 +474,8 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                         console.log(result1.data[0].device);
                         //if(result.data.length>0){
                             
-    
-                            let datt=result1.data[0].activeFrom.toISOString();
+                            for(let k=0;k<result.data.length;k++){
+                            let datt=result1.data[k].activeFrom;//.toISOString();
                                 let sep11=datt.split('T');
                                 let fri= sep11[0].split('-');
                                 let hri=sep11[1].split(':');
@@ -480,7 +484,8 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                             //usando watchdog
                             let text =('SELECT watchDogAlertaLite($1,$2,$3,$4)');
                             let values=[rows[j].id_ruta_configurada, '005',hrealinicio,frealinicio];//con el id de alerta ya saca la db las horas y fechas
-                            pool.query(text,values);
+                            await pool.query(text,values);
+                            }
                             console.log('paso watchdog saliendo mmroutes');
     
                             
@@ -530,16 +535,15 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                         //Alerts.push({info:'En Ruta',data:result.data});
                         //Alerts.push({ info:'En Ruta', id_route:rows[j].id_ruta_configurada, vehiculo:rows[j].device, hora:result.data[0].activeFrom, distancia:result.data[0].distance });
                         //hacer un push para meter datos de quien salio a la ruta
-                        let text =('SELECT setTiempos($1,$2,$3)');
-                            let values=[rows[j].id_ruta_configurada, resultIn.data[0].duration,'0'];//con el id de alerta ya saca la db las horas y fechas
-                            pool.query(text,values);
+                        let text =('SELECT setDentro($1,$2,$3)');
+                            let values=[rows[j].id_ruta_configurada, resIn.data[0].duration,resIn.data[0].distance];//con el id de alerta ya saca la db las horas y fechas
+                            await pool.query(text,values);
                             console.log('paso watchdog dentro MMROUTES');
                     }
                // }).catch(error => console.log('DENTRO ERROR ', error));
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////comentado aun no hay alerta para fuera de mm routes//////////////////////////////
             // FUERA MM ROUTES
-            // /PENSAR SI AQUI ES MEJOR EL RESULTADO AL MOMENTO PARA SABER CUANTO TIEMPO HA ESTADO FUERA
            const resOut = await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
                     deviceSearch: { id: rows[j].id_vehiculo },
@@ -556,16 +560,16 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                         if(resOut.data.length>0){
                             
     
-                            let datt=resOut.data[0].activeFrom.toISOString();
-                                let sep11=datt.split('T');
-                                let fri= sep11[0].split('-');
-                                let hri=sep11[1].split(':');
-                                let frealinicio= fri[0]+'-'+fri[1]+'-'+fri[2];//<--------- para guardar en db
-                                let hrealinicio= hri[0]+':'+hri[1]+':'+'00';//<------- para guardar en db
+                            // let datt=resOut.data[0].activeFrom.toISOString();
+                            //     let sep11=datt.split('T');
+                            //     let fri= sep11[0].split('-');
+                            //     let hri=sep11[1].split(':');
+                            //     let frealinicio= fri[0]+'-'+fri[1]+'-'+fri[2];//<--------- para guardar en db
+                            //     let hrealinicio= hri[0]+':'+hri[1]+':'+'00';//<------- para guardar en db
                             //usando watchdog
-                            let text =('SELECT setTiempos($1,$2,$3)');
-                            let values=[rows[j].id_ruta_configurada,'0',resOut.data[0].duration];//con el id de alerta ya saca la db las horas y fechas
-                            pool.query(text,values);
+                            let text =('SELECT setFuera($1,$2,$3)');
+                            let values=[rows[j].id_ruta_configurada,resOut.data[0].duration,resOut.data[0].distance];//con el id de alerta ya saca la db las horas y fechas
+                            await pool.query(text,values);
                             console.log('paso watchdog fuera MMROUTES');
     
                             
@@ -573,7 +577,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                             ///////////ver rutacompleta se actualiza....
                             //////
                             //////////////////////
-                            
+                            console.log('fuera');
                             console.log(result.data[0]);
 ////////////////////////////comentado para watchdog/////////////////////////////
                         // console.log(result.data[0].rule);
@@ -627,12 +631,12 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                     // console.log(result.data[0].rule);
                     // console.log(result.data[0].device);
                     if (resultCP.data.length > 0) {
-                        console.log(resultCP.data[0].rule);
-                        console.log(resultCP.data[0].device);
+                        // console.log(resultCP.data[0].rule);
+                        // console.log(resultCP.data[0].device);
                       //  if(result.data.length>0){
                             
-    
-                        let datt=resultCP.data[0].activeFrom.toISOString();
+                        for(let k=0;k<result.data.length;k++){
+                            let datt=resultCP.data[k].activeFrom;//.toISOString();
                                 let sep11=datt.split('T');
                                 let fri= sep11[0].split('-');
                                 let hri=sep11[1].split(':');
@@ -641,7 +645,8 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                             //usando watchdog
                             let text =('SELECT watchDogAlertaLite($1,$2,$3,$4)');
                             let values=[rows[j].id_ruta_configurada, '007',hrealinicio,frealinicio];//con el id de alerta ya saca la db las horas y fechas
-                            pool.query(text,values);
+                            await pool.query(text,values);
+                        }
                             console.log('paso watchdog pasando checkpoint');
     
                             
@@ -686,7 +691,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                         let text =('SELECT watchDogAlertaLite($1,$2,$3,$4)');
                         let values=[rows[j].id_ruta_configurada, '003',hrealinicio,frealinicio];//con el id de alerta ya saca la db las horas y fechas
                         pool.query(text,values);
-                        console.log('paso watchdog entrando startpoint');
+                        console.log('paso watchdog entrando ENDtpoint');
 
                         
                         //////////////////////
@@ -694,7 +699,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                         //////
                         //////////////////////
                         
-                        console.log(result.data[0]);
+                        console.log(resultEP.data[0]);
 /////////////////////////////////comentado para usar watchdog///////////////////                    
                     // if (result.data.length > 0) {
                     //     console.log(result.data[0]);
