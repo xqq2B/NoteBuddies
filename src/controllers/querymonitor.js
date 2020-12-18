@@ -291,7 +291,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                         
                         console.log(result.data[0].rule);
                         console.log(result.data[0].device);
-                        let datt=result.data.activeFROM.toISOString();
+                        let datt=result.data[0].activeFROM.toISOString();
                             let sep11=datt.split('T');
                             let fri= sep11[0].split('-');
                             let hri=sep11[1].split(':');
@@ -460,7 +460,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                         //if(result.data.length>0){
                             
     
-                            let datt=result.data.activeFROM.toISOString();
+                            let datt=result.data[0].activeFROM.toISOString();
                                 let sep11=datt.split('T');
                                 let fri= sep11[0].split('-');
                                 let hri=sep11[1].split(':');
@@ -619,7 +619,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                       //  if(result.data.length>0){
                             
     
-                            let datt=result.data.activeFROM.toISOString();
+                        let datt=result.data[0].activeFROM.toISOString();
                                 let sep11=datt.split('T');
                                 let fri= sep11[0].split('-');
                                 let hri=sep11[1].split(':');
@@ -663,7 +663,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                         console.log(result.data[0].rule);
                         console.log(result.data[0].device);
 
-                        let datt=result.data.activeFROM.toISOString();
+                        let datt=result.data[0].activeFROM.toISOString();
                             let sep11=datt.split('T');
                             let fri= sep11[0].split('-');
                             let hri=sep11[1].split(':');
@@ -704,7 +704,11 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                 console.log(j);
                 
         }
-        res.json(Alerts);
+        text = ('SELECT * FROM verruta_completa WHERE BD=$1');
+            //completas
+        values = [req.body.db];
+            let alerts = await pool.query(text, values);
+            res.json({ alertas:alerts.rows });
     }
     catch (e) {
         console.log('ERROR QUERY EXCEPTIONS', e);
