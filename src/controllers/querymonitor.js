@@ -283,7 +283,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             const result= await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
                     //deviceSearch: { id: rows[j].id_vehiculo }, QUITADO PARA VER RESULTADOS
-                    ruleSearch: { id: idRuleEntrandoStart[0].id }, fromDate: '2020-01-01T00:01:00'/*festimadasalirDB*///rows[j].horainicioestimada//fechaInicioRuta//poner fecha de cuando va a arrancar
+                    ruleSearch: { id: idRuleEntrandoStart[0].id }, fromDate: req.body.testeofecha//'2020-01-01T00:01:00'/*festimadasalirDB*///rows[j].horainicioestimada//fechaInicioRuta//poner fecha de cuando va a arrancar
                 }, 
             });
                // .then(result => {
@@ -376,7 +376,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
 
             }
 
-            if(rows[j].status == 'En_curso'){
+            if(rows[j].status == 'En curso'){
 
 
                 //por guardar hora y fecha se tienen que sacar las variables para inicio real y llegada real
