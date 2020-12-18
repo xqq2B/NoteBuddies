@@ -469,12 +469,12 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                     // console.log(result.data.length);
                     // console.log(result.data[0].rule);
                     // console.log(result.data[0].device);
-                    if(result.data.length>0){
+                    if(result1.data.length>0){
                         console.log(result1.data[0].rule);
                         console.log(result1.data[0].device);
                         //if(result.data.length>0){
                             
-                            for(let k=0;k<result.data.length;k++){
+                            for(let k=0;k<result1.data.length;k++){
                             let datt=result1.data[k].activeFrom;//.toISOString();
                                 let sep11=datt.split('T');
                                 let fri= sep11[0].split('-');
@@ -530,7 +530,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                     // console.log(result.data.length);
                     // console.log(result.data[0].rule);
                     // console.log(result.data[0].device);
-                    if (resultIn.data.length > 0) {
+                    if (resIn.data.length > 0) {
                        // console.log(result.data[0]);
                         //Alerts.push({info:'En Ruta',data:result.data});
                         //Alerts.push({ info:'En Ruta', id_route:rows[j].id_ruta_configurada, vehiculo:rows[j].device, hora:result.data[0].activeFrom, distancia:result.data[0].distance });
@@ -578,7 +578,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                             //////
                             //////////////////////
                             console.log('fuera');
-                            console.log(result.data[0]);
+                            console.log(resOut.data[0]);
 ////////////////////////////comentado para watchdog/////////////////////////////
                         // console.log(result.data[0].rule);
                         // console.log(result.data[0].device);
@@ -635,7 +635,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                         // console.log(resultCP.data[0].device);
                       //  if(result.data.length>0){
                             
-                        for(let k=0;k<result.data.length;k++){
+                        for(let k=0;k<resultCP.data.length;k++){
                             let datt=resultCP.data[k].activeFrom;//.toISOString();
                                 let sep11=datt.split('T');
                                 let fri= sep11[0].split('-');
@@ -655,7 +655,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                             //////
                             //////////////////////
                             
-                            console.log(result.data[0]);
+                            console.log(resultCP.data[0]);
 //////////////////////////comentado para uso de watchdog////////////////////////////                        
                     //     
                     }
