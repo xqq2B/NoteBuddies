@@ -236,6 +236,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
         //horaActual sacarla en UTC 0, ver otro archivo para referencia
         //ciclo  para comparar cada device y su ubicacion
         var horaActual = new Date();
+        console.log(rows.length);
         for (var j = 0; j < rows.length; j++) {
 
 
@@ -268,10 +269,10 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             //es
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+            console.log('antes del primer if');
             if(rows[j].estado == 'Programada'){
 
-
+                console.log('dentro del primer if');
 
             //ENTRANDO A ZONA INICIO
             await api.call('GetFeed', {
@@ -284,6 +285,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                     //result.forEach(
                     // console.log(result);
                     // console.log(result.data.length);
+                    console.log('dentro del primer getfeed');
                     console.log(result.data.length);
                     if(result.data.length>0){
                         
