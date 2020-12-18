@@ -1434,7 +1434,7 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
                 console.log('ultimo push');
 
                 completeRoute.push({id_ruta:rows[j].id_ruta_configurada,id_rutageotab:rows[j].id_rutageotab,nombreruta:rows[j].nombreruta,nombrerutageotab:rows[j].nombrerutageotab,RouteCoor: RoutePoints,//[j] se quito
-                    conductor:rows[j].conductor,id_vehiculo:rows[j].id_vehiculo,vehiculo:rows[j].vehiculo,/*id_*/trailer:rows[j].json_build_array/*.id_trailer*/,
+                    conductor:rows[j].conductor,id_vehiculo:rows[j].id_vehiculo,vehiculo:rows[j].vehiculo,semaforo:rows[j].semaforo,/*id_*/trailer:rows[j].json_build_array/*.id_trailer*/,
                     /*trailer:rows[j].trailer,*/shipment:rows[j].shipment,fecha_salida:rows[j].fechainicioestimada,hora_salida:rows[j].horainicioestimada,
                     fecha_llegada:rows[j].fechallegadaestimada,hora_llegada:rows[j].horallegadaestimada,estado:rows[j].estado,bd:rows[j].bd,
                     id_startpoint:rows[j].id_startpoint,startpoint:rows[j].startpoint,StartCoor:StartPoints,
