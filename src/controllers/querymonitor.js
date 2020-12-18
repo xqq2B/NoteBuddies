@@ -375,10 +375,10 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
              //   }).catch(error => console.log('ENTRANDO ERROR ', error));
 
             }
-
+            console.log(rows[j].estado);
             if(rows[j].estado == 'En_curso'){
 
-
+                console.log('En_curso',+rows[j].estado);
                 //por guardar hora y fecha se tienen que sacar las variables para inicio real y llegada real
                 //hora estimada esta en formato DATE y debe convertirse lo de la db a DATE nuevamente...
 /////////////////////se comentarion 5 lineas para usar watchdog////////////////////////
@@ -399,7 +399,9 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
 /////ATENCION VARIABLE REPETIDA///////
             festimadasalirDB= new Date(fechaaa[0],fechaaa[1],fechaaa[2],horaSS[0],horaSS[1]);//DATE fecha y hora estimada INICIO/SALIR base de datos
 
-
+                
+// await api.call('GetFeed', { typeName: 'ExceptionEvent', /*fromVersion: token, */search:{ deviceSearch:{id:'b1EA'},
+// ruleSearch:{id:idRuleEntrando[0].id},fromDate:'2020-12-12T00:01:00'},resultsLimit:10})
            // ENTRANDO A MM ROUTES
             const result = await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
