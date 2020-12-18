@@ -275,7 +275,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
             console.log('antes del primer if');
-            if(rows[j].estado == 'Programada'){
+            if(rows[j].estado == 'En curso'/*'Programada'*/){
 
                 console.log('dentro del primer if');
 
@@ -307,6 +307,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                             console.log(hrealinicio);
                         //usando watchdog
                         var idAlert="001";
+                        frealinicio='2021-12-12';
                         let text =('SELECT watchDogAlertaLite($1,$2,$3,$4)');
                         let values=[rows[j].id_ruta_configurada,idAlert,hrealinicio,frealinicio];//con el id de alerta ya saca la db las horas y fechas
                         await pool.query(text,values);
@@ -375,7 +376,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
 
             }
 
-            if(rows[j].status == 'En_curso'){
+            if(rows[j].status == 'En curso'){
 
 
                 //por guardar hora y fecha se tienen que sacar las variables para inicio real y llegada real
