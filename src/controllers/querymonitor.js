@@ -277,18 +277,18 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
                     deviceSearch: { id: rows[j].id_vehiculo },
-                    ruleSearch: { id: idRuleEntrandoStart[0].id }, fromDate: festimadasalirDB//rows[j].horainicioestimada//fechaInicioRuta//poner fecha de cuando va a arrancar
+                    ruleSearch: { id: idRuleEntrandoStart[0].id }, fromDate: '2020-01-01T00:01:00'/*festimadasalirDB*///rows[j].horainicioestimada//fechaInicioRuta//poner fecha de cuando va a arrancar
                 }, 
             })
                 .then(result => {
                     //result.forEach(
                     // console.log(result);
                     // console.log(result.data.length);
-                    console.log(result.data[0].rule);
-                    console.log(result.data[0].device);
+                    console.log(result.data.length);
                     if(result.data.length>0){
                         
-
+                        console.log(result.data[0].rule);
+                        console.log(result.data[0].device);
                         let datt=result.data.activeFROM.toISOString();
                             let sep11=datt.split('T');
                             let fri= sep11[0].split('-');
@@ -655,10 +655,11 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                     // console.log(result.data.length);
                     // console.log(result.data[0].rule);
                     //console.log(result.data[0].device);
-                    console.log(result.data[0].rule);
-                    console.log(result.data[0].device);
+                   
                     if(result.data.length>0){
                         
+                        console.log(result.data[0].rule);
+                        console.log(result.data[0].device);
 
                         let datt=result.data.activeFROM.toISOString();
                             let sep11=datt.split('T');
