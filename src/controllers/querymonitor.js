@@ -729,16 +729,42 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                 console.log(j);
                 
         }
-        text = ('SELECT * FROM verruta_completa WHERE BD=$1');
+        // text = ('SELECT * FROM verruta_completa WHERE BD=$1');
+        //     //completas
+        // values = [req.body.db];
+        //     let alerts = await pool.query(text, values);
+        //     res.json({ alertas:alerts.rows });
+
+            text = ('SELECT * FROM verruta_completa WHERE BD=$1 as t1 inner join verAlertas as t2 On t1.id_ruta_configurada = t2.id_ruta_configurada;');
             //completas
-        values = [req.body.db];
+             values = [req.body.db];
             let alerts = await pool.query(text, values);
-            res.json({ alertas:alerts.rows });
+            res.json({ ruta_completa_con_alertas:alerts.rows });
+
+        //select * from verRuta_Completa as t1
+        //inner join verAlertas as t2 On t1.id_ruta_configurada = t2.id_ruta_configurada;
     }
     catch (e) {
         console.log('ERROR QUERY EXCEPTIONS', e);
     }
 };
 
+
+qryCtrlMonitor.QueryAlerts = async (req, res) => {
+    try{
+        console.log(req.body.db);
+        let text = ('SELECT * FROM verAlertas WHERE db=$1');
+            //completas
+        let values = [req.body.db];
+        let alerts = await pool.query(text, values);
+            res.json({ alertas:alerts.rows });
+    }catch(e){
+        console.log(e);
+        res.json(e);
+    }
+}
+
+
+//crear metodo solo para alertas
 
 module.exports = qryCtrlMonitor;

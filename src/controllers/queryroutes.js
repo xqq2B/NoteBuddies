@@ -337,6 +337,7 @@ qryCtrlRoutes.QueryTrailer = async (req, res) => {
         // res.json({ trailer });
         var trailer=[];
         var rep=false;
+        console.log('trailers');
         for(j=0;j<result.rows[0].json_build_object.grupo.length;j++){
         await api.call('Get', { typeName: 'Trailer', search: { groups: [{ id: result.rows[0].json_build_object.grupo[j]}]}, /*resultsLimit: 15*/ })
                 .then(results => {

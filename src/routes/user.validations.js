@@ -6,6 +6,7 @@ const geoCtrl = require ('../lib/geo.auth');
 const qryCtrl = require('../controllers/querycontrol');
 const qryCtrlRoutes = require ('../controllers/queryroutes');
 const qryCtrlMonitor = require ('../controllers/querymonitor');
+const qryCtrlReports = require ('../controllers/queryreports');
 
 
 //ver todos
@@ -112,5 +113,12 @@ router.post('/monitor/edit/checkpoints',qryCtrlMonitor.EditCheckPoint);
 router.post('/monitor/device/info',qryCtrlMonitor.QueryDevice);
 //Consultar Casos
 router.post('/monitor/device/exceptions',qryCtrlMonitor.QueryExceptions);
+//Consultar solo alertas
+router.post('/monitor/device/alerts',qryCtrlMonitor.QueryAlerts);
+
+
+//REPORTES
+//Query Report Filtro
+router.post('/report/route',qryCtrlReports.QueryRoute);
 
 module.exports=router;
