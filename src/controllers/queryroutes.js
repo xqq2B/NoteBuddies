@@ -1419,6 +1419,7 @@ qryCtrlRoutes.QueryAll = async (req, res) => {
                 //fin rutas points
                 //inicio checkpoints
                 var CheckPoints=[];
+                console.log( rows[j].json_build_object);
                 for (var k = 0; k < rows[j].json_build_object.ruta.length; k++) {//cantidad de checkpoints en esa ruta que va corriendo
                     const zonesCheckPoints = await api.call("Get", {
                         typeName: "Zone",
