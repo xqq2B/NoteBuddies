@@ -156,6 +156,8 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
         let text = 'SELECT * FROM vistaObtenerUsuario WHERE id_usuario = $1';
         let values = [req.body.id_user];
         const result = await pool.query(text, values);
+
+        console.log(result.rows[0]);
         // if (result.rows[0].bd == "metrica") {
         //     api = await conexion.updateSessionId();
         // }
