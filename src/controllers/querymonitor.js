@@ -748,8 +748,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             //completas
              let nvalues = [req.body.db];
             let ruta = await pool.query(ntext, nvalues);
-            console.log(ruta.rows.length);
-            console.log(ruta.rows[0]);
+            
             let mtext='SELECT * FROM verAlertas WHERE BD=$1';
             let alerts = await pool.query(mtext,nvalues);
 
