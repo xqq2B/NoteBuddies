@@ -158,6 +158,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
         const result = await pool.query(text, values);
 
         console.log(result.rows[0]);
+        console.log(result.rows);
         // if (result.rows[0].bd == "metrica") {
         //     api = await conexion.updateSessionId();
         // }
