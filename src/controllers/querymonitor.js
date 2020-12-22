@@ -735,14 +735,25 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
         //     let alerts = await pool.query(text, values);
         //     res.json({ alertas:alerts.rows });
         console.log('??? alertas??????');
+        var completeRoutenAlerts=[];
             //let ntext = ('SELECT * FROM verruta_completa WHERE BD=($1) as t1 inner join verAlertas as t2 On t1.id_ruta_configurada = t2.id_ruta_configurada');4
-            let ntext ='Select * from verRuta_completa as t1 inner join Veralertas as t2 on t1.id_ruta_configurada = t2.id_ruta_configurada Where BD = $1';
-            
+//            let ntext ='Select * from verRuta_completa as t1 inner join Veralertas as t2 on t1.id_ruta_configurada = t2.id_ruta_configurada Where BD = $1';
+            let ntext ='SELECT * FROM verRuta_completa WHERE BD = $1';          
             //completas
              let nvalues = [req.body.db];
-            let alerts = await pool.query(ntext, nvalues);
+            let ruta = await pool.query(ntext, nvalues);
+
+            let mtext='SELECT * FROM verAlertas WHERE DB=$1';
+            let alerts = await pool.query(mtext,nvalues);
+
+
+            for(let o=0;o<ruta.length;o++){
+                completeRoutenAlerts.push({ruta:ruta[o].rows,alerts:alerts[o].rows});
+            }
             console.log('??? alertas');
-            res.json({ ruta_completa_con_alertas:alerts.rows });
+
+
+            res.json({ ruta_completa_con_alertas:completeRoutenAlerts });
 
         //select * from verRuta_Completa as t1
         //inner join verAlertas as t2 On t1.id_ruta_configurada = t2.id_ruta_configurada;
@@ -756,7 +767,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
 qryCtrlMonitor.QueryAlerts = async (req, res) => {
     try{
         console.log(req.body.db);
-        let text = ('SELECT * FROM verAlertas WHERE db=$1');
+        let text='SELECT * FROM verAlertas WHERE DB=$1';
             //completas
         let values = [req.body.db];
         let alerts = await pool.query(text, values);
