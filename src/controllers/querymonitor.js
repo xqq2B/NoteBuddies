@@ -735,7 +735,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
         //     let alerts = await pool.query(text, values);
         //     res.json({ alertas:alerts.rows });
         console.log('??? alertas??????');
-            let ntext = ('SELECT * FROM verruta_completa WHERE BD=$1 as t1 inner join verAlertas as t2 On t1.id_ruta_configurada = t2.id_ruta_configurada');
+            let ntext = ('SELECT * FROM verruta_completa WHERE BD=($1) as t1 inner join verAlertas as t2 On t1.id_ruta_configurada = t2.id_ruta_configurada');
             //completas
              let nvalues = [req.body.db];
             let alerts = await pool.query(ntext, nvalues);
