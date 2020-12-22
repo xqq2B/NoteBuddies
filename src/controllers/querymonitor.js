@@ -14,12 +14,14 @@ qryCtrlMonitor.EditCheckPoint = async (req, res) => {
     try {
         console.log(req.body);
          var checkpoints=req.body;
-         let text=('SELECT * FROM ruta_checkpoint WHERE id_ruta_catalogo=$1');//id_ruta_catalogo???
+         //let text=('SELECT * FROM ruta_checkpoint WHERE id_ruta_catalogo=$1');//id_ruta_catalogo???
+         let text=('SELECT * FROM Ruta_Configurada_Checkpoint WHERE id_ruta_configurada=$1');//id_ruta_catalogo???
          let values=[checkpoints.id_routep];//cambio
          const {rows} = await pool.query(text,values);
          console.log(rows.length);
          console.log(rows[0]);
-         let text2 = "DELETE FROM Ruta_Checkpoint WHERE id_ruta_catalogo=$1";
+         //let text2 = "DELETE FROM Ruta_Checkpoint WHERE id_ruta_catalogo=$1";
+         let text2 = "DELETE FROM Ruta_Configurada_Checkpoint WHERE id_ruta_configurada=$1";
         let values2=[checkpoints.id_routep];
         await pool.query(text2,values2);
         console.log('borro');
@@ -29,7 +31,8 @@ qryCtrlMonitor.EditCheckPoint = async (req, res) => {
          else{
             for (let y = 0; y < checkpoints.checkpoints.length; y++) {
                 //let text2 = 'SELECT edicionRuta_Checkpoint($1,$2,$3,$4,$5)';
-                let text2 = 'INSERT INTO Ruta_Checkpoint VALUES ($1,$2,$3,$4,$5)';
+                //let text2 = 'INSERT INTO Ruta_Checkpoint VALUES ($1,$2,$3,$4,$5)';
+                let text2 = 'INSERT INTO Ruta_Configurada_Checkpoint VALUES ($1,$2,$3,$4,$5)';
                 // let text2 = 'SELECT createRuta_Checkpoint($1,$2,$3)';    
                 //pedir hora y fecha ya que lo solicita la db para ingresar manualmente funcionando ver formatos fecha y hora al pedir
                 let values2 = [checkpoints.id_routep, checkpoints.checkpoints[y].id_punto, checkpoints.checkpoints[y].name_punto,checkpoints.checkpoints[y].fecha,checkpoints.checkpoints[y].hora];
