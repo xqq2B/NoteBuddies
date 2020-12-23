@@ -773,10 +773,11 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
 qryCtrlMonitor.QueryAlerts = async (req, res) => {
     try{
         console.log(req.body.db);
-        let text='SELECT * FROM verAlertas WHERE DB=$1';
+        let text='SELECT * FROM verAlertas WHERE BD=$1';
             //completas
         let values = [req.body.db];
         let alerts = await pool.query(text, values);
+        console.log('alertas');
             res.json({ alertas:alerts.rows });
     }catch(e){
         console.log(e);
