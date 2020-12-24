@@ -7,7 +7,7 @@ qryCtrlReports.QueryRoute = async (req, res) => {
 
     try {
         console.log(req.body);
-        let text ='SELECT imprimirReporte($1,$2,$3,$3)';//drivers es correo, vehiculos el id
+        let text ='SELECT imprimirReporte($1,$2,$3,$4,$5)';//drivers es correo, vehiculos el id
         let values=[req.body.type,req.body.dateFrom,req.body.dateTo,req.body.drivers,req.body.devices];
         await pool.query(text,values);
         var query;
