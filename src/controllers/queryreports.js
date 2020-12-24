@@ -11,6 +11,7 @@ qryCtrlReports.QueryRoute = async (req, res) => {
         let values=[req.body.type,req.body.dateFrom,req.body.dateTo,req.body.drivers,req.body.devices];
         await pool.query(text,values);
         var query;
+        console.log('antes de los ifs');
         if(req.body.type=="Programada"){
         query= await pool.query('SELECT * FROM verReporteProgramada');
          }
@@ -24,7 +25,7 @@ qryCtrlReports.QueryRoute = async (req, res) => {
                     query= await pool.query('SELECT * FROM verReporteGeneral');
                      }
                  else
-                 console.log('ERROR REPORT TYPE',req.body.type);
+                 console.log('REPORT TYPE',req.body.type);
             res.json({ Reporte:query.rows });
         }
         catch(e){
