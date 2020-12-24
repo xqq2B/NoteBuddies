@@ -391,8 +391,11 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
              //   }).catch(error => console.log('ENTRANDO ERROR ', error));
 
             }
+
+
+
             console.log(rows[j].estado);
-            if(rows[j].estado == 'En_curso'){
+            if(rows[j].estado == 'En_Curso'){
 
                 console.log('dentro de En_curso');
                 //por guardar hora y fecha se tienen que sacar las variables para inicio real y llegada real
@@ -620,21 +623,11 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                         //     pool.query(text,values);
                         //     console.log('paso watchdog entrando startpoint');
     
-                            
-                        //     //////////////////////
-                        //     ///////////ver rutacompleta se actualiza....
-                        //     //////
-                        //     //////////////////////
+                 
                             
                         //     console.log(result.data[0]);
 ////////////////////////////comentado para watchdog/////////////////////////
-                        // console.log(result.data[0]);
-                        //    // Alerts.push({info:'Fuera de Ruta',data:result.data});
-                        //     Alerts.push({ info:'Fuera de Ruta', id_route:rows[j].id_ruta_configurada, vehiculo:rows[j].device, hora:result.data[0].activeFrom, distancia:result.data[0].distance,
-                        //     duration:result.data[0].duration  });
-                        //     pool.query("UPDATE FROM WHERE id_ruta=rows[j].id SET status='en progreso',info='fuera de ruta',horadelsuceso='result.data.activeFROM'");
-                        //     //poner ademas las alertas con la hora en la base de datos porque queda un historico
-                        //     //consultar db y se muestran las alertas
+                       
 ////////////////////////////////////////////////////////////////////                        
                         }
              //   }).catch(error => console.log('FUERA ERROR ', error));
@@ -663,7 +656,8 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                         var coordinates = [];
                         const resultDI = await api.call('Get', {
                             typeName: 'DeviceStatusInfo', search:
-                                { deviceSearch: { id: /*'b36'*/ rows[j].id_vehiculo }, fromDate: resultCP.data[uCP].activeFrom/*'2020-12-22T16:04:59.990Z'/*'2020-01-01T00:01:00'/*startDate*/ }
+                                { deviceSearch: { id: /*'b36'*/ rows[j].id_vehiculo }, fromDate: resultCP.data[uCP].activeFrom
+                                /*'2020-12-22T16:04:59.990Z'/*'2020-01-01T00:01:00'/*startDate*/ }
                         });/*, toDate: '2020-01-01T00:01:00' */
                            // .then(result => {
                                 //result.forEach(
@@ -741,7 +735,8 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                             console.log(resultCP.data[0]);
 //////////////////////////comentado para uso de watchdog////////////////////////////                        
                     //     
-                    }
+                    
+                }//<-------------agregado del if data > 0
                // }).catch(error => console.log('ENTRANDO CHECKPOINT ERROR ', error));
 
 
@@ -802,9 +797,11 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                 }
               //  }).catch(error => console.log('ENTRANDO ENDPOINT ERROR ', error));
             }
+        }//agregado es el del if en curso
                 console.log(j);
                 
         }
+    
         // text = ('SELECT * FROM verruta_completa WHERE BD=$1');
         //     //completas
         // values = [req.body.db];
@@ -833,7 +830,6 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
 
         //select * from verRuta_Completa as t1
         //inner join verAlertas as t2 On t1.id_ruta_configurada = t2.id_ruta_configurada;
-    }  
  }
     catch (e) {
         console.log('ERROR QUERY EXCEPTIONS', e);
