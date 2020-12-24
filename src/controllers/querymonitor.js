@@ -20,24 +20,34 @@ qryCtrlMonitor.EditCheckPoint = async (req, res) => {
          const {rows} = await pool.query(text,values);
          console.log(rows.length);
          console.log(rows[0]);
-         //let text2 = "DELETE FROM Ruta_Checkpoint WHERE id_ruta_catalogo=$1";
-         let text2 = "DELETE FROM Ruta_Configurada_Checkpoint WHERE id_ruta_configurada=$1";
-        let values2=[checkpoints.id_routep];
-        await pool.query(text2,values2);
-        console.log('borro');
+
+        //  let text2 = "DELETE FROM Ruta_Configurada_Checkpoint WHERE id_ruta_configurada=$1";
+        // let values2=[checkpoints.id_routep];
+        // await pool.query(text2,values2);
+        // console.log('borro');
          if(rows.length==0){
              res.json({status:'Not Found!'});
          }
-         else{
+         else {
+            // let text='SetRuta_Configurada_Checkpoint(ide_ruta_configurada varchar(30),ide_checkpoint varchar(30),
+                                                    // _fecha DATE,_hora TIME,ide_usuario varchar(60) default null);'
+            ///nueva funcion donde no se borran
             for (let y = 0; y < checkpoints.checkpoints.length; y++) {
-                //let text2 = 'SELECT edicionRuta_Checkpoint($1,$2,$3,$4,$5)';
-                //let text2 = 'INSERT INTO Ruta_Checkpoint VALUES ($1,$2,$3,$4,$5)';
-                let text2 = 'INSERT INTO Ruta_Configurada_Checkpoint VALUES ($1,$2,$3,$4,$5)';
-                // let text2 = 'SELECT createRuta_Checkpoint($1,$2,$3)';    
-                //pedir hora y fecha ya que lo solicita la db para ingresar manualmente funcionando ver formatos fecha y hora al pedir
-                let values2 = [checkpoints.id_routep, checkpoints.checkpoints[y].id_punto, checkpoints.checkpoints[y].name_punto,checkpoints.checkpoints[y].fecha,checkpoints.checkpoints[y].hora];
-                await pool.query(text2, values2);
+             let text = 'SELECT SetRuta_Configurada_Checkpoint($1,$2,$3,$4,$5)';
+             ///////rows y ???? checar
+             let values = [rows[y].id_ruta_configurada, result[0].zones[0].id, req.body.fecha, req.body.hora, req.body.id_user];
+             await pool.query(text, values);
+            //////////////////////////////////////
             }
+            //  for (let y = 0; y < checkpoints.checkpoints.length; y++) {
+            //     //let text2 = 'SELECT edicionRuta_Checkpoint($1,$2,$3,$4,$5)';
+            //     //let text2 = 'INSERT INTO Ruta_Checkpoint VALUES ($1,$2,$3,$4,$5)';
+            //     let text2 = 'INSERT INTO Ruta_Configurada_Checkpoint VALUES ($1,$2,$3,$4,$5)';
+            //     // let text2 = 'SELECT createRuta_Checkpoint($1,$2,$3)';    
+            //     //pedir hora y fecha ya que lo solicita la db para ingresar manualmente funcionando ver formatos fecha y hora al pedir
+            //     let values2 = [checkpoints.id_routep, checkpoints.checkpoints[y].id_punto, checkpoints.checkpoints[y].name_punto,checkpoints.checkpoints[y].fecha,checkpoints.checkpoints[y].hora];
+            //     await pool.query(text2, values2);
+            // }
             res.json({ status: 'ok' });
          }
         }
@@ -289,7 +299,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             const result= await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
                     //deviceSearch: { id: rows[j].id_vehiculo }, QUITADO PARA VER RESULTADOS
-                    ruleSearch: { id: idRuleEntrandoStart[0].id }, fromDate: req.body.testeofecha//'2020-01-01T00:01:00'/*festimadasalirDB*///rows[j].horainicioestimada//fechaInicioRuta//poner fecha de cuando va a arrancar
+                    ruleSearch: { id: idRuleEntrandoStart[0].id }, /*fromDate: req.body.testeofecha/*'2020-01-01T00:01:00'*/festimadasalirDB//rows[j].horainicioestimada//fechaInicioRuta//poner fecha de cuando va a arrancar
                 }, 
             });
                // .then(result => {
@@ -416,8 +426,8 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
 
             const result = await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
-                    deviceSearch: { id:'b1EA' /*rows[j].id_vehiculo*/ },//AGREGADO id vehiculo para dar resultados
-                    ruleSearch: { id: idRuleEntrando[0].id }, fromDate: req.body.testeofecha//'2020-01-01T00:01:00'/*finiciorealDB*///festimadasalirDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
+                    deviceSearch: { id:/*'b1EA'*/ rows[j].id_vehiculo },//AGREGADO id vehiculo para dar resultados
+                    ruleSearch: { id: idRuleEntrando[0].id }, fromDate: /*req.body.testeofecha'2020-01-01T00:01:00'finiciorealDB*/festimadasalirDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
             })
                 //.then(result => {
@@ -472,8 +482,8 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                  //SALIENDO DE MM ROUTES
            const result1= await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
-                    deviceSearch: { id:'b1EA'}, //rows[j].id_vehiculo }, agregado vehiculo fake para resultados
-                    ruleSearch: { id: idRuleSaliendo[0].id }, fromDate: req.body.testeofecha//'2020-01-01T00:01:00' //finiciorealDB//rows[j],horaRealInicio//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
+                    deviceSearch: { id:/*'b1EA'},*/ rows[j].id_vehiculo }, //agregado vehiculo fake para resultados
+                    ruleSearch: { id: idRuleSaliendo[0].id }, fromDate:festimadasalirDB// req.body.testeofecha//'2020-01-01T00:01:00' //finiciorealDB//rows[j],horaRealInicio//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
             });
                // .then(result => {
@@ -533,10 +543,10 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
            // DENTRO MM ROUTES
             const resIn = await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
-                    deviceSearch: { id:'b1EA'}, //rows[j].id_vehiculo }, agregado vehiculo fake para resultados
-                    ruleSearch: { id: idRuleDentro[0].id }, fromDate: req.body.testeofecha//'2020-01-01T00:01:00'//finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
+                    deviceSearch: { id:/*'b1EA'}, */rows[j].id_vehiculo },// agregado vehiculo fake para resultados
+                    ruleSearch: { id: idRuleDentro[0].id }, fromDate: festimadasalirDB//req.body.testeofecha//'2020-01-01T00:01:00'//finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
-            })
+            });
                // .then(result => {
                     //result.forEach(
                     //console.log(resultIn);
@@ -559,10 +569,10 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             // FUERA MM ROUTES
            const resOut = await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
-                    deviceSearch: {id:'b1EA'}, //rows[j].id_vehiculo }, agregado vehiculo fake para resultados
-                    ruleSearch: { id: idRuleFuera[0].id }, fromDate: req.body.testeofecha//'2020-01-01T00:01:00'//finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
+                    deviceSearch: {id:/*'b1EA'},*/ rows[j].id_vehiculo },// agregado vehiculo fake para resultados
+                    ruleSearch: { id: idRuleFuera[0].id }, fromDate: festimadasalirDB//req.body.testeofecha//'2020-01-01T00:01:00'//finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
-            })
+            });
                 //.then(result => {
                     //result.forEach(
                   //  console.log(result);
@@ -633,8 +643,8 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             //ENTRANDO CHECKPOINT
             const resultCP = await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
-                    deviceSearch: { id:'b1EA'}, //rows[j].id_vehiculo }, agregado vehiculo fake para resultados
-                    ruleSearch: { id: idRuleEntrandoCP[0].id }, fromDate: req.body.testeofecha//'2020-01-01T00:01:00'//finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
+                    deviceSearch: { id:/*'b1EA'},*/rows[j].id_vehiculo },// agregado vehiculo fake para resultados
+                    ruleSearch: { id: idRuleEntrandoCP[0].id }, fromDate: festimadasalirDB//req.body.testeofecha//'2020-01-01T00:01:00'//finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
             });
                // .then(result => {
@@ -647,6 +657,66 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                         // console.log(resultCP.data[0].rule);
                         // console.log(resultCP.data[0].device);
                       //  if(result.data.length>0){
+
+                        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        var uCP = resultCP.data.length - 1;
+                        var coordinates = [];
+                        const resultDI = await api.call('Get', {
+                            typeName: 'DeviceStatusInfo', search:
+                                { deviceSearch: { id: /*'b36'*/ rows[j].id_vehiculo }, fromDate: resultCP.data[uCP].activeFrom/*'2020-12-22T16:04:59.990Z'/*'2020-01-01T00:01:00'/*startDate*/ }
+                        });/*, toDate: '2020-01-01T00:01:00' */
+                           // .then(result => {
+                                //result.forEach(
+                                if (resultDI.length > 0) {
+                                    console.log('datosDSI');
+                                    console.log(resultDI[0]);
+                                    coordinates.push({
+                                        x: resultDI[0].longitude,
+                                        y: resultDI[0].latitude
+                                    });
+                                    // );
+                                    let datt=resultCP.data[uCP].activeFrom;//.toISOString();
+                                    let sep11=datt.split('T');
+                                    let fri= sep11[0].split('-');
+                                    let hri=sep11[1].split(':');
+                                    let fechaCP= fri[0]+'-'+fri[1]+'-'+fri[2];//<--------- para guardar en db
+                                    let horaCP= hri[0]+':'+hri[1]+':'+'00';//<------- para guardar en db
+
+                                  const resultGA = await api.call('GetAddresses', { coordinates: /*[{ x: -102.8429946899414, y: 23.161401748657227 }]*/coordinates });
+                                      //  .then(result => {
+                                            console.log(resultGA.length);
+                                            console.log(resultGA);
+                                            console.log(resultGA[0].street);
+                                            console.log(resultGA[0].zones);
+                                            console.log(resultGA[0].zones[0].id);
+
+
+                                            ////////////////////SEPARAR FECHA DE ALERTA////////////////////////
+
+
+                                            /////////////////////////////////////////////
+                                            for (let k = 0; k < rows[j].json_build_object.ruta.length; k++) {
+                                                if (rows[j].json_build_object.ruta[k].id_checkpoint == resultGA[0].zones[0].id) {
+                                                    /////////////////////update checkpoint cuando entro a el////////////////////////////
+                                                    // let text='SetRuta_Configurada_Checkpoint(ide_ruta_configurada varchar(30),ide_checkpoint varchar(30),
+                                                    // _fecha DATE,_hora TIME,ide_usuario varchar(60) default null);'
+                                                    let text='SELECT SetRuta_Configurada_Checkpoint($1,$2,$3,$4,53)';
+//-------------------------------------------------------->let text = 'UPDATE Ruta_Checkpoint WHERE id_checkpoint=$1 SET (hrealinicio)';
+                                                        let values = [rows[j].id_ruta_configurada, resultGA[0].zones[0].id, fechaCP,horaCP,req.body.id_user];
+                                                        pool.query(text, values);
+                                                    }
+                                                }
+
+
+                                        //});
+                    
+                        //    }).catch(error => console.log(error));
+
+                        console.log('getaddresses');
+                        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
                             
                         for(let k=0;k<resultCP.data.length;k++){
                             let datt=resultCP.data[k].activeFrom;//.toISOString();
@@ -678,8 +748,8 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             //ENTRANDO ENDPOINT
             const resultEP = await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
-                    deviceSearch: { id:'b1EA'}, //rows[j].id_vehiculo }, agregado vehiculo fake para resultados
-                    ruleSearch: { id: idRuleEntrandoEP[0].id }, fromDate: req.body.testeofecha//'2020-01-01T00:01:00'//finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
+                    deviceSearch: { id:/*'b1EA'}, */rows[j].id_vehiculo }, //agregado vehiculo fake para resultados
+                    ruleSearch: { id: idRuleEntrandoEP[0].id }, fromDate: festimadasalirDB//req.body.testeofecha//'2020-01-01T00:01:00'//finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
             });
                // .then(result => {
@@ -763,7 +833,8 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
 
         //select * from verRuta_Completa as t1
         //inner join verAlertas as t2 On t1.id_ruta_configurada = t2.id_ruta_configurada;
-    }
+    }  
+ }
     catch (e) {
         console.log('ERROR QUERY EXCEPTIONS', e);
     }
