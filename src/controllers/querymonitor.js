@@ -35,7 +35,7 @@ qryCtrlMonitor.EditCheckPoint = async (req, res) => {
             for (let y = 0; y < checkpoints.checkpoints.length; y++) {
              let text = 'SELECT SetRuta_Configurada_Checkpoint($1,$2,$3,$4,$5)';
              ///////rows y ???? checar
-             let values = [rows[y].id_ruta_configurada, result[0].zones[0].id, req.body.fecha, req.body.hora, req.body.id_user];
+             let values = [checkpoints.id_routep, checkpoints.checkpoints[y].id_punto, checkpoints.checkpoints[y].fecha, checkpoints.checkpoints[y].hora, checkpoints.id_user];
              await pool.query(text, values);
             //////////////////////////////////////
             }
@@ -152,11 +152,9 @@ qryCtrlMonitor.QueryDevice = async (req, res) => {
 //cada minuto respuestas
 qryCtrlMonitor.QueryExceptions = async (req, res) => {
     //RECIBE id_user y db
-    //mandaria toda la lista de la tabla
+    
     //escuchando un poco de tiempo  antes, cuando se consulta sale el id de la zona especifica
-    //buscar todas las rutas con el estatus de progreso en nuestra db
     //mm routes que entre en cualquiera del mapa
-    //REVISAR EL AGREGADO DE ZONA DE INICIO, REVISAR AGREGADO ENTRANDO CHECKPOINT Y ENTRANDO ENDPOINT*********
     //preguntar tiempo de consulta de los vehiculos puede ser en tiempo real ya que si habra datos.
     //PEDIR A DB que guarde el estado del semaforo para poner IF antes de entrar a una verificacion como "PUNTO INICIO"
     //EN DB guardar si ya termino para que quede omitida en la consulta de la linea 120 donde se consulta db y el status y filtrar
