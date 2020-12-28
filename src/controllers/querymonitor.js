@@ -709,6 +709,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
 
                                             /////////////////////////////////////////////
                                             for (let k = 0; k < rows[j].json_build_object.ruta.length; k++) {
+                                                console.log('ingresando cp');
                                                 if (rows[j].json_build_object.ruta[k].id_checkpoint == resultGA[0].zones[0].id) {
                                                     /////////////////////update checkpoint cuando entro a el////////////////////////////
                                                     // let text='SetRuta_Configurada_Checkpoint(ide_ruta_configurada varchar(30),ide_checkpoint varchar(30),
@@ -777,6 +778,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                         
                         console.log(resultEP.data[0].rule);
                         console.log(resultEP.data[0].device);
+                        console.log(resultEP.data[0]);
 
                         let datt=resultEP.data[0].activeFrom.toISOString();
                             let sep11=datt.split('T');
