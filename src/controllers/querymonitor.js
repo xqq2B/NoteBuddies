@@ -286,6 +286,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             //que busque desde una hora antes de la fecha de inicio estimada//
             festimadasalirDB.setMinutes(festimadasalirDB.getMinutes() - 60);//se suman los minutos y la hora
             //es
+            console.log(festimadasalirDB);
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
             console.log('antes del primer if');
@@ -297,7 +298,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             const result= await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
                     deviceSearch: { id: rows[j].id_vehiculo },// QUITADO PARA VER RESULTADOS
-                    ruleSearch: { id: idRuleEntrandoStart[0].id }, fromDate:/* req.body.testeofecha*/'2020-01-01T00:01:00'/*festimadasalirDB*///rows[j].horainicioestimada//fechaInicioRuta//poner fecha de cuando va a arrancar
+                    ruleSearch: { id: idRuleEntrandoStart[0].id }, fromDate:/* req.body.testeofecha*/'2020-01-28T17:01:00'/*festimadasalirDB*///rows[j].horainicioestimada//fechaInicioRuta//poner fecha de cuando va a arrancar
                 }, 
             });
                // .then(result => {
@@ -306,6 +307,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                     // console.log(result.data.length);
                     console.log('dentro del primer getfeed');
                     console.log(result.data.length);
+                    console.log(result.data[0]);
                     if(result.data.length>0){
                         
                         console.log(result.data[0].rule);
