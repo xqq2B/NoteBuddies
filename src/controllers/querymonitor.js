@@ -278,12 +278,15 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             console.log('fecha ISO');
             console.log(fechaSS);
             var separarr = fechaSS.split('T');
+            console.log(separarr);
             var fechaaa = separarr[0].split('-');
+            console.log(fechaa[0],fechaa[1],fechaa[2]);
             
             var horaSS = rows[j].horainicioestimada.split(':');
-
+            console.log(horaSS)
+            console.log(horaSS[0]);
             var festimadasalirDB= new Date(fechaaa[0],fechaaa[1],fechaaa[2],horaSS[0],horaSS[1]);//DATE fecha y hora estimada INICIO/SALIR base de datos
-
+            
            // var horaEstimadaActual = new Date(result.data.activeFROM);//formato'2019-09-13T06:45:00Z'
             console.log(festimadasalirDB);//valor original
 
