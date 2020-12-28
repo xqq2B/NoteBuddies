@@ -841,7 +841,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                     // console.log(result.data.length);
                     // console.log(result.data[0].rule);
                     //console.log(result.data[0].device);
-                   
+                   console.log('dentro de eP');
                     if(resultEP.data.length>0){
                         
                         console.log(resultEP.data[0].rule);
