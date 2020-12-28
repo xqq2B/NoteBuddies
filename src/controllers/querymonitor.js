@@ -699,7 +699,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                                             console.log(resultGA[0].street);
 //                                            console.log(resultGA[0].zones);
                                             //console.log(resultGA[0].zones[0].id);
-                                            if(!resultGA[0].zones[0].id){////////////////agregado del if
+                                          //  if(!resultGA[0].zones[0].id){////////////////agregado del if
 
                                             
 
@@ -720,7 +720,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                                                         pool.query(text, values);
                                                     }
                                                 }
-                                            }/////////////////////////////<------------------agregado del if
+                                            //}/////////////////////////////<------------------agregado del if
 
                                         //});
                     
@@ -781,7 +781,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                         console.log(resultEP.data[0]);
                         console.log(resultEP.data[0].activeFrom);
 
-                        let datt=resultEP.data[0].activeFrom;//.toISOString();
+                        let datt=resultEP.data[0].activeFrom;//.toISOString();  //<-----------error no es una funcion????????????
                             let sep11=datt.split('T');
                             console.log('afrom');
                             console.log(sep11);
