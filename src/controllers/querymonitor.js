@@ -275,6 +275,8 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             console.log('fecha inicio estimada prueba');
             console.log(rows[j].fechainicioestimada);
             var fechaSS = rows[j].fechainicioestimada.toISOString();
+            console.log('fecha ISO');
+            console.log(fechaSS);
             var separarr = fechaSS.split('T');
             var fechaaa = separarr[0].split('-');
             
