@@ -21,6 +21,7 @@ qryCtrlMonitor.EditCheckPoint = async (req, res) => {
          console.log(rows.length);
          console.log(rows[0]);
 
+         
         //  let text2 = "DELETE FROM Ruta_Configurada_Checkpoint WHERE id_ruta_configurada=$1";
         // let values2=[checkpoints.id_routep];
         // await pool.query(text2,values2);
@@ -426,7 +427,12 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
 
             let horaSS = rows[j].horainicioestimada.split(':');
 /////ATENCION VARIABLE REPETIDA///////
-            festimadasalirDB= new Date(fechaaa[0],fechaaa[1],fechaaa[2],horaSS[0],horaSS[1]);//DATE fecha y hora estimada INICIO/SALIR base de datos
+
+
+
+//////////////////////restar 1 al mes//////////////////////////////
+                let fff= fechaaa[1]-1;
+            festimadasalirDB= new Date(fechaaa[0],fff/*fechaaa[1]-1*/,fechaaa[2],horaSS[0],horaSS[1]);//DATE fecha y hora estimada INICIO/SALIR base de datos
 
                 
 // await api.call('GetFeed', { typeName: 'ExceptionEvent', /*fromVersion: token, */search:{ deviceSearch:{id:'b1EA'},
