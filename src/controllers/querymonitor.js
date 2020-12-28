@@ -781,7 +781,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                         console.log(resultEP.data[0]);
                         console.log(resultEP.data[0].activeFrom);
 
-                        let datt=resultEP.data[0].activeFrom();//.toISOString();
+                        let datt=resultEP.data[0].activeFrom;//.toISOString();
                             let sep11=datt.split('T');
                             console.log('afrom');
                             console.log(sep11);
