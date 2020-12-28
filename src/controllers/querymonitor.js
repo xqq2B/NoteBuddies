@@ -282,10 +282,13 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             var fechaaa = separarr[0].split('-');
             console.log(fechaaa[0],fechaaa[1],fechaaa[2]);
             
+            /////////////restar 1 al mes para poder aplicar new DATE/////////////////
+            var fechnewDATE=fechaaa[1]-1;
+
             var horaSS = rows[j].horainicioestimada.split(':');
             console.log(horaSS);
             console.log(horaSS[0]);
-            var festimadasalirDB= new Date(fechaaa[0],fechaaa[1],fechaaa[2],horaSS[0],horaSS[1]);//DATE fecha y hora estimada INICIO/SALIR base de datos
+            var festimadasalirDB= new Date(fechaaa[0],fechnewDATE/*fechaaa[1]*/,fechaaa[2],horaSS[0],horaSS[1]);//DATE fecha y hora estimada INICIO/SALIR base de datos
             
            // var horaEstimadaActual = new Date(result.data.activeFROM);//formato'2019-09-13T06:45:00Z'
             console.log(festimadasalirDB);//valor original
@@ -305,7 +308,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             const result= await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
                     deviceSearch: { id: rows[j].id_vehiculo },// QUITADO PARA VER RESULTADOS
-                    ruleSearch: { id: idRuleEntrandoStart[0].id }, fromDate:/* req.body.testeofecha*/'2020-01-28T17:01:00'/*festimadasalirDB*///rows[j].horainicioestimada//fechaInicioRuta//poner fecha de cuando va a arrancar
+                    ruleSearch: { id: idRuleEntrandoStart[0].id }, fromDate:/* req.body.testeofecha*//*'2020-01-28T17:01:00'*/festimadasalirDB///rows[j].horainicioestimada//fechaInicioRuta//poner fecha de cuando va a arrancar
                 }, 
             });
                // .then(result => {
