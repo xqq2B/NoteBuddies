@@ -272,6 +272,8 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             // var festimadallegarDB= new Date(fechaa[0],fechaa[1],fechaa[2],horaS[0],horaS[1]);//DATE fecha y hora estimada LLEGAR base de datos COMPLETADA
 
             // //lo mismo para la estimada de la DB
+            console.log('fecha inicio estimada prueba');
+            console.log(rows[j].fechainicioestimada);
             var fechaSS = rows[j].fechainicioestimada.toISOString();
             var separarr = fechaSS.split('T');
             var fechaaa = separarr[0].split('-');
