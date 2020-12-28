@@ -659,7 +659,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                // .then(result => {
                     //result.forEach(
                     //console.log(result);
-                    // console.log(result.data.length);
+                    console.log(result.data.length);
                     // console.log(result.data[0].rule);
                     // console.log(result.data[0].device);
                     if (resultCP.data.length > 0) {
