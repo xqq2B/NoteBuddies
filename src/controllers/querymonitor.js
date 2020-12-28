@@ -699,7 +699,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                                             console.log(resultGA[0].street);
 //                                            console.log(resultGA[0].zones);
                                             //console.log(resultGA[0].zones[0].id);
-                                            if(resultGA[0].zones[0].id != undefined){////////////////agregado del if
+                                            if(!resultGA[0].zones[0].id){////////////////agregado del if
 
                                             
 
@@ -709,7 +709,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
 
                                             /////////////////////////////////////////////
                                             for (let k = 0; k < rows[j].json_build_object.ruta.length; k++) {
-                                                console.log('ingresando cp');
+                                                console.log('ingresando para meter id zone');
                                                 if (rows[j].json_build_object.ruta[k].id_checkpoint == resultGA[0].zones[0].id) {
                                                     /////////////////////update checkpoint cuando entro a el////////////////////////////
                                                     // let text='SetRuta_Configurada_Checkpoint(ide_ruta_configurada varchar(30),ide_checkpoint varchar(30),
@@ -779,9 +779,12 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                         console.log(resultEP.data[0].rule);
                         console.log(resultEP.data[0].device);
                         console.log(resultEP.data[0]);
+                        console.log(resultEP.data[0].activeFrom);
 
-                        let datt=resultEP.data[0].activeFrom.toISOString();
+                        let datt=resultEP.data[0].activeFrom();//.toISOString();
                             let sep11=datt.split('T');
+                            console.log('afrom');
+                            console.log(sep11);
                             let fri= sep11[0].split('-');
                             let hri=sep11[1].split(':');
                             let frealinicio= fri[0]+'-'+fri[1]+'-'+fri[2];//<--------- para guardar en db
