@@ -691,6 +691,8 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                                     let hri=sep11[1].split(':');
                                     let fechaCP= fri[0]+'-'+fri[1]+'-'+fri[2];//<--------- para guardar en db
                                     let horaCP= hri[0]+':'+hri[1]+':'+'00';//<------- para guardar en db
+                                    console.log('coordenadas cp');
+                                    console.log(coordinates);
 
                                   const resultGA = await api.call('GetAddresses', { coordinates: /*[{ x: -102.8429946899414, y: 23.161401748657227 }]*/coordinates });
                                       //  .then(result => {
