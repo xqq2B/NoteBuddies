@@ -692,7 +692,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                                                     /////////////////////update checkpoint cuando entro a el////////////////////////////
                                                     // let text='SetRuta_Configurada_Checkpoint(ide_ruta_configurada varchar(30),ide_checkpoint varchar(30),
                                                     // _fecha DATE,_hora TIME,ide_usuario varchar(60) default null);'
-                                                    let text='SELECT SetRuta_Configurada_Checkpoint($1,$2,$3,$4,53)';
+/*ERROR AQUI ERROR EN EL $5 fue 53                  */let text='SELECT SetRuta_Configurada_Checkpoint($1,$2,$3,$4,$5)';
 //-------------------------------------------------------->let text = 'UPDATE Ruta_Checkpoint WHERE id_checkpoint=$1 SET (hrealinicio)';
                                                         let values = [rows[j].id_ruta_configurada, resultGA[0].zones[0].id, fechaCP,horaCP,req.body.id_user];
                                                         pool.query(text, values);
