@@ -21,7 +21,7 @@ qryCtrlMonitor.EditCheckPoint = async (req, res) => {
          console.log(rows.length);
          console.log(rows[0]);
 
-         
+
         //  let text2 = "DELETE FROM Ruta_Configurada_Checkpoint WHERE id_ruta_configurada=$1";
         // let values2=[checkpoints.id_routep];
         // await pool.query(text2,values2);
@@ -697,8 +697,11 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                                             console.log(resultGA.length);
                                             console.log(resultGA);
                                             console.log(resultGA[0].street);
-                                            console.log(resultGA[0].zones);
-                                            console.log(resultGA[0].zones[0].id);
+//                                            console.log(resultGA[0].zones);
+                                            //console.log(resultGA[0].zones[0].id);
+                                            if(resultGA[0].zones[0].id != undefined){////////////////agregado del if
+
+                                            
 
 
                                             ////////////////////SEPARAR FECHA DE ALERTA////////////////////////
@@ -716,7 +719,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                                                         pool.query(text, values);
                                                     }
                                                 }
-
+                                            }/////////////////////////////<------------------agregado del if
 
                                         //});
                     
