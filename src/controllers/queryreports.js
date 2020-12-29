@@ -24,7 +24,9 @@ qryCtrlReports.QueryRoute = async (req, res) => {
                  if(req.body.type=="General"){
                     query= await pool.query('SELECT * FROM verReporteGeneral');
                      }
-                 else
+                 else{
+                    console.log('REPORT TYPE',req.body.type);  
+                 }
                  //console.log('REPORT TYPE',req.body.type);
                  console.log(query.rows);
             res.json({ Reporte:query.rows });
