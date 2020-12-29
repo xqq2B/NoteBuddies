@@ -599,13 +599,6 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                     
                         if(resOut.data.length>0){
                             
-    
-                            // let datt=resOut.data[0].activeFrom.toISOString();
-                            //     let sep11=datt.split('T');
-                            //     let fri= sep11[0].split('-');
-                            //     let hri=sep11[1].split(':');
-                            //     let frealinicio= fri[0]+'-'+fri[1]+'-'+fri[2];//<--------- para guardar en db
-                            //     let hrealinicio= hri[0]+':'+hri[1]+':'+'00';//<------- para guardar en db
                             //usando watchdog
                             let text =('SELECT setFuera($1,$2,$3)');
                             let values=[rows[j].id_ruta_configurada,resOut.data[0].duration,resOut.data[0].distance];//con el id de alerta ya saca la db las horas y fechas
@@ -669,7 +662,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                                             y: resultDI[0].latitude
                                         });
                                         // );
-                                        let datt=resultCP.data[uCP].activeFrom;//.toISOString();
+                                        let datt=resultCP.data[h].activeFrom;//.toISOString();
                                         let sep11=datt.split('T');
                                         let fri= sep11[0].split('-');
                                         let hri=sep11[1].split(':');
