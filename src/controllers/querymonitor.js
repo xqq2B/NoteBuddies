@@ -498,7 +498,10 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                              var tFecha = new Date(toFecha).getTime();
                              console.log('ffffechas');
                              console.log(tFecha);
+                             console.log(activeF);
                              if (activeF < tFecha) {////////////////agregado no repeticion
+
+                                console.log('entro menor que entrando mmroutes');
                                  let datt = result.data[k].activeFrom;//.toISOString();
                                 let sep11=datt.split('T');
                                 let fri= sep11[0].split('-');
