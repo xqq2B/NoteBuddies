@@ -636,7 +636,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             const resultCP = await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
                     deviceSearch: { id:/*'b1EA'},*/rows[j].id_vehiculo },// agregado vehiculo fake para resultados
-                    ruleSearch: { id: idRuleEntrandoCP[0].id }, fromDate: festimadasalirDB//req.body.testeofecha//'2020-01-01T00:01:00'//finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
+                    ruleSearch: { id: idRuleEntrandoCP[0].id }, fromDate: festimadasalirDB,toDate:toFecha//req.body.testeofecha//'2020-01-01T00:01:00'//finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
             });
                // .then(result => {
@@ -649,67 +649,127 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                         // console.log(resultCP.data[0].rule);
                         // console.log(resultCP.data[0].device);
                       //  if(result.data.length>0){
-
+                          /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                          for(let h=0;h<resultCP.data.length;h++)
+                          {
+                            var uCP = resultCP.data.length - 1;
+                            var coordinates = [];
+                            const resultDI = await api.call('Get', {
+                                typeName: 'DeviceStatusInfo', search:
+                                    { deviceSearch: { id: /*'b36'*/ rows[j].id_vehiculo }, fromDate: resultCP.data[h].activeFrom
+                                    /*'2020-12-22T16:04:59.990Z'/*'2020-01-01T00:01:00'/*startDate*/ }
+                            });/*, toDate: '2020-01-01T00:01:00' */
+                               // .then(result => {
+                                    //result.forEach(
+                                    if (resultDI.length > 0) {
+                                        console.log('datosDSI');
+                                        console.log(resultDI[0]);
+                                        coordinates.push({
+                                            x: resultDI[0].longitude,
+                                            y: resultDI[0].latitude
+                                        });
+                                        // );
+                                        let datt=resultCP.data[uCP].activeFrom;//.toISOString();
+                                        let sep11=datt.split('T');
+                                        let fri= sep11[0].split('-');
+                                        let hri=sep11[1].split(':');
+                                        let fechaCP= fri[0]+'-'+fri[1]+'-'+fri[2];//<--------- para guardar en db
+                                        let horaCP= hri[0]+':'+hri[1]+':'+'00';//<------- para guardar en db
+                                        console.log('coordenadas cp');
+                                        console.log(coordinates);
+    
+                                      const resultGA = await api.call('GetAddresses', { coordinates: coordinates });
+                                          //  .then(result => {
+                                                console.log(resultGA.length);
+                                                console.log(resultGA);
+                                                console.log(resultGA[0].street);
+    //                                            console.log(resultGA[0].zones);
+                                                //console.log(resultGA[0].zones[0].id);
+                                               if(resultGA[0].zones[0].id != undefined){////////////////agregado del if
+    
+                                                
+    
+    
+                                                ////////////////////SEPARAR FECHA DE ALERTA////////////////////////
+    
+    
+                                                /////////////////////////////////////////////
+                                                for (let k = 0; k < rows[j].json_build_object.ruta.length; k++) {
+                                                    console.log('ingresando para meter id zone');
+                                                    console.log(rows[j].json_build_object.ruta[k].id_checkpoint);
+                                                        console.log(resultGA[0].zones[0].id);
+                                                    if (rows[j].json_build_object.ruta[k].id_checkpoint == resultGA[0].zones[0].id) {
+                                                       
+                                                        
+                                                            let text='SELECT SetRuta_Configurada_Checkpoint($1,$2,$3,$4,$5)';
+                                                            let values = [rows[j].id_ruta_configurada, resultGA[0].zones[0].id, fechaCP,horaCP,req.body.id_user];
+                                                            pool.query(text, values);
+                                                        }
+                                                    }
+                                                }/////////////////////////////<------------------agregado del if
+                          }
+                        }
                         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                        var uCP = resultCP.data.length - 1;
-                        var coordinates = [];
-                        const resultDI = await api.call('Get', {
-                            typeName: 'DeviceStatusInfo', search:
-                                { deviceSearch: { id: /*'b36'*/ rows[j].id_vehiculo }, fromDate: resultCP.data[uCP].activeFrom
-                                /*'2020-12-22T16:04:59.990Z'/*'2020-01-01T00:01:00'/*startDate*/ }
-                        });/*, toDate: '2020-01-01T00:01:00' */
-                           // .then(result => {
-                                //result.forEach(
-                                if (resultDI.length > 0) {
-                                    console.log('datosDSI');
-                                    console.log(resultDI[0]);
-                                    coordinates.push({
-                                        x: resultDI[0].longitude,
-                                        y: resultDI[0].latitude
-                                    });
-                                    // );
-                                    let datt=resultCP.data[uCP].activeFrom;//.toISOString();
-                                    let sep11=datt.split('T');
-                                    let fri= sep11[0].split('-');
-                                    let hri=sep11[1].split(':');
-                                    let fechaCP= fri[0]+'-'+fri[1]+'-'+fri[2];//<--------- para guardar en db
-                                    let horaCP= hri[0]+':'+hri[1]+':'+'00';//<------- para guardar en db
-                                    console.log('coordenadas cp');
-                                    console.log(coordinates);
+//////////////////////////////////////////////////////////////////////////ORIGINAL/////////////////////////////////////////////////////////////////////////                        
+//                         var uCP = resultCP.data.length - 1;
+//                         var coordinates = [];
+//                         const resultDI = await api.call('Get', {
+//                             typeName: 'DeviceStatusInfo', search:
+//                                 { deviceSearch: { id: /*'b36'*/ rows[j].id_vehiculo }, fromDate: resultCP.data[uCP].activeFrom
+//                                 /*'2020-12-22T16:04:59.990Z'/*'2020-01-01T00:01:00'/*startDate*/ }
+//                         });/*, toDate: '2020-01-01T00:01:00' */
+//                            // .then(result => {
+//                                 //result.forEach(
+//                                 if (resultDI.length > 0) {
+//                                     console.log('datosDSI');
+//                                     console.log(resultDI[0]);
+//                                     coordinates.push({
+//                                         x: resultDI[0].longitude,
+//                                         y: resultDI[0].latitude
+//                                     });
+//                                     // );
+//                                     let datt=resultCP.data[uCP].activeFrom;//.toISOString();
+//                                     let sep11=datt.split('T');
+//                                     let fri= sep11[0].split('-');
+//                                     let hri=sep11[1].split(':');
+//                                     let fechaCP= fri[0]+'-'+fri[1]+'-'+fri[2];//<--------- para guardar en db
+//                                     let horaCP= hri[0]+':'+hri[1]+':'+'00';//<------- para guardar en db
+//                                     console.log('coordenadas cp');
+//                                     console.log(coordinates);
 
-                                  const resultGA = await api.call('GetAddresses', { coordinates: /*[{ x: -102.8429946899414, y: 23.161401748657227 }]*/coordinates });
-                                      //  .then(result => {
-                                            console.log(resultGA.length);
-                                            console.log(resultGA);
-                                            console.log(resultGA[0].street);
-//                                            console.log(resultGA[0].zones);
-                                            //console.log(resultGA[0].zones[0].id);
-                                           if(resultGA[0].zones[0].id != undefined){////////////////agregado del if
+//                                   const resultGA = await api.call('GetAddresses', { coordinates: /*[{ x: -102.8429946899414, y: 23.161401748657227 }]*/coordinates });
+//                                       //  .then(result => {
+//                                             console.log(resultGA.length);
+//                                             console.log(resultGA);
+//                                             console.log(resultGA[0].street);
+// //                                            console.log(resultGA[0].zones);
+//                                             //console.log(resultGA[0].zones[0].id);
+//                                            if(resultGA[0].zones[0].id != undefined){////////////////agregado del if
 
                                             
 
 
-                                            ////////////////////SEPARAR FECHA DE ALERTA////////////////////////
+//                                             ////////////////////SEPARAR FECHA DE ALERTA////////////////////////
 
 
-                                            /////////////////////////////////////////////
-                                            for (let k = 0; k < rows[j].json_build_object.ruta.length; k++) {
-                                                console.log('ingresando para meter id zone');
-                                                console.log(rows[j].json_build_object.ruta[k].id_checkpoint);
-                                                    console.log(resultGA[0].zones[0].id);
-                                                if (rows[j].json_build_object.ruta[k].id_checkpoint == resultGA[0].zones[0].id) {
+//                                             /////////////////////////////////////////////
+//                                             for (let k = 0; k < rows[j].json_build_object.ruta.length; k++) {
+//                                                 console.log('ingresando para meter id zone');
+//                                                 console.log(rows[j].json_build_object.ruta[k].id_checkpoint);
+//                                                     console.log(resultGA[0].zones[0].id);
+//                                                 if (rows[j].json_build_object.ruta[k].id_checkpoint == resultGA[0].zones[0].id) {
                                                    
-                                                    /////////////////////update checkpoint cuando entro a el////////////////////////////
-                                                    // let text='SetRuta_Configurada_Checkpoint(ide_ruta_configurada varchar(30),ide_checkpoint varchar(30),
-                                                    // _fecha DATE,_hora TIME,ide_usuario varchar(60) default null);'
-/*ERROR AQUI ERROR EN EL $5 fue 53                  */let text='SELECT SetRuta_Configurada_Checkpoint($1,$2,$3,$4,$5)';
-//-------------------------------------------------------->let text = 'UPDATE Ruta_Checkpoint WHERE id_checkpoint=$1 SET (hrealinicio)';
-                                                        let values = [rows[j].id_ruta_configurada, resultGA[0].zones[0].id, fechaCP,horaCP,req.body.id_user];
-                                                        pool.query(text, values);
-                                                    }
-                                                }
-                                            }/////////////////////////////<------------------agregado del if
-
+//                                                     /////////////////////update checkpoint cuando entro a el////////////////////////////
+//                                                     // let text='SetRuta_Configurada_Checkpoint(ide_ruta_configurada varchar(30),ide_checkpoint varchar(30),
+//                                                     // _fecha DATE,_hora TIME,ide_usuario varchar(60) default null);'
+// /*ERROR AQUI ERROR EN EL $5 fue 53                  */let text='SELECT SetRuta_Configurada_Checkpoint($1,$2,$3,$4,$5)';
+// //-------------------------------------------------------->let text = 'UPDATE Ruta_Checkpoint WHERE id_checkpoint=$1 SET (hrealinicio)';
+//                                                         let values = [rows[j].id_ruta_configurada, resultGA[0].zones[0].id, fechaCP,horaCP,req.body.id_user];
+//                                                         pool.query(text, values);
+//                                                     }
+//                                                 }
+//                                             }/////////////////////////////<------------------agregado del if
+//////////////////////////////////////////////////////////////////////////ORIGINAL/////////////////////////////////////////////////////////////////////////
                                         //});
                     
                         //    }).catch(error => console.log(error));
