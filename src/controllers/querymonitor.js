@@ -802,6 +802,10 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
 
                             
                         for(let k=0;k<resultCP.data.length;k++){
+                            let activeF = new Date(resultCP.data[h].activeFrom).getTime();
+                            let tFecha = new Date(toFecha).getTime();
+                          
+                            if (activeF < tFecha) {
                             let datt=resultCP.data[k].activeFrom;//.toISOString();
                                 let sep11=datt.split('T');
                                 let fri= sep11[0].split('-');
@@ -812,6 +816,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                             let text =('SELECT watchDogAlertaLite($1,$2,$3,$4)');
                             let values=[rows[j].id_ruta_configurada, '007',hrealinicio,frealinicio];//con el id de alerta ya saca la db las horas y fechas
                             await pool.query(text,values);
+                            }
                         }
                             console.log('paso watchdog pasando checkpoint');
     
