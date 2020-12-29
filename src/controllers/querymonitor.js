@@ -642,6 +642,8 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                     // console.log(result.data.length);
                     // console.log(result.data[0].rule);
                     // console.log(result.data[0].device);
+                    console.log(resultCP.data.length);
+                    console.log(resultCP);
                     if (resultCP.data.length > 0) {
                         // console.log(resultCP.data[0].rule);
                         // console.log(resultCP.data[0].device);
@@ -662,7 +664,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                                         console.log('datosDSI');
                                         console.log(resultDI[0]);
                                         coordinates.push({
-                                            x: resultDI[0].longitude,
+                                            x: resultDI[0].longitude,//se estan metiendo las mismas coordenadas
                                             y: resultDI[0].latitude
                                         });
                                         // );
