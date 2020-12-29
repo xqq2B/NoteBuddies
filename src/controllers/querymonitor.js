@@ -802,7 +802,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
 
                             
                         for(let k=0;k<resultCP.data.length;k++){
-                            let activeF = new Date(resultCP.data[h].activeFrom).getTime();
+                            let activeF = new Date(resultCP.data[k].activeFrom).getTime();
                             let tFecha = new Date(toFecha).getTime();
                           
                             if (activeF < tFecha) {
