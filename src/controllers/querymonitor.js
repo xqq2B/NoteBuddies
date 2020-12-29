@@ -480,7 +480,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             const result = await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
                     deviceSearch: { id:/*'b1EA'*/ rows[j].id_vehiculo },//AGREGADO id vehiculo para dar resultados
-                    ruleSearch: { id: idRuleEntrando[0].id }, fromDate: festimadasalirDB,toDate:toFecha//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
+                    ruleSearch: { id: idRuleEntrando[0].id }, fromDate: festimadasalirDB,toDate:'2020-12-28T17:40:00'//toFecha//'2020-12-28T17:40:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
             })
                 //.then(result => {
@@ -525,7 +525,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
            const result1= await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
                     deviceSearch: { id:/*'b1EA'},*/ rows[j].id_vehiculo }, //agregado vehiculo fake para resultados
-                    ruleSearch: { id: idRuleSaliendo[0].id }, fromDate:festimadasalirDB,toDate:toFecha// req.body.testeofecha//'2020-01-01T00:01:00' //finiciorealDB//rows[j],horaRealInicio//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
+                    ruleSearch: { id: idRuleSaliendo[0].id }, fromDate:festimadasalirDB,toDate:'2020-12-28T17:40:00'//toFecha// req.body.testeofecha//'2020-01-01T00:01:00' //finiciorealDB//rows[j],horaRealInicio//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
             });
                // .then(result => {
@@ -571,7 +571,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             const resIn = await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
                     deviceSearch: { id:/*'b1EA'}, */rows[j].id_vehiculo },// agregado vehiculo fake para resultados
-                    ruleSearch: { id: idRuleDentro[0].id }, fromDate: festimadasalirDB, toDate:toFecha//req.body.testeofecha//'2020-01-01T00:01:00'//finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
+                    ruleSearch: { id: idRuleDentro[0].id }, fromDate: festimadasalirDB,toDate:'2020-12-28T17:40:00'//toFecha//req.body.testeofecha//'2020-01-01T00:01:00'//finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
             });
                // .then(result => {
@@ -595,7 +595,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
            const resOut = await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
                     deviceSearch: {id:/*'b1EA'},*/ rows[j].id_vehiculo },// agregado vehiculo fake para resultados
-                    ruleSearch: { id: idRuleFuera[0].id }, fromDate: festimadasalirDB,toDate:toFecha//req.body.testeofecha//'2020-01-01T00:01:00'//finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
+                    ruleSearch: { id: idRuleFuera[0].id }, fromDate: festimadasalirDB,toDate:'2020-12-28T17:40:00'//toFecha//req.body.testeofecha//'2020-01-01T00:01:00'//finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
             });
                 //.then(result => {
@@ -637,7 +637,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             const resultCP = await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
                     deviceSearch: { id:/*'b1EA'},*/rows[j].id_vehiculo },// agregado vehiculo fake para resultados
-                    ruleSearch: { id: idRuleEntrandoCP[0].id }, fromDate: festimadasalirDB,toDate:toFecha//req.body.testeofecha//'2020-01-01T00:01:00'//finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
+                    ruleSearch: { id: idRuleEntrandoCP[0].id }, fromDate: festimadasalirDB,toDate:'2020-12-28T17:40:00'//toFecha//req.body.testeofecha//'2020-01-01T00:01:00'//finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
             });
                // .then(result => {
