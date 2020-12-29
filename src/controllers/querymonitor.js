@@ -486,7 +486,8 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                 }, resultsLimit: 10
             })
                 //.then(result => {
-                    console.log('dentro de 1er apicall');
+                    console.log('entrando MMROutes');
+                    console.log(result.data.length);
                      if(result.data.length>0){
                         console.log(result.data[0].rule);
                         console.log(result.data[0].device);
@@ -533,13 +534,14 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
            const result1= await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
                     deviceSearch: { id:/*'b1EA'},*/ rows[j].id_vehiculo }, //agregado vehiculo fake para resultados
-                    ruleSearch: { id: idRuleSaliendo[0].id }, fromDate:festimadasalirDB,toDate:'2020-12-28T17:40:00'//toFecha// req.body.testeofecha//'2020-01-01T00:01:00' //finiciorealDB//rows[j],horaRealInicio//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
+                    ruleSearch: { id: idRuleSaliendo[0].id }, fromDate:festimadasalirDB,toDate:toFecha//toFecha// req.body.testeofecha//'2020-01-01T00:01:00' //finiciorealDB//rows[j],horaRealInicio//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
             });
                // .then(result => {
                     //result.forEach(
                     // console.log(result);
-                    // console.log(result.data.length);
+                    console.log('saliendo MMROutes');
+                    console.log(result1.data.length);
                     // console.log(result.data[0].rule);
                     // console.log(result.data[0].device);
                     if(result1.data.length>0){
@@ -584,7 +586,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             const resIn = await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
                     deviceSearch: { id:/*'b1EA'}, */rows[j].id_vehiculo },// agregado vehiculo fake para resultados
-                    ruleSearch: { id: idRuleDentro[0].id }, fromDate: festimadasalirDB,toDate:'2020-12-28T17:40:00'//toFecha//req.body.testeofecha//'2020-01-01T00:01:00'//finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
+                    ruleSearch: { id: idRuleDentro[0].id }, fromDate: festimadasalirDB,toDate:toFecha//toFecha//req.body.testeofecha//'2020-01-01T00:01:00'//finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
             });
                // .then(result => {
@@ -650,7 +652,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             const resultCP = await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
                     deviceSearch: { id:/*'b1EA'},*/rows[j].id_vehiculo },// agregado vehiculo fake para resultados
-                    ruleSearch: { id: idRuleEntrandoCP[0].id }, fromDate: festimadasalirDB,toDate:'2020-12-28T17:40:00'//toFecha//req.body.testeofecha//'2020-01-01T00:01:00'//finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
+                    ruleSearch: { id: idRuleEntrandoCP[0].id }, fromDate: festimadasalirDB//toFecha//req.body.testeofecha//'2020-01-01T00:01:00'//finiciorealDB//'2020-01-01T00:01:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
             });
                // .then(result => {
@@ -672,7 +674,6 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                             let tFecha = new Date(toFecha).getTime();
                           
                             if (activeF < tFecha) {
-                            var uCP = resultCP.data.length - 1;
                             var coordinates = [];
                             const resultDI = await api.call('Get', {
                                 typeName: 'DeviceStatusInfo', search:
@@ -685,8 +686,8 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                                         console.log('datosDSI');
                                         console.log(resultDI[0]);
                                         coordinates.push({
-                                            x: resultDI[0].longitude,//se estan metiendo las mismas coordenadas
-                                            y: resultDI[0].latitude
+                                            x: resultDI[h].longitude,//se estan metiendo las mismas coordenadas
+                                            y: resultDI[h].latitude
                                         });
                                         // );
                                         let datt=resultCP.data[h].activeFrom;//.toISOString();
