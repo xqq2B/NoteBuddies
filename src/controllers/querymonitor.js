@@ -447,11 +447,14 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             let values=[rows[j].id_ruta_configurada, '003',hrealinicio,frealinicio];//con el id de alerta ya saca la db las horas y fechas
             pool.query(text,values);
             console.log('paso watchdog entrando ENDtpoint');
+            console.log(resultEP.data[0].activeFrom);
 ///////////////////agregado para fecha////////////////
             if(EP==false){
+                console.log('hora actual');
                 toFecha=horaActual;
             }
             if(EP==true){
+                console.log('fecha de activeFROM');
                 toFecha=resultEP.data[0].activeFrom;
             }
             //////////////////////////////////////////////////////////
@@ -461,6 +464,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             //////////////////////
             
             console.log(resultEP.data[0]);
+            console.log(toFecha);
 /////////////////////////////////comentado para usar watchdog///////////////////                    
       
     }
