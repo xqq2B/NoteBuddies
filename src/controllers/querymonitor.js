@@ -470,7 +470,9 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
     }
 
 
-
+    // await api.call('GetFeed', { typeName: 'LogRecord', fromVersion: token, 
+    // search: 
+    // { deviceSearch: { id: req.body.id_device }, fromDate: req.body.tiempo/*'2020-01-01T00:01:00'/*startDate*/ } })/*, toDate: '2020-01-01T00:01:00' */
 
 
 
@@ -480,7 +482,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
             const result = await api.call('GetFeed', {
                 typeName: 'ExceptionEvent', /*fromVersion: token, */search: {
                     deviceSearch: { id:/*'b1EA'*/ rows[j].id_vehiculo },//AGREGADO id vehiculo para dar resultados
-                    ruleSearch: { id: idRuleEntrando[0].id }, fromDate: festimadasalirDB,toDate:'2020-12-28T17:40:00'//toFecha//'2020-12-28T17:40:00'//poner fecha de cuando va a arrancar
+                    ruleSearch: { id: idRuleEntrando[0].id }, fromDate: festimadasalirDB,toDate:toFecha//'2020-12-28T17:40:00'//poner fecha de cuando va a arrancar
                 }, resultsLimit: 10
             })
                 //.then(result => {
@@ -489,9 +491,14 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                         console.log(result.data[0].rule);
                         console.log(result.data[0].device);
                         //if(result.data.length>0){
-                            
-                            for(let k=0;k<result.data.length;k++){
-                                let datt=result.data[k].activeFrom;//.toISOString();
+
+                         for (let k = 0; k < result.data.length; k++) {
+                             var activeF = new Date(result.data[k].activeFrom).getTime();
+                             var tFecha = new Date(toFecha).getTime();
+                             console.log('ffffechas');
+                             console.log(tfecha);
+                             if (activeF < tFecha) {////////////////agregado no repeticion
+                                 let datt = result.data[k].activeFrom;//.toISOString();
                                 let sep11=datt.split('T');
                                 let fri= sep11[0].split('-');
                                 let hri=sep11[1].split(':');
@@ -503,6 +510,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                                 let text =('SELECT watchDogAlertaLite($1,$2,$3,$4)');
                             let values=[rows[j].id_ruta_configurada, '006',hrealinicio,frealinicio];//con el id de alerta ya saca la db las horas y fechas
                             await pool.query(text,values);
+                            }
                             }
                             
                             console.log('paso watchdog entrando mm routes');
@@ -540,6 +548,10 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                         //if(result.data.length>0){
                             
                             for(let k=0;k<result1.data.length;k++){
+                            let activeF = new Date(result1.data[k].activeFrom).getTime();
+                             let tFecha = new Date(toFecha).getTime();
+                           
+                             if (activeF < tFecha) {////////////////agregado no repeticion
                             let datt=result1.data[k].activeFrom;//.toISOString();
                                 let sep11=datt.split('T');
                                 let fri= sep11[0].split('-');
@@ -550,6 +562,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                             let text =('SELECT watchDogAlertaLite($1,$2,$3,$4)');
                             let values=[rows[j].id_ruta_configurada, '005',hrealinicio,frealinicio];//con el id de alerta ya saca la db las horas y fechas
                             await pool.query(text,values);
+                             }//////////////
                             }
                             console.log('paso watchdog saliendo mmroutes');
     
@@ -655,6 +668,10 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                           /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                           for(let h=0;h<resultCP.data.length;h++)
                           {
+                            let activeF = new Date(resultCP.data[k].activeFrom).getTime();
+                            let tFecha = new Date(toFecha).getTime();
+                          
+                            if (activeF < tFecha) {
                             var uCP = resultCP.data.length - 1;
                             var coordinates = [];
                             const resultDI = await api.call('Get', {
@@ -711,6 +728,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                                                     }
                                                 }/////////////////////////////<------------------agregado del if
                                             }
+                                        }
                                             }
                         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////ORIGINAL/////////////////////////////////////////////////////////////////////////                        
