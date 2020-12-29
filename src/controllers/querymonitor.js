@@ -349,6 +349,10 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                         
                         console.log(result.data[0]);
 
+///////////////////////////////////////////////////////////////////////////////ANOTACIOOOOOOOOOOOOOOOOOOOOOOOOOOOONNNNNNNNNNNNNNNN/////////////////////
+                        // let text1 = ('SELECT * FROM verruta_completa WHERE BD=$1');
+                        // let values1 = [req.body.db];
+                        //   { rows } = await pool.query(text1, values1);
 /////////////////////////////////// se comento para usar watchdog/////////////////////////////////
                         // var horaEstimadaActual = new Date(result.data.activeFROM);//formato'2019-09-13T06:45:00Z'
                         // console.log(horaEstimadaActual);//valor original
@@ -361,7 +365,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
 
             }
 
-
+///////////////////////////////////////EL ESTADO ES EL ORIGINAL PORQUE NO SE REALIZO QUERY///////////////////////////////////
 
             console.log(rows[j].estado);
             if(rows[j].estado == 'En_Curso'){
@@ -847,7 +851,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
 qryCtrlMonitor.QueryAlerts = async (req, res) => {
     try{
         console.log(req.body.db);
-        let text='SELECT * FROM verAlertas WHERE BD=$1';
+        let text='SELECT * FROM verRuta_Alertas WHERE BD=$1';
             //completas
         let values = [req.body.db];
         let alerts = await pool.query(text, values);
