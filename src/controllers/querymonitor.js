@@ -707,8 +707,8 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                                                         }
                                                     }
                                                 }/////////////////////////////<------------------agregado del if
-                          }
-                        }
+                                            }
+                                            }
                         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////ORIGINAL/////////////////////////////////////////////////////////////////////////                        
 //                         var uCP = resultCP.data.length - 1;
@@ -804,7 +804,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
 //////////////////////////comentado para uso de watchdog////////////////////////////                        
                     //     
                     
-                }//<-------------agregado del if data > 0
+                //}//<-------------agregado del if data > 0<----------------------ponerlo si no se usa el for
                // }).catch(error => console.log('ENTRANDO CHECKPOINT ERROR ', error));
 
 
