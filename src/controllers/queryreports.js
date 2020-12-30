@@ -13,22 +13,22 @@ qryCtrlReports.QueryRoute = async (req, res) => {
         var query;
         console.log('antes de los ifs');
         if (req.body.type == "Programada") {
-            text = 'SELECT * FROM verReporteProgramada WHERE db=$1';//drivers es correo, vehiculos el id
+            text = 'SELECT * FROM verReporteProgramada WHERE bd=$1';//drivers es correo, vehiculos el id
             values = [req.body.db];
             query = await pool.query(text, values);
         }
         if (req.body.type == "En_Curso") {
-            text = ('SELECT * FROM verReporteEn_Curso WHERE db=$1');
+            text = ('SELECT * FROM verReporteEn_Curso WHERE bd=$1');
             values = [req.body.db];
             query = await pool.query(text, values);
         }
         if (req.body.type == "Finalizada") {
-            text='SELECT * FROM verReporteFinalizada WHERE db=$1';
+            text='SELECT * FROM verReporteFinalizada WHERE bd=$1';
             values = [req.body.db];
             query = await pool.query(text, values);
         }
         if (req.body.type == "General") {
-            text='SELECT * FROM verReporteGeneral WHERE db=$1';
+            text='SELECT * FROM verReporteGeneral WHERE bd=$1';
             values = [req.body.db];
             query = await pool.query(text, values);
         }
