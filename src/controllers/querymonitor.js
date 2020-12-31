@@ -34,7 +34,8 @@ qryCtrlMonitor.EditCheckPoint = async (req, res) => {
                                                     // _fecha DATE,_hora TIME,ide_usuario varchar(60) default null);'
             ///nueva funcion donde no se borran
             for (let y = 0; y < checkpoints.checkpoints.length; y++) {
-             let text = 'SELECT SetRuta_Configurada_Checkpoint($1,$2,$3,$4,$5)';
+             //let text = 'SELECT SetRuta_Configurada_Checkpoint($1,$2,$3,$4,$5)';
+             let text = 'SELECT setRuta_Configurada_CheckpointManual($1,$2,$3,$4,$5)';
              ///////rows y ???? checar
              let values = [checkpoints.id_routep, checkpoints.checkpoints[y].id_punto, checkpoints.checkpoints[y].fecha, checkpoints.checkpoints[y].hora, checkpoints.id_user];
              await pool.query(text, values);
