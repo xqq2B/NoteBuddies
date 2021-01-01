@@ -1,7 +1,7 @@
-const {pool} = require('../database');
+const { pool } = require('../database');
 
 const bcrypt = require('bcrypt');
-const {sendWelcomeEmail,sendEmailRec}  =require('./notifications');
+const { sendWelcomeEmail, sendEmailRec } = require('./notifications');
 
 
 
@@ -23,17 +23,17 @@ helpers.matchPassword = async (password, savedPassword) => {
 };
 
 
-helpers.signIn =async  (user)=>{
+helpers.signIn = async (user) => {
 
     const text = 'SELECT * FROM usuario WHERE correo = $1';
     const values = [user.email];
     const { rows } = await pool.query(text, values);
-    console.log(rows[0]);
+    // console.log(rows[0]);
     if (rows.length > 0) {
-        const OkPass = await helpers.matchPassword(user.password, rows[0].pass);//pass <-- como aparece en la tabla
+        const OkPass = await helpers.matchPassword(user.password, rows[0].pass);
         if (rows[0].activo == null)
-            return 'Email Not Confirmed!';////cambios
-        else if(rows[0].activo == false ){
+            return 'Email Not Confirmed!';
+        else if (rows[0].activo == false) {
             return 'User Deleted!';
         }
         else if (OkPass) {
@@ -42,55 +42,47 @@ helpers.signIn =async  (user)=>{
         else {
             return 'Wrong Password!';
         }
-    } else return 'Unknown Email!';//correo no existe
+    } else return 'Unknown Email!';
 };
 
-async function checkId (){
-    const id_user = (Math.floor(Math.random() * (10000001)))+10000000;
-    const text = 'SELECT * FROM usuario WHERE id_usuario= $1';//id_user
-    const value =[id_user];
-    const{rows}= await pool.query(text,value);
-    if(rows.length>0) {
-        console.log('id user repetido');
-        checkId();}
-    else{
+async function checkId() {
+    const id_user = (Math.floor(Math.random() * (10000001))) + 10000000;
+    const text = 'SELECT * FROM usuario WHERE id_usuario= $1';
+    const value = [id_user];
+    const { rows } = await pool.query(text, value);
+    if (rows.length > 0) {
+        checkId();
+    }
+    else {
         return id_user;
-    } 
+    }
 }
 
 
-helpers.signUp =async  (newUser)=>{
-    const text = 'SELECT * FROM usuario WHERE correo = $1';// activo
-        const values= [newUser.email];
-        const {rows} = await pool.query(text,values);
-        console.log(newUser.password);
-        console.log(rows);
-    if (rows.length == 0 ){//|| rows[0].activo == false) {//added rows0 condition
+helpers.signUp = async (newUser) => {
+    const text = 'SELECT * FROM usuario WHERE correo = $1';
+    const values = [newUser.email];
+    const { rows } = await pool.query(text, values);
+    // console.log(rows);
+    if (rows.length == 0) {
         const encPass = await helpers.encryptPassword(newUser.password);
         await checkId().then(res => newUser.id_user = parseInt(res));
-        //newUser.id_rol generado en db
         let text = 'SELECT createusuario($1, $2, $3, $4, $5, $6)';//
-        let values=[newUser.id_user,newUser.username,newUser.lastname,newUser.email,newUser.telephone,encPass];
+        let values = [newUser.id_user, newUser.username, newUser.lastname, newUser.email, newUser.telephone, encPass];
         await pool.query(text, values);
         sendWelcomeEmail(newUser);
         return true;
     }
-    else if(rows[0].activo == false){
+    else if (rows[0].activo == false) {
         newUser.id_user = rows[0].id_usuario;
         const encPass = await helpers.encryptPassword(newUser.password);
-        //await checkId().then(res => newUser.id_user = parseInt(res)); se va el id
-        console.log(newUser.id_user);
         let text = 'SELECT updateUsuario($1, $2, $3, $4, $5)';
-        let values=[newUser.id_user,newUser.username,newUser.lastname,newUser.telephone,encPass];
+        let values = [newUser.id_user, newUser.username, newUser.lastname, newUser.telephone, encPass];
         await pool.query(text, values);
-        /////////cambiar a nulo
-        console.log('ok');
         let text2 = 'SELECT activonulo($1)';
-        let values2=[newUser.id_user];
-        await pool.query(text2,values2);
-        console.log('sali');
+        let values2 = [newUser.id_user];
+        await pool.query(text2, values2);
         sendWelcomeEmail(newUser);
-        console.log('sirvio query');
         return 'true';
     }
     else {
@@ -99,31 +91,29 @@ helpers.signUp =async  (newUser)=>{
 
 };
 
-helpers.mailRe = async (mail)=>{    
+helpers.mailRe = async (mail) => {
     const text = 'SELECT * FROM usuario WHERE correo = $1';
-    const values= [mail];
-    const {rows} = await pool.query(text,values);
-    if(rows.length>0)
-    {
-       let size = Math.floor(Math.random() * (20 - 10 + 1) ) + 10;
-       const nPass =makePass(size);
-       let id = [rows[0].id_usuario];
-       console.log(mail,nPass);
-       return  sendEmailRec(id,mail,nPass);
+    const values = [mail];
+    const { rows } = await pool.query(text, values);
+    if (rows.length > 0) {
+        let size = Math.floor(Math.random() * (20 - 10 + 1)) + 10;
+        const nPass = makePass(size);
+        let id = [rows[0].id_usuario];
+        return sendEmailRec(id, mail, nPass);
     }
     else
         return 'Invalid Email!';
 };
 
 function makePass(size) {
-    var result           = '';
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var charactersLength = characters.length;
-    for ( var i = 0; i < size; i++ ) {
-       result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    for (var i = 0; i < size; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
- }
- 
+}
+
 
 module.exports = helpers;

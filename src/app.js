@@ -1,5 +1,5 @@
 const express = require('express');
-const morgan = require ('morgan');
+const morgan = require('morgan');
 const cors = require('cors');
 
 //test path
@@ -13,18 +13,18 @@ const app = express();
 app.set('port', process.env.port || 3389);
 
 
-app.use(cors(/*{origin:"http://localhost:4200"} 10.128.0.32*/ ));
+app.use(cors(/*{origin:"http://localhost:4200"} 10.128.0.32*/));
 app.use(morgan('dev'));
 app.use(express.json());
-app.use(express.urlencoded({extended:false}));
+app.use(express.urlencoded({ extended: false }));
 
 //TEST port mensaje
-app.get('/',(req,res)=>{
+app.get('/', (req, res) => {
     console.log('External Ip working!');
-    res.sendFile(path.join(__dirname,'views/index.html'));
+    res.sendFile(path.join(__dirname, 'views/index.html'));
 });
 
 
 
-app.use('/api/auth',require('./routes/user.validations'));
+app.use('/api/auth', require('./routes/user.validations'));
 module.exports = app;

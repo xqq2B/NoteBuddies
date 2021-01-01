@@ -1,30 +1,26 @@
-const userCtrl ={};
-const {pool} = require('../database');
-var User = require ('../models/User');
+const userCtrl = {};
+const { pool } = require('../database');
+var User = require('../models/User');
 const helpers = require('../lib/passport');
 const jwt = require('jsonwebtoken');
-//const { email } = require('../models/User');
+
 require('dotenv').config();
 
 const EMAIL_SECRET = process.env.EMAIL_SECRET;
 const EMAIL_SECRET_PASS = process.env.EMAIL_SECRET_PASS;
 
-//todos no es necesario
-userCtrl.getUsers = async(req,res)=>{
+
+userCtrl.getUsers = async (req, res) => {
     res.json('hay comunicacion!');
-    /*const result = await pool.query('Select * from users');
-    res.json(result.rows);*/
 };
 
-//login por username y password
-userCtrl.loginUser = async (req,res)=>{
+
+userCtrl.loginUser = async (req, res) => {
     User = req.body;
-    console.log(User);
     try {
         const Verification = await helpers.signIn(User);
         if (Verification) {
             res.json({ status: Verification });
-            //res.redirect();
         }
         else
             res.json({ status: 'Failed!' });
@@ -34,25 +30,24 @@ userCtrl.loginUser = async (req,res)=>{
 };
 
 
-//pass changer
-userCtrl.newPass =async (req,res)=>{    
-    let id_user = req.body.id_user;  
+userCtrl.newPass = async (req, res) => {
+    let id_user = req.body.id_user;
     let pass = req.body.pass;
-    let newPass= req.body.newPass;
+    let newPass = req.body.newPass;
     try {
         const text = 'SELECT * FROM usuario WHERE id_usuario = $1';
         const values = [id_user];
         const { rows } = await pool.query(text, values);
         if (rows.length > 0) {
-            const OkPass = await helpers.matchPassword(pass, rows[0].pass);//pass <-- como aparece en la tabla
-             if (OkPass) {
+            const OkPass = await helpers.matchPassword(pass, rows[0].pass);
+            if (OkPass) {
                 const encPass = await helpers.encryptPassword(newPass);
                 let text2 = 'UPDATE usuario SET pass=$1 WHERE id_usuario=$2';
-                let values2 = [encPass,id_user];
+                let values2 = [encPass, id_user];
                 await pool.query(text2, values2);
                 res.json('Password Changed!');
             }
-            else{
+            else {
                 res.json('Wrong Password!');
             }
         }
@@ -61,15 +56,13 @@ userCtrl.newPass =async (req,res)=>{
     }
 };
 
-//register user
-userCtrl.registerUser =async (req,res)=>{      
+
+userCtrl.registerUser = async (req, res) => {
     User = req.body;
-    console.log(User);
     try {
         const Verification = await helpers.signUp(User);
         if (Verification) {
             res.json({ status: 'Registered!' });
-            //res.redirect();
         }
         else
             res.json({ status: 'Email already registered!' });
@@ -79,84 +72,53 @@ userCtrl.registerUser =async (req,res)=>{
     }
 };
 
-//confirm email
 
 userCtrl.registerConfirm = async (req, res) => {
     try {
         const id = jwt.verify(req.params.token, EMAIL_SECRET);
-        let text2='SELECT * FROM vistaEstadoUsuario WHERE id_usuario = $1';
-        //let text ='SELECT * FROM usuario WHERE id_usuario=$1 SET activo=$2'; const activo=true;
+        let text2 = 'SELECT * FROM vistaEstadoUsuario WHERE id_usuario = $1';
         let values = [id.user];
-        const {rows} = await pool.query(text2, values);
-        console.log(id.user);
-        console.log('rows'+rows);
+        const { rows } = await pool.query(text2, values);
+
         if (rows[0].activo == false) {
             let text = 'SELECT estadoUsuario($1)';
             await pool.query(text, values);
-            console.log(rows[0].activo);
         }
         else if (rows[0].activo == null) {
-            let activo=true;
+            let activo = true;
             let text2 = 'UPDATE usuario SET activo=$1 WHERE id_usuario=$2';
-            let values2 = [activo,id.user];
+            let values2 = [activo, id.user];
             await pool.query(text2, values2);
-            console.log(rows[0].activo);
         }
     } catch (e) {
         res.send('error: ' + e);
     }
 
-    return res.redirect('http://35.206.82.124/');//mandar al login
+    return res.redirect('http://35.206.82.124/');
 };
 
 
-// {
-//     const id = jwt.verify(req.params.token, EMAIL_SECRET);
-//     // let text2='SELECT * FROM vistaEstadoUsuario WHERE id_usuario = $1';
-//     let values = [id.user];
-//     // const {rows} = await pool.query(text2, values);
-//     console.log(id.user);
-//     //////////////////
-//     let text = 'SELECT estadoUsuario($1)';
-//         await pool.query(text, values);
-//      ///////////////////
-//     console.log('rows'+rows[0]);
-//     if (rows[0].activo == false) {
-//         let text = 'SELECT estadoUsuario($1)';
-//         await pool.query(text, values);
-//         console.log(rows[0].activo);
-//     }
-
-
-//edit password recovery
-userCtrl.getRecovery = async (req,res)=>{
-    const mail=req.body.email;
-    console.log(mail);
-    try{
-        const Verification = await helpers.mailRe(mail);
-        res.json({status: Verification});
-    }catch(e){console.log(e);}
-};
-
-userCtrl.defaultPassword =async (req,res)=>{    
+userCtrl.getRecovery = async (req, res) => {
+    const mail = req.body.email;
     try {
-        console.log(req.params.token);
-        const id =jwt.verify(req.params.token,EMAIL_SECRET_PASS);
-        //let text = 'UPDATE usuario set pass=$1 where id_usuario=$2';
+        const Verification = await helpers.mailRe(mail);
+        res.json({ status: Verification });
+    } catch (e) { console.log(e); }
+};
+
+userCtrl.defaultPassword = async (req, res) => {
+    try {
+        const id = jwt.verify(req.params.token, EMAIL_SECRET_PASS);
         let text = 'SELECT cambiarPass($1,$2)';
-        //SELECT cambiarPass(id_usuario,nuevo pass);
         const encPass = await helpers.encryptPassword(id.pass);
-         let values =[id.user[0],encPass];
-         await pool.query(text,values);
-         console.log(id.pass);
-         console.log(id.user[0]);
-         
-       } catch (e) {
-         res.send('error');
-       }
-     
-       return res.redirect('http://35.206.82.124/');
-     };
+        let values = [id.user[0], encPass];
+        await pool.query(text, values);
+    } catch (e) {
+        res.send('error');
+    }
+
+    return res.redirect('http://35.206.82.124/');
+};
 
 
 module.exports = userCtrl;
