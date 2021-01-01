@@ -421,7 +421,7 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                             // });
                             /////////////////////////////////////////////////////////////////////////////////////////////////////
                            const resultDI = await api.call('Get', {
-                                typeName: 'LogRecord', fromVersion: token,
+                                typeName: 'LogRecord',
                                 search:
                                     { deviceSearch: { id: rows[j.id_vehiculo] }, fromDate: resultCP.data[h].activeFrom,toDate:rows[j].fechallegadaestimada/*startDate*/,resultslimit:10 }
                             });
