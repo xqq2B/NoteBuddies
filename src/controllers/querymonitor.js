@@ -412,13 +412,22 @@ qryCtrlMonitor.QueryExceptions = async (req, res) => {
                     for (let h = 0; h < resultCP.data.length; h++) {
                         let activeF = new Date(resultCP.data[h].activeFrom).getTime();
                         let tFecha = new Date(toFecha).getTime();
-                        
+
                         if (activeF < tFecha) {
                             var coordinates = [];
-                            const resultDI = await api.call('Get', {
-                                typeName: 'DeviceStatusInfo', search:
-                                    { deviceSearch: { id: rows[j].id_vehiculo }, fromDate: resultCP.data[h].activeFrom }
+                            // const resultDI = await api.call('Get', {
+                            //     typeName: 'DeviceStatusInfo', search:
+                            //         { deviceSearch: { id: rows[j].id_vehiculo }, fromDate: resultCP.data[h].activeFrom }
+                            // });
+                            /////////////////////////////////////////////////////////////////////////////////////////////////////
+                           const resultDI = await api.call('Get', {
+                                typeName: 'LogRecord', fromVersion: token,
+                                search:
+                                    { deviceSearch: { id: rows[j.id_vehiculo] }, fromDate: resultCP.data[h].activeFrom,toDate:rows[j].fechallegadaestimada/*startDate*/,resultslimit:10 }
                             });
+
+
+                            /////////////////////////////////////////////////////////////////////////////////////////////////////
                             console.log('probando cp');
                             console.log(resultCP.data[h].activeFrom);
                             if (resultDI.length > 0) {
