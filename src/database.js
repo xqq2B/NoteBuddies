@@ -1,32 +1,20 @@
-const { Pool } = require('pg');
+const mongo = require('mongoose');
 require('dotenv').config();
-const host = process.env.hostdb;
-const user = process.env.userdb;
-const password = process.env.passworddb;
-const database = process.env.databasedb;
+const logger = require ('./lib/logger');
 
-
-const config = {
-    user,
-    host,
-    password,
-    database
-};
-
-const pool = new Pool(config);
-console.log(pool);
-
-async function query() {
-    await pool.query('SELECT NOW()', (err, res) => {
-        if (err) {
-            console.log('DB Not Connected: ' + err);
-        }
-        else
-            console.log('DB Connected');
-    });
+async function database() {
+    try {
+        mongo.connect('mongodb://localhost/noteBuddies', {
+            useCreateIndex: true,
+            useNewUrlParser: true,
+            useFindAndModify: false
+        }).then(db => console.log('DB is connected'), logger.info('DB is connected'))
+            .catch(err => database());
+    } catch (e) {
+        console.log(e);
+        logger.info('Error: '+e);
+    }
 }
 
+database();
 
-query();
-
-module.exports = { pool };

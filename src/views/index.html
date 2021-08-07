@@ -1,11 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    Puerto funcionando, comunicación exitosa!
-</body>
-</html>
+<div class="container-all">
+    <div class="ctn-form">
+        <img src="img/login.png" alt="" class="logox">
+        <h3 class="title">Iniciar Sesion</h3>
+        <form action="/signin" method="POST">
+            <label for="">Usuario</label>
+            <input name="user" type="text" value="{{user}}" maxlength="10" />
+            <label for="">Contrasena</label>
+            <input name="pass" type="password" maxlength="10" />
+            <input class="i2" type="submit" value="Ingresar">
+        </form>
+        <span class="text-footer">No tienes cuenta?
+            
+            <button class="abpop" id="abpop" onclick="location.href='signup'">Registrate</button><br><br>
+            <!--<a href="/auth/fb"><button class="abpop" id="abpop" >Facebook</button></a><br><br>-->
+    </div>
+</div>
+
+

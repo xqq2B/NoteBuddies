@@ -1,0 +1,20 @@
+<div class="containercard">
+    <div class="card">
+        <h3>Nueva Nota</h3>
+        <div class="bodycard">
+            <form action="/newnotes" method="POST">
+                <div class=form>
+                    <input type='text' value="{{title}}" name="title" placeholder="Ingresa Titulo" autofocus><br><br>
+                </div>
+                <div class="form">
+                    <textarea name="message" value="{{message}}" placeholder="Descripcion"></textarea>
+                </div>
+                <div class="form">
+                    <button class="abpop" type="submit">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

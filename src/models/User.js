@@ -1,12 +1,13 @@
-let user ={
-    username: String,
-    password: String,
-    lastname: String,
-    telephone: String,
-    email: String,
-    id_user:Number,
-    id_rol:Number,
-    active:Number//added
-};
+const mongoose = require ('mongoose');
+const {Schema} = mongoose;
 
-module.exports=user;
+const userSchema = new Schema ({
+    user: {type: String, required:false},
+    mail: {type:String, required:false},
+    tel: {type:String, required:false},
+    pass: {type:String, required:false},
+    facebookId:{type:String},
+    date:{type:Date, default:Date.now}
+});
+
+module.exports = mongoose.model('User', userSchema);

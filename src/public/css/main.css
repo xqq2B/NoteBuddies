@@ -1,0 +1,301 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    font-family:verdana;
+}
+body{
+   background-image: url('../img/bgbody.png');
+   
+    z-index: 3;
+    width:100%;
+    height:100%;
+    background-size:cover;
+    justify-content: center;
+
+    /* animation: moverse 20s infinite linear alternate;
+    }
+@keyframes moverse
+{
+    from{
+        background-position:bottom right;
+    }to{
+        background position: top left;
+    } */
+}
+
+header
+{
+    width: 100%;
+    height: 300px;
+    background-image:url('../img/bgheader.png');
+    text-align:center;
+    position:fixed;
+    overflow: hidden;
+    top: 0;
+    transition: all 0.5s ease;
+    z-index: 1;
+}
+
+header h1{
+    font-size: 142px;
+    color:rgb(16, 170, 190);
+    line-height:250px;
+    font-weight: 300px;
+    transition: all 0.3s ease;
+}
+
+header h1 i{
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+header nav{
+    position:absolute;
+    bottom: 0;
+    height: 60px;
+    line-height: 60px;
+    width: 100%;
+    background: rgb(36, 74, 109);
+}
+
+header nav a{
+    color: white;
+    display: inline-block;
+    padding: 10px 15px;
+    line-height: 1;
+    text-decoration:none;
+    border-radius: 5px;
+}
+
+header nav a:hover{
+    background: rgba(206, 186, 142, 0.719);
+}
+
+h2{
+    font-size: 34px;
+    text-transform: uppercase;
+    font-weight: 400;
+    line-height: 2;
+    color: royalblue;
+}
+
+
+
+h1
+{
+	font-weight:bold;
+	font-size:35px;
+	color:rgb(0, 0, 0,0.99);
+	text-shadow:3px 2px rgb(255, 255, 255);
+}
+h2
+{
+    color:rgb(42, 76, 187);
+	font-family:Arial;
+	font-size:21px;
+	font-weight:300;
+	text-shadow:2px 1px rgb(25, 120, 28,0.99);
+    text-align:left;
+}
+
+
+
+.container-all
+{
+    margin-left: auto;
+    margin-right: auto;
+    text-align:center;
+    width: 100%;
+    height:70%;
+    max-width:400px;
+    margin:auto;
+    margin-top:20%;
+    margin-bottom: auto;
+    display:flex;
+    border-radius:25px;
+    overflow:hidden;
+}
+
+.alert{
+    color: rgb(252, 2, 56);
+    text-align:center ;
+    margin:auto;
+    font-size: larger;
+    text-decoration-line: underline;
+}
+
+.container-reg
+{
+    margin-left: auto;
+    margin-right: auto;
+    text-align:center;
+    width: 50%;
+    height:70%;
+    max-width:400px;
+    margin:auto;
+    margin-top:17%;
+    margin-bottom: auto;
+    display:flex;
+    border-radius:25px;
+    overflow:hidden;
+    
+}
+
+.ctn-form
+{
+    width: 100%;
+    padding:5px;
+    background:rgba(209, 219, 221, 0.719);
+}
+
+
+.containercard{
+    width:100%;
+    max-width:300px;
+    margin-top:17%;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+
+.card{
+    width:100%;
+    max-width: fit-content;
+    text-align: center;
+    margin: 20px;
+    border-radius: 6px;
+    overflow-wrap: break-word;
+    background: rgb(185, 172, 172);
+    box-shadow: 0px 1px 10px rgb(192, 182, 182);
+    padding: 5px;
+}
+ .card textarea{
+     background: rgb(193, 198, 236);
+     width: 80%;
+     height: 100%;
+     padding: 3px;
+     max-width: 100%;
+ }
+.card h3{
+    color: rgb(20, 123, 220);
+    padding: 5px;
+}
+.card p{
+    color: rgb(255, 0, 242);
+    padding: 5px;
+}
+
+.about-container{
+    width: 60%;
+    text-align: center;
+    margin-top: 17%;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+.about-container p{
+    color: cyan;
+}
+.logox
+{
+    padding:5px;
+    width:100px;
+    display:block;
+    margin:auto;
+    opacity:0.8;
+}
+.title
+{
+    text-align:center;
+    margin-top:20px;
+    font-weight:100px;
+    color:rgb(0, 0, 0);
+}
+.ctn-form label
+{
+    display:block;
+    margin-top:30px;
+    font-size:22px;
+    font-family:'Courier New', Courier, monospace;
+    font-weight:bold;
+    color:rgb(14, 14, 182);
+}
+input[type="text"],
+input[type="password"]
+{
+    height:30px;
+    background:transparent;
+    border-bottom-color: rgb(7, 7, 7);
+    border-top:0;
+    border-left:0;
+    border-right:0;
+    font-size:16px;
+    color:darkred;
+}
+.i2, input[type="submit"]
+{
+    width:80%;
+    height:50px;
+    margin-top:40px;
+    color:white;
+    border:0px;
+    background:rgb(96, 93, 143);
+    font-weight:300px;
+    cursor:pointer;
+    font-size:18px;
+}
+input[type="submit"]:hover
+{
+    background:rgb(87, 81, 95);
+}
+.text-footer
+{
+    color:rgba(155, 36, 36);
+    font-weight:200px;
+}
+button[class="abpop"]
+{
+    background:transparent;
+    border:none;
+    cursor:pointer;
+    color:blue;
+    font-weight:bold;
+}
+input[name="oa"]
+{
+    background:rgba(155, 36, 36, 0.8);
+    border-radius:100px;
+    width:18px;
+    height:18px;
+}
+h5
+{
+    color:rgba(155, 36, 36);
+}
+
+
+p
+{
+    position:relative;
+    top:5px;
+    color:rgb(197, 6, 38);
+    font-family:cursive;
+    font-size:20px;
+    font-weight:bold;
+}
+
+
+footer {
+    background: #111;
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    padding: 1em;
+    align-self: flex-end;
+  }
+.footer{
+    text-align: center;
+    color:white;
+}
+/*ultimo*/

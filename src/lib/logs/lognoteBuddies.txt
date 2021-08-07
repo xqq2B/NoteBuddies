@@ -1,0 +1,218 @@
+{"level":"info","message":"Server running on port"}
+info: Server running on port
+info: Server running on port
+[${info.timestamp}] ${info.level} ${info.message}
+2021-07-01T10:08:36.880ZinfoServer running on port
+[2021-07-01T10:09:16.539ZinfoServer running on port] 
+[2021-07-01T10:09:36.515Zinfo] Server running on port
+[2021-07-01T10:11:27.500Z] infoServer running on port
+[2021-07-01T10:11:45.230Z] info: Server running on port
+[2021-07-01T10:12:05.978Z] info: Server running on port3389
+[2021-07-01T10:13:07.644Z] info: Server running on port3389
+[2021-07-01T10:13:31.604Z] info: Server running on port3389
+[2021-07-01T10:15:17.856Z] info: DB is connected
+[2021-07-01T10:15:18.042Z] info: Server running on port3389
+[2021-07-01T10:15:38.267Z] info: DB is connected
+[2021-07-01T10:15:38.453Z] info: Server running on port3389
+[2021-07-01T10:17:33.938Z] info: DB is connected
+[2021-07-01T10:17:34.129Z] info: Server running on port3389
+[2021-07-01T10:18:08.762Z] info: DB is connected
+[2021-07-01T10:18:08.952Z] info: Server running on port3389
+[2021-07-01T10:19:05.959Z] info: DB is connected
+[2021-07-01T10:19:06.151Z] info: Server running on port3389
+[2021-07-01T10:19:22.429Z] info: DB is connected
+[2021-07-01T10:19:22.623Z] info: Server running on port3389
+[2021-07-01T10:20:06.617Z] info: DB is connected
+[2021-07-01T10:20:06.808Z] info: Server running on port3389
+[2021-07-01T10:20:17.498Z] info: User not valid
+[2021-07-01T10:21:20.805Z] info: DB is connected
+[2021-07-01T10:21:20.995Z] info: Server running on port3389
+[2021-07-01T10:21:23.964Z] info: User not validsdfsdf
+[2021-07-01T10:21:34.503Z] info: User not validdfgdfg
+[2021-07-01T10:22:00.776Z] info: DB is connected
+[2021-07-01T10:22:00.969Z] info: Server running on port3389
+[2021-07-01T10:22:05.510Z] info: User not valid
+[2021-07-01T10:22:26.652Z] info: DB is connected
+[2021-07-01T10:22:26.845Z] info: Server running on port3389
+[2021-07-01T10:22:29.679Z] info: User not valid: dsfgdfg
+[2021-07-01T10:24:24.755Z] info: DB is connected
+[2021-07-01T10:24:24.955Z] info: Server running on port3389
+[2021-07-01T10:26:03.186Z] info: DB is connected
+[2021-07-01T10:26:03.379Z] info: Server running on port3389
+[2021-07-01T10:27:23.831Z] info: DB is connected
+[2021-07-01T10:27:24.022Z] info: Server running on port3389
+[2021-07-01T10:29:07.883Z] info: DB is connected
+[2021-07-01T10:29:08.076Z] info: Server running on port3389
+[2021-07-01T10:29:08.124Z] info: Registration error: [object Object],[object Object],[object Object]
+[2021-07-01T10:30:39.453Z] info: DB is connected
+[2021-07-01T10:30:39.644Z] info: Server running on port3389
+[2021-07-01T10:30:46.092Z] info: Registration error: [{"text":"Contraseñas no coinciden"},{"text":"Telefono debe ser a 10 digitos"},{"text":"Correo ya esta registrado"}]
+[2021-07-01T10:31:15.869Z] info: DB is connected
+[2021-07-01T10:31:16.065Z] info: Server running on port3389
+[2021-07-01T10:32:06.202Z] info: DB is connected
+[2021-07-01T10:32:06.394Z] info: Server running on port3389
+[2021-07-01T10:32:59.190Z] info: DB is connected
+[2021-07-01T10:32:59.383Z] info: Server running on port3389
+[2021-07-01T10:33:10.762Z] info: User not valid: test
+[2021-07-01T10:33:19.223Z] info: User not valid: admin
+[2021-07-01T10:33:26.489Z] info: Checking Passwords
+[2021-07-01T10:33:26.540Z] info: Incorrect Password for user: tester
+[2021-07-01T10:33:33.160Z] info: User not valid: test
+[2021-07-01T10:33:38.808Z] info: User not valid: test
+[2021-07-01T10:33:41.837Z] info: User not valid: test
+[2021-07-01T10:34:15.470Z] info: Checking Passwords
+[2021-07-01T10:34:15.520Z] info: Login Successful for user: tester
+[2021-07-01T10:34:33.595Z] info: Note creation error: [{"text":"Nota muy corta!"}]
+[2021-07-01T10:35:48.277Z] info: DB is connected
+[2021-07-01T10:35:48.473Z] info: Server running on port3389
+[2021-07-01T10:38:34.239Z] info: DB is connected
+[2021-07-01T10:38:34.431Z] info: Server running on port3389
+[2021-07-01T10:38:54.146Z] info: Note creation error: [{"text":"Titulo muy corto!"}]
+[2021-07-01T10:39:11.543Z] info: Note created!
+[2021-07-01T10:39:15.357Z] info: Getting note by id: 60dd9b4f361ad44210ee58e2
+[2021-07-01T10:39:37.729Z] info: Note edited! by user id: 60dd9b4f361ad44210ee58e2
+[2021-07-01T10:40:44.381Z] info: DB is connected
+[2021-07-01T10:40:44.572Z] info: Server running on port3389
+[2021-07-01T10:41:09.004Z] info: DB is connected
+[2021-07-01T10:41:09.196Z] info: Server running on port3389
+[2021-07-01T10:43:09.716Z] info: DB is connected
+[2021-07-01T10:43:09.911Z] info: Server running on port3389
+[2021-07-01T10:43:10.852Z] info: Showing index
+[2021-07-01T10:43:28.178Z] info: DB is connected
+[2021-07-01T10:43:28.370Z] info: Server running on port3389
+[2021-07-01T10:44:57.708Z] info: DB is connected
+[2021-07-01T10:44:57.900Z] info: Server running on port3389
+[2021-07-01T10:45:27.594Z] info: DB is connected
+[2021-07-01T10:45:27.791Z] info: Server running on port3389
+[2021-07-01T10:47:09.299Z] info: DB is connected
+[2021-07-01T10:47:09.491Z] info: Server running on port3389
+[2021-07-01T10:49:27.155Z] info: DB is connected
+[2021-07-01T10:49:27.349Z] info: Server running on port3389
+[2021-07-01T10:50:19.450Z] info: DB is connected
+[2021-07-01T10:50:19.641Z] info: Server running on port3389
+[2021-07-01T10:52:03.576Z] info: DB is connected
+[2021-07-01T10:52:03.768Z] info: Server running on port3389
+[2021-07-01T10:52:15.285Z] info: Trying to login with user: dfg
+[2021-07-01T10:52:15.298Z] info: User not valid: dfg
+[2021-07-01T10:52:53.573Z] info: Attempt to register
+[2021-07-01T10:52:53.578Z] info: Registration error: [{"text":"Contraseñas no coinciden"}]
+[2021-07-01T10:53:04.483Z] info: Attempt to register
+[2021-07-01T10:53:04.537Z] info: Password encrypted
+[2021-07-01T10:53:04.546Z] info: Registration complete!
+[2021-07-01T10:53:04.552Z] info: Showing index
+[2021-07-01T10:53:12.298Z] info: Trying to login with user: admin
+[2021-07-01T10:53:12.303Z] info: Checking Passwords
+[2021-07-01T10:53:12.353Z] info: Login Successful for user: admin
+[2021-07-01T10:53:12.360Z] info: Getting all user notes
+[2021-07-01T10:53:50.505Z] info: Attempt to get edit notes
+[2021-07-01T10:53:50.510Z] info: Getting note by id: 60dd9b4f361ad44210ee58e2
+[2021-07-01T10:54:02.707Z] info: Attempt to edit note
+[2021-07-01T10:54:02.714Z] info: Note edited! by user id: 60dd9b4f361ad44210ee58e2
+[2021-07-01T10:54:02.721Z] info: Getting all user notes
+[2021-07-01T10:54:31.217Z] info: Attempt to delete note id: 60dd9b4f361ad44210ee58e2
+[2021-07-01T10:54:31.222Z] info: Note deleted! by user id: 60dd9b4f361ad44210ee58e2
+[2021-07-01T10:54:31.228Z] info: Getting all user notes
+[2021-07-01T10:54:45.328Z] info: Showing new notes
+[2021-07-01T10:55:05.338Z] info: Attempt to get all notes
+[2021-07-01T10:55:05.342Z] info: Note creation error: [{"text":"Titulo muy corto!"},{"text":"Nota muy corta!"}]
+[2021-07-01T10:55:39.610Z] info: Attempt to get all notes
+[2021-07-01T10:55:39.616Z] info: Note created!
+[2021-07-01T10:55:39.624Z] info: Getting all user notes
+[2021-07-01T10:57:23.791Z] info: DB is connected
+[2021-07-01T10:57:23.986Z] info: Server running on port3389
+[2021-07-01T10:57:25.412Z] info: Showing new notes
+[2021-07-01T10:57:31.569Z] info: Attempt to create note
+[2021-07-01T10:57:31.575Z] info: Note creation error: [{"text":"Nota muy corta!"}]
+[2021-07-01T11:38:30.655Z] info: DB is connected
+[2021-07-01T11:38:30.846Z] info: Server running on port3389
+[2021-07-01T12:41:06.104Z] info: Showing index
+[2021-07-01T12:43:41.757Z] info: Showing new notes
+[2021-07-01T12:43:54.702Z] info: Attempt to create note
+[2021-07-01T12:43:54.719Z] info: Note created!
+[2021-07-01T12:43:54.733Z] info: Getting all user notes
+[2021-07-01T12:43:56.958Z] info: Attempt to delete note id: 60ddb88ab1a7e41e0422332a
+[2021-07-01T12:43:56.965Z] info: Note deleted! by user id: 60ddb88ab1a7e41e0422332a
+[2021-07-01T12:43:56.971Z] info: Getting all user notes
+[2021-07-01T12:43:57.734Z] info: Attempt to delete note id: 60dd9f2bf6c82e054cf541ba
+[2021-07-01T12:43:57.739Z] info: Note deleted! by user id: 60dd9f2bf6c82e054cf541ba
+[2021-07-01T12:43:57.745Z] info: Getting all user notes
+[2021-07-01T12:44:00.508Z] info: Attempt to delete note id: 6076489d68b09d0144b4898a
+[2021-07-01T12:44:00.514Z] info: Note deleted! by user id: 6076489d68b09d0144b4898a
+[2021-07-01T12:44:00.520Z] info: Getting all user notes
+[2021-07-01T12:44:02.916Z] info: Showing index
+[2021-07-01T12:51:03.152Z] info: Trying to login with user: 654654
+[2021-07-01T12:51:03.158Z] info: User not valid: 654654
+[2021-07-01T12:52:06.154Z] info: Attempt to register
+[2021-07-01T12:52:06.158Z] info: Registration error: [{"text":"Contraseñas no coinciden"}]
+[2021-07-01T12:52:38.797Z] info: Showing index
+[2021-07-01T12:52:48.342Z] info: Trying to login with user: admin
+[2021-07-01T12:52:48.346Z] info: Checking Passwords
+[2021-07-01T12:52:48.396Z] info: Login Successful for user: admin
+[2021-07-01T12:52:48.402Z] info: Getting all user notes
+[2021-07-01T12:52:52.125Z] info: Showing new notes
+[2021-07-01T12:52:59.925Z] info: Attempt to create note
+[2021-07-01T12:52:59.929Z] info: Note creation error: [{"text":"Titulo muy corto!"},{"text":"Nota muy corta!"}]
+[2021-07-01T12:54:04.094Z] info: Attempt to create note
+[2021-07-01T12:54:04.099Z] info: Note created!
+[2021-07-01T12:54:04.108Z] info: Getting all user notes
+[2021-07-01T12:54:10.301Z] info: Attempt to get edit notes
+[2021-07-01T12:54:10.306Z] info: Getting note by id: 60ddbaecb1a7e41e0422332b
+[2021-07-01T12:54:17.767Z] info: Attempt to edit note
+[2021-07-01T12:54:17.775Z] info: Note edited! by user id: 60ddbaecb1a7e41e0422332b
+[2021-07-01T12:54:17.780Z] info: Getting all user notes
+[2021-07-01T12:54:20.773Z] info: Attempt to delete note id: 60ddbaecb1a7e41e0422332b
+[2021-07-01T12:54:20.777Z] info: Note deleted! by user id: 60ddbaecb1a7e41e0422332b
+[2021-07-01T12:54:20.785Z] info: Getting all user notes
+[2021-07-08T08:56:13.702Z] info: DB is connected
+[2021-07-08T08:56:17.608Z] info: Server running on port3389
+[2021-07-08T08:56:18.256Z] info: Showing index
+[2021-07-08T08:56:32.091Z] info: Trying to login with user: 
+[2021-07-08T08:56:32.260Z] info: User not valid: 
+[2021-07-08T08:56:38.526Z] info: Showing about
+[2021-07-08T08:56:45.935Z] info: Showing index
+[2021-07-08T08:57:33.484Z] info: Attempt to register
+[2021-07-08T08:57:33.537Z] info: Password encrypted
+[2021-07-08T08:57:33.683Z] info: Registration complete!
+[2021-07-08T08:57:33.690Z] info: Showing index
+[2021-07-08T08:57:46.544Z] info: Trying to login with user: Marina
+[2021-07-08T08:57:46.549Z] info: Checking Passwords
+[2021-07-08T08:57:46.599Z] info: Incorrect Password for user: Marina
+[2021-07-08T08:58:00.431Z] info: Trying to login with user: Marina
+[2021-07-08T08:58:00.435Z] info: Checking Passwords
+[2021-07-08T08:58:00.485Z] info: Incorrect Password for user: Marina
+[2021-07-08T08:58:06.368Z] info: Trying to login with user: Marina
+[2021-07-08T08:58:06.371Z] info: Checking Passwords
+[2021-07-08T08:58:06.421Z] info: Login Successful for user: Marina
+[2021-07-08T08:58:06.440Z] info: Getting all user notes
+[2021-07-08T08:58:10.927Z] info: Showing new notes
+[2021-07-08T08:58:46.232Z] info: Attempt to create note
+[2021-07-08T08:58:46.238Z] info: Note created!
+[2021-07-08T08:58:46.269Z] info: Getting all user notes
+[2021-07-08T08:58:55.198Z] info: Showing new notes
+[2021-07-08T08:59:11.296Z] info: Attempt to create note
+[2021-07-08T08:59:11.300Z] info: Note creation error: [{"text":"Nota muy corta!"}]
+[2021-07-08T08:59:34.920Z] info: Attempt to create note
+[2021-07-08T08:59:34.923Z] info: Note creation error: [{"text":"Nota muy corta!"}]
+[2021-07-08T08:59:55.824Z] info: Attempt to create note
+[2021-07-08T08:59:55.827Z] info: Note creation error: [{"text":"Nota muy corta!"}]
+[2021-07-08T09:00:25.232Z] info: Attempt to create note
+[2021-07-08T09:00:25.237Z] info: Note created!
+[2021-07-08T09:00:25.247Z] info: Getting all user notes
+[2021-07-08T09:00:36.129Z] info: Attempt to get edit notes
+[2021-07-08T09:00:36.133Z] info: Getting note by id: 60e6be4651f4e116c8581e74
+[2021-07-08T09:00:49.463Z] info: Attempt to edit note
+[2021-07-08T09:00:49.531Z] info: Note edited! by user id: 60e6be4651f4e116c8581e74
+[2021-07-08T09:00:49.537Z] info: Getting all user notes
+[2021-07-08T09:00:56.350Z] info: Attempt to delete note id: 60e6be4651f4e116c8581e74
+[2021-07-08T09:00:56.368Z] info: Note deleted! by user id: 60e6be4651f4e116c8581e74
+[2021-07-08T09:00:56.374Z] info: Getting all user notes
+[2021-07-08T09:01:00.911Z] info: Attempt to delete note id: 60e6bea951f4e116c8581e75
+[2021-07-08T09:01:00.916Z] info: Note deleted! by user id: 60e6bea951f4e116c8581e75
+[2021-07-08T09:01:00.922Z] info: Getting all user notes
+[2021-07-08T09:01:02.280Z] info: Showing new notes
+[2021-07-08T09:01:39.120Z] info: Attempt to create note
+[2021-07-08T09:01:39.123Z] info: Note creation error: [{"text":"Nota muy corta!"}]
+[2021-07-08T09:01:54.991Z] info: Attempt to create note
+[2021-07-08T09:01:54.996Z] info: Note created!
+[2021-07-08T09:01:55.002Z] info: Getting all user notes
+[2021-07-08T09:02:03.046Z] info: Showing about

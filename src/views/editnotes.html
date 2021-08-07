@@ -1,0 +1,23 @@
+<div class="containercard">
+    <div class="card">
+        <h3>Editar Nota</h3>
+        <div class="bodycard">
+            <form action="/editednote/{{Note._id}}" method="POST">
+                <div class=form>
+                    <input type='text' name="title" placeholder="Ingresa Titulo"
+                    value= "{{Note.title}}" autofocus><br><br>
+                </div>
+                <div class="form">
+                    <textarea name="message" placeholder="Descripcion">
+                        {{Note.message}}
+                    </textarea>
+                </div>
+                <div class="form">
+                    <button class="abpop" type="submit">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

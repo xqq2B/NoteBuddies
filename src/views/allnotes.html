@@ -1,0 +1,18 @@
+<div class="containercard">
+    {{#each allNotes}}
+    <div class="card">
+        <h3>{{title}}</h3>
+        <p>{{message}}</p>
+        <div class="bodycard">
+            <button class="abpop" onclick="location.href='/editnotes/{{_id}}'">Editar</button>
+
+            <form action="deletenote/{{_id}}" method="POST">
+                <button class="abpop" type="submit">Eliminar</button>
+            </form>
+        </div>
+    </div>
+    {{else}}
+    <h2>No hay notas</h2>
+    <button class="abpop" onclick="location.href='newnotes'">Ir a Crear Nota</button>
+    {{/each}}
+</div>
