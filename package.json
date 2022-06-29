@@ -33,7 +33,7 @@
     "node-fetch": "^2.6.1",
     "nodemailer": "^6.4.16",
     "override": "0.0.1",
-    "passport": "^0.4.1",
+    "passport": "^0.6.0",
     "passport-facebook": "^3.0.0",
     "passport-local": "^1.0.0",
     "winston": "^3.3.3"
